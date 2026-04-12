@@ -1,0 +1,16 @@
+/* TinyMCE — match mwadmin dark UI (import next to app.css or merge into mwadmin.css) */
+.mwadmin-news-rich-editor--dark .tox-tinymce {
+    border-color: #324760 !important;
+}
+
+.mwadmin-news-rich-editor--dark .tox .tox-edit-area__iframe {
+    background: #121a26;
+}
+
+.mwadmin-news-rich-editor .tox-tinymce {
+    border-radius: 4px;
+}
+
+.mwadmin-theme-dark .mwadmin-news-rich-editor .tox-tinymce {
+    border-color: #324760 !important;
+}

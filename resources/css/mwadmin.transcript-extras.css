@@ -1,0 +1,730 @@
+/* MW Admin — extra screens (dashboard, grids, dialogs, news flows). Loaded after mwadmin.css */
+
+.mwadmin-category-classic {
+    max-width: 100%;
+}
+
+/* —— Dashboard —— */
+.mwadmin-dashboard-adv-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.mwadmin-dashboard-adv-chevron {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.mwadmin-dashboard-adv-body {
+    padding: 12px 14px 14px;
+    border-top: 1px solid #e4e4e4;
+    background: #fafafa;
+}
+
+.mwadmin-dashboard-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px 16px;
+}
+
+.mwadmin-dashboard-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mwadmin-dashboard-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+}
+
+.mwadmin-dashboard-adv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.mwadmin-btn-primary {
+    border: 0;
+    border-radius: 3px;
+    background: #d64541;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.mwadmin-btn-primary:hover {
+    filter: brightness(1.05);
+}
+
+.mwadmin-btn-secondary {
+    border: 1px solid #c4c4c4;
+    border-radius: 3px;
+    background: #fff;
+    color: #444;
+    font-size: 13px;
+    padding: 7px 14px;
+    cursor: pointer;
+}
+
+.mwadmin-btn-reset {
+    border: 1px solid #bbb;
+    background: #f7f7f7;
+    color: #444;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.mwadmin-dashboard-table-wrap {
+    overflow-x: auto;
+}
+
+.mwadmin-dashboard-pager {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px 12px 14px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* —— Advanced search (news listing) —— */
+.mwadmin-advanced-search {
+    margin-bottom: 12px;
+}
+
+.mwadmin-advanced-search-toggle {
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.mwadmin-advanced-search-body {
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #e2e2e2;
+    background: #fafafa;
+    border-radius: 4px;
+}
+
+.mwadmin-advanced-search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px 14px;
+}
+
+.mwadmin-advanced-search-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.mwadmin-news-final-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.mwadmin-news-final-badge.is-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.mwadmin-news-final-badge.is-inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* —— News create / edit (core layout) —— */
+.mwadmin-required {
+    color: #c0392b;
+    font-weight: 700;
+}
+
+.mwadmin-label-hint {
+    font-weight: 400;
+    color: #888;
+    font-size: 11px;
+}
+
+.mwadmin-input-readonly {
+    background: #f3f3f3 !important;
+    color: #666;
+}
+
+.mwadmin-textarea {
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid #d8d8d8;
+    padding: 8px;
+    font-size: 13px;
+    border-radius: 2px;
+    font-family: inherit;
+}
+
+.mwadmin-form-grid-full {
+    grid-column: 1 / -1;
+}
+
+.mwadmin-news-create-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 0 0 14px;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.mwadmin-news-create-tabs li {
+    margin: 0;
+}
+
+.mwadmin-news-create-tabs button,
+.mwadmin-news-edit-tab-btn {
+    border: 1px solid transparent;
+    border-bottom: 0;
+    background: #f0f0f0;
+    padding: 8px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    margin-right: 4px;
+}
+
+.mwadmin-news-create-tabs li.active button,
+.mwadmin-news-edit-tab-btn.active {
+    background: #fff;
+    border-color: #ddd;
+    font-weight: 600;
+}
+
+.mwadmin-news-create-form {
+    align-items: start;
+}
+
+.mwadmin-news-create-aside {
+    grid-column: 2 / -1;
+}
+
+@media (max-width: 900px) {
+    .mwadmin-news-create-aside {
+        grid-column: 1 / -1;
+    }
+}
+
+.mwadmin-news-create-featured {
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background: #fafafa;
+}
+
+.mwadmin-news-create-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #444;
+}
+
+.mwadmin-news-create-actions {
+    margin-top: 8px;
+}
+
+.mwadmin-news-create-submit {
+    border: 0;
+    border-radius: 3px;
+    background: #d64541;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    cursor: pointer;
+}
+
+.mwadmin-news-create-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.mwadmin-news-create-cancel {
+    margin-left: 10px;
+    font-size: 13px;
+    color: #555;
+    text-decoration: underline;
+}
+
+.mwadmin-news-members-block {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+}
+
+.mwadmin-news-members-btn {
+    border: 1px solid #337ab7;
+    background: #337ab7;
+    color: #fff;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.mwadmin-news-members-table-wrap {
+    overflow-x: auto;
+    margin-top: 8px;
+}
+
+.mwadmin-news-members-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.mwadmin-news-members-table th,
+.mwadmin-news-members-table td {
+    border: 1px solid #e5e5e5;
+    padding: 6px 8px;
+}
+
+.mwadmin-news-members-empty {
+    color: #888;
+    font-style: italic;
+}
+
+.mwadmin-news-create-release-row {
+    grid-column: 1 / -1;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.mwadmin-news-create-release-group--ready {
+    background: #f4fff8;
+    border-color: #b8e6c8;
+}
+
+.mwadmin-news-create-release-group--muted {
+    background: #fafafa;
+    opacity: 0.9;
+}
+
+.mwadmin-news-edit-step-panel {
+    padding: 4px 0 12px;
+}
+
+.mwadmin-news-edit-step-title {
+    font-size: 16px;
+    margin: 0 0 8px;
+    color: #333;
+}
+
+.mwadmin-news-edit-step-intro {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.45;
+    margin: 0 0 12px;
+}
+
+.mwadmin-news-edit-step-actions {
+    margin-top: 12px;
+}
+
+.mwadmin-news-edit-next-btn {
+    border: 0;
+    background: #2fd0bd;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 3px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.mwadmin-news-edit-img-preview {
+    min-height: 120px;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+}
+
+.mwadmin-news-img-placeholder {
+    color: #999;
+    font-size: 12px;
+}
+
+.mwadmin-news-image-controls {
+    margin-top: 8px;
+}
+
+.mwadmin-news-file-input-hidden {
+    display: none;
+}
+
+.mwadmin-news-image-choose-btn {
+    border: 1px solid #666;
+    background: #fff;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.mwadmin-news-review-summary {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+}
+
+/* —— AG Grid —— */
+/* AgGridReact’s outer div uses height:100%; parents need a real height — min-height alone collapses % children → blank white grid */
+.mwadmin-ag-grid {
+    width: 100%;
+    height: 560px;
+    min-height: 420px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.mwadmin-ag-grid > div {
+    height: 100%;
+    min-height: 0;
+}
+
+.mwadmin-ag-grid.ag-theme-quartz,
+.mwadmin-ag-grid.ag-theme-quartz-dark {
+    --ag-font-size: 12px;
+    --ag-wrapper-border-radius: 8px;
+}
+
+/* —— Classic dialog / modals —— */
+.mwadmin-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(35, 28, 22, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2500;
+    backdrop-filter: blur(1px);
+}
+
+.mwadmin-modal-card {
+    width: min(460px, calc(100vw - 32px));
+    background: linear-gradient(180deg, #f8f2e8 0%, #efe3d2 100%);
+    border: 1px solid #cdbba2;
+    border-radius: 14px;
+    box-shadow: 0 20px 44px rgba(45, 31, 18, 0.25);
+    padding: 16px 18px 14px;
+    color: #3f342b;
+}
+
+.mwadmin-modal-card h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: #4b3a2d;
+}
+
+.mwadmin-modal-card p {
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.mwadmin-modal-input {
+    width: 100%;
+    border: 1px solid #cdbda8;
+    border-radius: 8px;
+    background: #fffdf9;
+    color: #403428;
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+}
+
+.mwadmin-modal-input:focus {
+    outline: none;
+    border-color: #9d7a49;
+    box-shadow: 0 0 0 3px rgba(157, 122, 73, 0.15);
+}
+
+.mwadmin-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.mwadmin-modal-btn {
+    border: 1px solid #a67d49;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #c79b62 0%, #a97b45 100%);
+    color: #fffef8;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 12px;
+    cursor: pointer;
+}
+
+.mwadmin-modal-btn.ghost {
+    border-color: #c8b69f;
+    background: #f9f3ea;
+    color: #594837;
+}
+
+.mwadmin-theme-dark .mwadmin-modal-card {
+    background: linear-gradient(180deg, #152133 0%, #111b2b 100%);
+    border-color: #354b64;
+    color: #deebfa;
+}
+
+.mwadmin-theme-dark .mwadmin-modal-card h3 {
+    color: #edf5ff;
+}
+
+.mwadmin-theme-dark .mwadmin-modal-card p {
+    color: #ccdaeb;
+}
+
+.mwadmin-theme-dark .mwadmin-modal-input {
+    background: #0f1725;
+    border-color: #334a63;
+    color: #edf5ff;
+}
+
+/* —— Weekly schedule —— */
+.mwadmin-schedule-panel {
+    overflow: hidden;
+}
+
+.mwadmin-schedule-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mwadmin-schedule-head-icon {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.mwadmin-schedule-loading {
+    padding: 18px 14px;
+    font-size: 14px;
+    color: #666;
+}
+
+.mwadmin-schedule-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e8e8e8;
+    background: #fafafa;
+    font-size: 13px;
+    color: #444;
+}
+
+.mwadmin-schedule-toolbar-mid {
+    flex: 1;
+    min-width: 200px;
+}
+
+.mwadmin-schedule-toolbar-nav {
+    display: flex;
+    gap: 6px;
+}
+
+.mwadmin-schedule-nav-btn {
+    min-width: 36px;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    background: #fff;
+    color: #444;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.mwadmin-schedule-table-wrap {
+    overflow-x: auto;
+    padding: 0 0 12px;
+}
+
+.mwadmin-schedule-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    font-size: 11px;
+    color: #444;
+    background: #fff;
+}
+
+.mwadmin-schedule-table thead th {
+    background: #eef2f5;
+    border: 1px solid #e0e6ec;
+    padding: 8px 6px;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.mwadmin-schedule-th-cat {
+    text-align: left !important;
+    min-width: 120px;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    box-shadow: 2px 0 0 #e0e6ec;
+}
+
+.mwadmin-schedule-th-day {
+    min-width: 92px;
+}
+
+.mwadmin-schedule-table tbody td {
+    border: 1px solid #eceef1;
+    vertical-align: top;
+    padding: 6px;
+}
+
+.mwadmin-schedule-td-cat {
+    font-weight: 600;
+    background: #f7f9fb;
+    white-space: nowrap;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    box-shadow: 2px 0 0 #eceef1;
+}
+
+.mwadmin-schedule-td-cell {
+    min-height: 36px;
+}
+
+.mwadmin-schedule-chip {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 4px;
+    padding: 5px 7px;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.mwadmin-schedule-chip:hover {
+    filter: brightness(1.08);
+}
+
+.mwadmin-modal.mwadmin-schedule-modal {
+    width: min(520px, calc(100vw - 32px));
+    max-height: min(90vh, 640px);
+    overflow: auto;
+    background: #fff;
+    border: 1px solid #d7d7d7;
+    border-radius: 6px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.mwadmin-schedule-modal .mwadmin-modal-head {
+    background: #3fd5c0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 14px;
+}
+
+.mwadmin-schedule-modal .mwadmin-modal-body {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #333;
+}
+
+.mwadmin-schedule-modal-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mwadmin-schedule-modal-table th {
+    text-align: left;
+    vertical-align: top;
+    padding: 6px 10px 6px 0;
+    font-weight: 600;
+    color: #555;
+    width: 38%;
+    border-bottom: 1px solid #eee;
+}
+
+.mwadmin-schedule-modal-table td {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.mwadmin-schedule-modal .mwadmin-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px 16px;
+    border-top: 1px solid #eee;
+    justify-content: flex-start;
+}
+
+.mwadmin-schedule-modal .mwadmin-news-create-submit {
+    border: 0;
+    border-radius: 4px;
+    background: #d64541;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.mwadmin-schedule-modal .mwadmin-news-create-cancel {
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    background: #f5f5f5;
+    color: #333;
+    font-size: 13px;
+    padding: 7px 14px;
+    cursor: pointer;
+}
+
+.mwadmin-schedule-edit-link {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0a6ebd;
+    text-decoration: underline;
+}
