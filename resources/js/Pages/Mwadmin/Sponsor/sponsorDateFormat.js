@@ -1,8 +1,16 @@
 const pad2 = (n) => String(n).padStart(2, '0');
 
-/** dd-mm-yyyy string → Date in local time, or null */
-export function parseDmyToDate(str) {
-    const raw = String(str ?? '').trim();
+/** Date object → dd-mm-yyyy (for DayPicker / DmyDateInput). */
+export function dateToDmy(date) {
+    if (!date || !(date instanceof Date) || Number.isNaN(date.getTime())) {
+        return '';
+    }
+    return `${pad2(date.getDate())}-${pad2(date.getMonth() + 1)}-${date.getFullYear()}`;
+}
+
+/** dd-mm-yyyy string → local Date at midnight, or null if empty/invalid. */
+export function parseDmyToDate(dmy) {
+    const raw = String(dmy ?? '').trim();
     if (raw === '') return null;
     const m = raw.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
     if (!m) return null;
@@ -12,14 +20,10 @@ export function parseDmyToDate(str) {
     if (y < 1000 || y > 9999) return null;
     if (mo < 1 || mo > 12 || d < 1 || d > 31) return null;
     const dt = new Date(y, mo - 1, d);
-    if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+    if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) {
+        return null;
+    }
     return dt;
-}
-
-/** Date → dd-mm-yyyy for DmyDateInput */
-export function dateToDmy(date) {
-    if (!date || !(date instanceof Date) || Number.isNaN(date.getTime())) return '';
-    return `${pad2(date.getDate())}-${pad2(date.getMonth() + 1)}-${date.getFullYear()}`;
 }
 
 /** API / DB date (Y-m-d) → display dd-mm-yyyy */
