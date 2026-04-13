@@ -266,7 +266,7 @@
 }
 
 .mwadmin-news-create-cancel {
-    margin-left: 10px;
+    margin-left: 0;
     font-size: 13px;
     color: #555;
     text-decoration: underline;
@@ -970,16 +970,74 @@
     min-width: 140px;
 }
 
+/* Banner + box: two columns on wide forms; stack on small screens */
+.mwadmin-category-images-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 22px;
+    align-items: start;
+}
+
+@media (max-width: 720px) {
+    .mwadmin-category-images-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Same preview height when side-by-side: stretch row, flex-fill below labels */
+@media (min-width: 721px) {
+    .mwadmin-category-images-row {
+        align-items: stretch;
+    }
+
+    .mwadmin-category-image-block {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .mwadmin-category-images-row .mwadmin-category-image-field {
+        flex: 1;
+        min-height: 0;
+    }
+
+    .mwadmin-category-images-row .mwadmin-category-image-preview-wrap--banner,
+    .mwadmin-category-images-row .mwadmin-category-image-preview-wrap--box {
+        flex: 1 1 auto;
+        aspect-ratio: unset;
+        min-height: clamp(200px, 28vw, 320px);
+    }
+}
+
+.mwadmin-category-image-block {
+    min-width: 0;
+}
+
+.mwadmin-category-image-block > label {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-image-block > label {
+    color: #94a3b8;
+}
+
 .mwadmin-category-image-field {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    align-items: flex-start;
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
 }
 
 .mwadmin-category-image-preview-wrap {
     width: 100%;
-    max-width: 520px;
+    max-width: none;
     min-height: 140px;
     border: 1px dashed #c4b8a8;
     border-radius: 8px;
@@ -1021,9 +1079,19 @@
     box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.25);
 }
 
+/* Banner slot: match export aspect (1280×360) so empty state matches final shape */
+.mwadmin-category-image-preview-wrap--banner {
+    aspect-ratio: 1280 / 360;
+    min-height: 0;
+}
+
+/* Box image: square, same column width as banner so edges align per column */
 .mwadmin-category-image-preview-wrap--box {
-    max-width: 280px;
-    min-height: 200px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
 }
 
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-category-image-preview-wrap {
@@ -1032,14 +1100,14 @@
 }
 
 .mwadmin-category-image-preview {
-    width: 100%;
-    max-height: 220px;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
     object-fit: contain;
     display: block;
-}
-
-.mwadmin-category-image-preview-wrap--box .mwadmin-category-image-preview {
-    max-height: 260px;
 }
 
 .mwadmin-category-image-placeholder-card {
@@ -1146,12 +1214,15 @@
     margin-bottom: 10px;
 }
 
-.mwadmin-category-image-crop-shell {
-    min-height: 200px;
+.mwadmin-category-image-crop-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .mwadmin-category-image-crop-main {
-    min-height: 220px;
+    min-height: 240px;
+    width: 100%;
 }
 
 .mwadmin-category-image-placeholder {
@@ -1170,23 +1241,86 @@
     font-size: 11px;
 }
 
-.mwadmin-category-img-thumb {
-    border: 1px solid #d3c2ab;
+.mwadmin-category-image-previews-bar {
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #f8f4ed 0%, #f0e8dc 100%);
+    border: 1px solid #e0d5c8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-image-previews-bar {
+    background: linear-gradient(180deg, #1e293b 0%, #172033 100%);
+    border-color: #334155;
+}
+
+.mwadmin-category-image-previews-bar-title {
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b5d50;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-image-previews-bar-title {
+    color: #94a3b8;
+}
+
+.mwadmin-category-image-previews-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 16px 24px;
+}
+
+.mwadmin-category-export-preview {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.mwadmin-category-export-preview-frame {
+    border-radius: 8px;
     overflow: hidden;
-    background: #fbf7f0;
+    background: #fff;
+    border: 1px solid #d4c4b2;
+    box-shadow: 0 2px 8px rgba(58, 44, 32, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
-    margin-bottom: 8px;
 }
 
-.mwadmin-category-img-thumb-placeholder {
-    font-size: 9px;
-    color: #8a7a68;
-    text-align: center;
-    padding: 6px;
-    line-height: 1.35;
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-export-preview-frame {
+    background: #0f172a;
+    border-color: #475569;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.mwadmin-category-export-preview-img {
+    width: auto;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: none;
+    max-height: none;
+    pointer-events: none;
+    object-fit: cover;
+    transform-origin: center center;
+}
+
+.mwadmin-category-export-preview-caption {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #5c4f44;
+    letter-spacing: 0.02em;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-export-preview-caption {
+    color: #cbd5e1;
 }
 
 .mwadmin-category-quality-label {
@@ -1221,12 +1355,6 @@
     background: rgba(15, 23, 42, 0.5);
 }
 
-.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-img-thumb {
-    border-color: #475569;
-    background: #0f172a;
-}
-
-.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-image-placeholder,
-.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-img-thumb-placeholder {
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-category-image-placeholder {
     color: #64748b;
 }

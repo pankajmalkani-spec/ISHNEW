@@ -4,35 +4,25 @@ import { clampMwadminZoom, exportMwadminImage } from './mwadminImageExport';
 
 const rotateFine = [-15, -30, -45, 15, 30, 45];
 
-function PreviewThumb({ preview, rotate, zoom, offset, width, outW, outH, label }) {
+/** Live export previews — only rendered when `preview` is set (no empty “NO IMAGE” stack). */
+function ExportPreviewFrame({ preview, rotate, zoom, offset, frameWidth, outW, outH, caption }) {
     const aspect = outW / outH;
-    const h = width / aspect;
+    const h = frameWidth / aspect;
+    const scale = 0.22;
     return (
-        <div
-            className="mwadmin-category-img-thumb"
-            style={{ width, height: h }}
-            title={label}
-        >
-            {preview ? (
+        <figure className="mwadmin-category-export-preview">
+            <div className="mwadmin-category-export-preview-frame" style={{ width: frameWidth, height: h }}>
                 <img
                     src={preview}
                     alt=""
-                    className="mwadmin-crop-image"
+                    className="mwadmin-category-export-preview-img"
                     style={{
-                        transform: `translate(${offset.x * 0.25}px, ${offset.y * 0.25}px) rotate(${rotate}deg) scale(${zoom})`,
-                        maxWidth: 'none',
-                        maxHeight: 'none',
-                        pointerEvents: 'none',
+                        transform: `translate(${offset.x * scale}px, ${offset.y * scale}px) rotate(${rotate}deg) scale(${zoom})`,
                     }}
                 />
-            ) : (
-                <span className="mwadmin-category-img-thumb-placeholder">
-                    {outW}×{outH}
-                    <br />
-                    NO IMAGE
-                </span>
-            )}
-        </div>
+            </div>
+            <figcaption className="mwadmin-category-export-preview-caption">{caption}</figcaption>
+        </figure>
     );
 }
 
@@ -234,7 +224,7 @@ export default function MwadminImageEditorModal({
                 </div>
 
                 <div className="mwadmin-category-image-editor-body">
-                    <div className="mwadmin-crop-shell mwadmin-category-image-crop-shell">
+                    <div className="mwadmin-category-image-crop-stage">
                         <div
                             className={`mwadmin-crop-main mwadmin-category-image-crop-main ${dragging ? 'dragging' : ''}`}
                             onMouseDown={startDrag}
@@ -256,43 +246,51 @@ export default function MwadminImageEditorModal({
                                 />
                             ) : (
                                 <div className="mwadmin-category-image-placeholder">
-                                    <span>{outputWidth} × {outputHeight}</span>
+                                    <span>
+                                        {outputWidth} × {outputHeight}
+                                    </span>
                                     <small>No image — drop a file or choose one</small>
                                 </div>
                             )}
                         </div>
-                        <div className="mwadmin-crop-right mwadmin-category-image-previews">
-                            <PreviewThumb
-                                preview={displayUrl}
-                                rotate={rotate}
-                                zoom={zoom}
-                                offset={offset}
-                                width={120}
-                                outW={outputWidth}
-                                outH={outputHeight}
-                                label="Large"
-                            />
-                            <PreviewThumb
-                                preview={displayUrl}
-                                rotate={rotate}
-                                zoom={zoom}
-                                offset={offset}
-                                width={88}
-                                outW={outputWidth}
-                                outH={outputHeight}
-                                label="Medium"
-                            />
-                            <PreviewThumb
-                                preview={displayUrl}
-                                rotate={rotate}
-                                zoom={zoom}
-                                offset={offset}
-                                width={56}
-                                outW={outputWidth}
-                                outH={outputHeight}
-                                label="Small"
-                            />
-                        </div>
+
+                        {displayUrl ? (
+                            <div className="mwadmin-category-image-previews-bar">
+                                <div className="mwadmin-category-image-previews-bar-title">How the export will look at different sizes</div>
+                                <div className="mwadmin-category-image-previews-row">
+                                    <ExportPreviewFrame
+                                        preview={displayUrl}
+                                        rotate={rotate}
+                                        zoom={zoom}
+                                        offset={offset}
+                                        frameWidth={168}
+                                        outW={outputWidth}
+                                        outH={outputHeight}
+                                        caption="Large"
+                                    />
+                                    <ExportPreviewFrame
+                                        preview={displayUrl}
+                                        rotate={rotate}
+                                        zoom={zoom}
+                                        offset={offset}
+                                        frameWidth={120}
+                                        outW={outputWidth}
+                                        outH={outputHeight}
+                                        caption="Medium"
+                                    />
+                                    <ExportPreviewFrame
+                                        preview={displayUrl}
+                                        rotate={rotate}
+                                        zoom={zoom}
+                                        offset={offset}
+                                        frameWidth={76}
+                                        outW={outputWidth}
+                                        outH={outputHeight}
+                                        caption="Small"
+                                    />
+                                </div>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
 

@@ -110,6 +110,8 @@ class CategoryApiController extends Controller
         $category->status = (int) $validated['status'];
         $category->addeddate = now();
         $category->addedby = $userId;
+        $category->modifieddate = now();
+        $category->modifiedby = $userId;
         $category->banner_img = $bannerFile ? $this->storeImage($bannerFile, 'banner') : '';
         $category->box_img = $boxFile ? $this->storeImage($boxFile, 'box') : '';
         $category->save();
@@ -160,6 +162,12 @@ class CategoryApiController extends Controller
         $category->color = $validated['color'];
         $category->sort = $validated['sort'];
         $category->status = (int) $validated['status'];
+        if (!$category->addeddate) {
+            $category->addeddate = now();
+        }
+        if (!$category->addedby) {
+            $category->addedby = $userId;
+        }
         $category->modifieddate = now();
         $category->modifiedby = $userId;
         $category->save();

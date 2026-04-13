@@ -792,7 +792,16 @@
 .mwadmin-form-actions {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
+    width: 100%;
+}
+
+/* Below the field grid: full width, centered (not trapped in column 1) */
+.mwadmin-form-grid > .mwadmin-form-actions {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 6px;
 }
 
 .mwadmin-form-actions button {
