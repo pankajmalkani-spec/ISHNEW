@@ -450,7 +450,7 @@
     box-sizing: border-box;
 }
 
-.mwadmin-theme-dark .mwadmin-ag-grid select.mwadmin-grid-action {
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-ag-grid select.mwadmin-grid-action {
     min-width: 108px;
     max-width: 100%;
     height: 30px;
@@ -775,4 +775,154 @@
     font-weight: 600;
     color: #0a6ebd;
     text-decoration: underline;
+}
+
+/* Dark theme: dashboard, schedule, news flows (avoid white inline panels) */
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-dashboard-adv-body {
+    border-top-color: #2d3544;
+    background: #1a222d;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-dashboard-label {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-dashboard-pager {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-btn-secondary {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-btn-reset {
+    background: #1e293b;
+    border-color: #475569;
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-advanced-search-toggle {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-advanced-search-body {
+    border-color: #334155;
+    background: #1a222d;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-news-create-tabs {
+    border-bottom-color: #334155;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-news-create-tabs button,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-news-edit-tab-btn {
+    background: #1e293b;
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-news-create-tabs li.active button,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-news-edit-tab-btn.active {
+    background: #151b24;
+    border-color: #475569;
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-news-create-featured {
+    border-color: #475569;
+    background: #1a222d;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-news-create-check {
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-textarea {
+    background: #1e293b;
+    border-color: #475569;
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-input-readonly {
+    background: #0f172a !important;
+    color: #94a3b8 !important;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-label-hint {
+    color: #64748b;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-loading {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-toolbar {
+    border-bottom-color: #2d3544;
+    background: #1a222d;
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-nav-btn {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-table {
+    background: #151b24;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-table thead th {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-th-cat {
+    box-shadow: 2px 0 0 #334155;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-table tbody td {
+    border-color: #2d3544;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-td-cat {
+    background: #1a222d;
+    box-shadow: 2px 0 0 #2d3544;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-td-cell {
+    background: transparent;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-modal.mwadmin-modal {
+    background: #151b24;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-modal .mwadmin-modal-body {
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-modal-table th,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-modal-table td {
+    border-bottom-color: #334155;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-modal .mwadmin-news-create-cancel {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-edit-link {
+    color: #38bdf8;
 }

@@ -22,6 +22,173 @@
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
 }
 
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-sidebar {
+    background: #1e2430;
+    border-right-color: #2d3544;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-menu > li > a,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-submenu li a {
+    color: #c8d0dc;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-menu > li > a:hover,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-submenu li a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-menu > li.active > a {
+    background: linear-gradient(180deg, #2a9d8f 0%, #238b7e 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-submenu {
+    background: rgba(0, 0, 0, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-submenu li.active a {
+    background: rgba(47, 208, 189, 0.22);
+    color: #e8fffa;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-collapse-btn {
+    color: #c8d0dc;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-collapse-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #f8fafc;
+}
+
+/* Dark theme: main column (was staying white while header/sidebar were dark) */
+.mwadmin-shell.mwadmin-theme-dark {
+    background: #0f1419;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-content {
+    background: #0f1419;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-title {
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-pagebar {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-pagebar strong {
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-panel {
+    background: #151b24;
+    border-color: #2d3544;
+    border-radius: 10px;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-panel-head {
+    background: linear-gradient(180deg, #2d6a5e 0%, #255a50 100%);
+    color: #ecfdf9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-toolbar {
+    background: #1a222d;
+    border-bottom: 1px solid #2d3544;
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-table-wrap {
+    background: #151b24;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-pagination {
+    background: #1a222d;
+    border-top: 1px solid #2d3544;
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-pagination button {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-pagination button:hover:not(:disabled) {
+    background: #334155;
+    border-color: #64748b;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-add-btn {
+    background: linear-gradient(180deg, #c97a1a 0%, #a86514 100%);
+    color: #fff;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-select {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-search {
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-search input {
+    background: #1e293b;
+    border-color: #475569;
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-empty {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-back-btn {
+    color: #cbd5e1;
+    border-color: #475569;
+    background: #1e293b;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-action-select {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-panel {
+    color: #e2e8f0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-grid label {
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-grid input,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-grid select,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-grid textarea {
+    background: #1e293b;
+    border-color: #475569;
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-actions a {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-field-error {
+    color: #fca5a5;
+}
+
 .mwadmin-logo {
     width: 120px;
 }
@@ -159,10 +326,12 @@
 }
 
 .mwadmin-sidebar {
-    width: 162px;
+    width: 176px;
     min-height: calc(100vh - 52px);
     background: #efefef;
     border-right: 1px solid #d8d8d8;
+    padding: 12px 8px 20px;
+    box-sizing: border-box;
 }
 
 .mwadmin-menu,
@@ -172,41 +341,76 @@
     list-style: none;
 }
 
+.mwadmin-menu > li {
+    margin-bottom: 4px;
+}
+
 .mwadmin-menu > li > a,
 .mwadmin-submenu li a {
     display: block;
-    padding: 7px 12px;
+    padding: 8px 12px;
     text-decoration: none;
     color: #666;
     font-size: 13px;
-    border-bottom: 1px solid #e5e5e5;
+    border-radius: 10px;
+    border-bottom: 0;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.mwadmin-menu > li > a:hover,
+.mwadmin-submenu li a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
 }
 
 .mwadmin-menu > li.active > a {
     background: #2fd0bd;
     color: #fff;
     font-weight: 600;
+    box-shadow: 0 2px 6px rgba(47, 208, 189, 0.35);
+}
+
+.mwadmin-submenu {
+    margin: 4px 2px 8px 4px;
+    padding: 6px 4px 8px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .mwadmin-submenu li a {
-    padding-left: 26px;
+    padding-left: 22px;
+    margin: 2px 0;
+    border-radius: 8px;
 }
 
 .mwadmin-submenu li.active a {
     background: #dff8f4;
     font-weight: 600;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
 }
 
 .mwadmin-collapse-btn {
-    width: 100%;
+    width: calc(100% - 12px);
+    margin-left: 6px;
+    margin-right: 6px;
     text-align: left;
     border: 0;
-    background: transparent;
-    padding: 7px 12px;
+    background: rgba(255, 255, 255, 0.55);
+    padding: 8px 12px;
     color: #666;
     font-size: 13px;
-    border-bottom: 1px solid #e5e5e5;
+    border-radius: 10px;
     cursor: pointer;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.mwadmin-collapse-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
 }
 
 .mwadmin-content {
@@ -773,33 +977,50 @@
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-menu > li > a,
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-submenu li a {
     color: #4a4036;
-    border-bottom-color: #d2c4b4;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-menu > li > a:hover,
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-submenu li a:hover {
+    background: rgba(92, 79, 68, 0.08);
+    color: #2f261f;
 }
 
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-menu > li.active > a {
     background: linear-gradient(180deg, #a08058 0%, #8c6d48 100%);
     color: #fffdf7;
     font-weight: 600;
-    border-radius: 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(74, 54, 36, 0.22);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-submenu {
+    background: rgba(255, 255, 255, 0.45);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-submenu li a {
     padding-left: 22px;
-    margin: 3px 8px;
+    margin: 2px 4px;
     border-radius: 8px;
-    border-bottom: 0;
 }
 
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-submenu li.active a {
     background: linear-gradient(180deg, #c9a574 0%, #b8925f 100%);
     color: #fffdf7;
     font-weight: 600;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 1px 3px rgba(74, 54, 36, 0.12);
 }
 
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-collapse-btn {
     color: #5c4f44;
-    border-bottom-color: #d2c4b4;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-collapse-btn:hover {
+    background: rgba(255, 255, 255, 0.75);
+    color: #2f261f;
 }
 
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-content {
