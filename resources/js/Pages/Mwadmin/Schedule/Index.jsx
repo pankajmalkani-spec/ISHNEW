@@ -14,11 +14,22 @@ function shiftWeekStart(isoDate, deltaDays) {
     return `${y}-${m}-${day}`;
 }
 
+function shiftDateYears(isoDate, deltaYears) {
+    if (!isoDate) return '';
+    const d = new Date(`${isoDate}T12:00:00`);
+    d.setFullYear(d.getFullYear() + deltaYears);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+}
+
 export default function ScheduleIndex({ authUser = {} }) {
     const dialog = useClassicDialog();
     const canUpdateStatus = canEdit(authUser, 'schedule');
     const [loading, setLoading] = useState(true);
     const [weekStart, setWeekStart] = useState('');
+    const [dateFilter, setDateFilter] = useState('');
     const [payload, setPayload] = useState(null);
     const [modal, setModal] = useState(null);
     const [modalStatus, setModalStatus] = useState('1');
@@ -33,6 +44,7 @@ export default function ScheduleIndex({ authUser = {} }) {
                 });
                 setPayload(data);
                 setWeekStart(data.week_start);
+                setDateFilter(data.week_start || '');
             } catch (err) {
                 dialog.toast(err?.response?.data?.message || 'Unable to load weekly schedule.', 'error');
             } finally {
@@ -77,6 +89,16 @@ export default function ScheduleIndex({ authUser = {} }) {
         }
     };
 
+    const applyDateFilter = () => {
+        if (!dateFilter) return;
+        loadWeek(dateFilter);
+    };
+
+    const visibleCategories =
+        payload?.categories?.filter((cat) => cat.cells.some((cell) => cell.length > 0)) || [];
+    const categoriesToRender =
+        visibleCategories.length > 0 ? visibleCategories : payload?.categories || [];
+
     return (
         <>
             <Head title="Weekly Schedule" />
@@ -100,7 +122,47 @@ export default function ScheduleIndex({ authUser = {} }) {
 
                         {!loading && payload && (
                             <>
-                                <div className="mwadmin-schedule-toolbar">
+                                <div className="mwadmin-filter-bar mwadmin-schedule-filter-bar">
+                                    <label htmlFor="mwadmin-schedule-date" className="mwadmin-schedule-filter-label">
+                                        Week start
+                                    </label>
+                                    <input
+                                        id="mwadmin-schedule-date"
+                                        type="date"
+                                        value={dateFilter}
+                                        onChange={(e) => setDateFilter(e.target.value)}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="mwadmin-filter-clear"
+                                        onClick={() =>
+                                            setDateFilter((prev) => shiftDateYears(prev || weekStart, -1))
+                                        }
+                                    >
+                                        Prev Year
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="mwadmin-filter-clear"
+                                        onClick={() =>
+                                            setDateFilter((prev) => shiftDateYears(prev || weekStart, 1))
+                                        }
+                                    >
+                                        Next Year
+                                    </button>
+                                    <button type="button" className="mwadmin-filter-clear" onClick={applyDateFilter}>
+                                        Apply
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="mwadmin-filter-clear"
+                                        onClick={() => loadWeek()}
+                                    >
+                                        Current Week
+                                    </button>
+                                </div>
+
+                                <div className="mwadmin-toolbar mwadmin-schedule-toolbar">
                                     <div className="mwadmin-schedule-toolbar-mid">
                                         From&nbsp;&nbsp;{payload.label_from}&nbsp;&nbsp; To &nbsp;&nbsp;
                                         {payload.label_to}
@@ -127,7 +189,7 @@ export default function ScheduleIndex({ authUser = {} }) {
                                     </div>
                                 </div>
 
-                                <div className="mwadmin-schedule-table-wrap">
+                                <div className="mwadmin-schedule-table-wrap mwadmin-schedule-scroll-wrap">
                                     <table className="mwadmin-schedule-table">
                                         <thead>
                                             <tr>
@@ -140,7 +202,7 @@ export default function ScheduleIndex({ authUser = {} }) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {payload.categories.map((cat) => (
+                                            {categoriesToRender.map((cat) => (
                                                 <tr key={cat.id}>
                                                     <td className="mwadmin-schedule-td-cat">{cat.title}</td>
                                                     {cat.cells.map((cell, idx) => (

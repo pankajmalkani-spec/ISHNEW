@@ -478,7 +478,8 @@
     box-sizing: border-box;
 }
 
-.mwadmin-filter-bar input[type='text'] {
+.mwadmin-filter-bar input[type='text'],
+.mwadmin-filter-bar input[type='date'] {
     flex: 1 1 200px;
     min-width: 160px;
     max-width: 100%;
@@ -528,6 +529,7 @@
 }
 
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-filter-bar input[type='text'],
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-filter-bar input[type='date'],
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-filter-bar select {
     border-color: #475569;
     background: #0f172a;
@@ -1258,6 +1260,7 @@
 }
 
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-filter-bar input[type='text'],
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-filter-bar input[type='date'],
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-filter-bar select {
     border-color: #c9b8a4;
     background: #fffdf9;
