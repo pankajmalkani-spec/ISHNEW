@@ -46,7 +46,19 @@ export default function UsersView({ authUser = {}, userId }) {
                                 <div><label>Last Name</label><input value={item.last_name || ''} readOnly /></div>
                                 <div><label>User Name</label><input value={item.username || ''} readOnly /></div>
                                 <div><label>Email</label><input value={item.email || ''} readOnly /></div>
-                                <div><label>Designation</label><input value={item.designation || ''} readOnly /></div>
+                                <div>
+                                    <label>Designation</label>
+                                    <input value={item.designation_name || ''} readOnly />
+                                </div>
+                                <div>
+                                    <label>Roles</label>
+                                    <textarea
+                                        readOnly
+                                        rows={3}
+                                        value={(item.role_names || []).join(', ')}
+                                        className="mwadmin-input-readonly"
+                                    />
+                                </div>
                                 <div><label>P2D Initials</label><input value={item.p2d_intials || ''} readOnly /></div>
                                 <div><label>Status</label><input value={item.status === 1 ? 'Active' : 'In-Active'} readOnly /></div>
                                 <div>

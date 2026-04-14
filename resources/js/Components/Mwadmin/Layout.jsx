@@ -58,6 +58,10 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
         authUser.username ||
         'User';
 
+    const headerAvatarSrc =
+        authUser.profile_photo_url ||
+        '/images/UserProfile_photo/no_user.png';
+
     useEffect(() => {
         try {
             window.localStorage.setItem('mwadmin.theme', themeMode);
@@ -99,6 +103,14 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                             onClick={() => setIsUserMenuOpen((v) => !v)}
                             aria-expanded={isUserMenuOpen}
                         >
+                            <img
+                                className="mwadmin-header-avatar"
+                                src={headerAvatarSrc}
+                                alt=""
+                                onError={(e) => {
+                                    e.currentTarget.src = '/images/categoryImages/boxImages/no_img.gif';
+                                }}
+                            />
                             <span className="mwadmin-user-menu-label">{displayName}</span>
                             <span className="mwadmin-user-menu-caret" aria-hidden="true">
                                 {isUserMenuOpen ? '▴' : '▾'}
@@ -106,8 +118,21 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                         </button>
                         {isUserMenuOpen && (
                             <div className="mwadmin-user-menu">
-                                <Link href="/mwadmin/logout" method="post" as="button" className="mwadmin-user-menu-item">
-                                    Logout
+                                <Link
+                                    href="/mwadmin/profile"
+                                    className="mwadmin-user-menu-item"
+                                    onClick={() => setIsUserMenuOpen(false)}
+                                >
+                                    My Profile
+                                </Link>
+                                <Link
+                                    href="/mwadmin/logout"
+                                    method="post"
+                                    as="button"
+                                    className="mwadmin-user-menu-item"
+                                    onClick={() => setIsUserMenuOpen(false)}
+                                >
+                                    Log Out
                                 </Link>
                             </div>
                         )}

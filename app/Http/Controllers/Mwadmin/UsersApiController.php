@@ -161,6 +161,20 @@ class UsersApiController extends Controller
         abort_if(!$user, 404);
         $roles = DB::table('usersrole')->where('userid', $id)->pluck('roleid')->map(fn ($v) => (int) $v)->values()->all();
 
+        $designationId = $user->designation;
+        $designationName = '';
+        if ($designationId !== null && $designationId !== '' && (int) $designationId > 0) {
+            $designationName = (string) (DB::table('designation')->where('id', (int) $designationId)->value('designation') ?? '');
+        }
+
+        $roleNames = [];
+        foreach ($roles as $roleId) {
+            $rn = DB::table('access_roles')->where('arid', $roleId)->value('rolename');
+            if ($rn !== null && $rn !== '') {
+                $roleNames[] = (string) $rn;
+            }
+        }
+
         return response()->json([
             'data' => [
                 'userid' => (int) $user->userid,
@@ -169,11 +183,13 @@ class UsersApiController extends Controller
                 'last_name' => $user->last_name ?? '',
                 'username' => $user->username ?? '',
                 'designation' => $user->designation ?? '',
+                'designation_name' => $designationName,
                 'p2d_intials' => $user->p2d_intials ?? '',
                 'email' => $user->email ?? '',
                 'status' => (int) ($user->status ?? 0),
                 'profile_photo_url' => $user->profile_photo ? '/images/UserProfile_photo/'.$user->profile_photo : null,
                 'role_ids' => $roles,
+                'role_names' => $roleNames,
                 'role_options' => $this->roleOptionsForForm($roles),
             ],
         ]);

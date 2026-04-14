@@ -1,4 +1,4 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
@@ -86,9 +86,6 @@ export default function ProfileIndex({ authUser = {} }) {
     };
 
     const onCancelPersonal = () => {
-        if (initial) {
-            setProfile({ ...profile, ...initial });
-        }
         router.visit('/mwadmin/dashboard');
     };
 
@@ -131,6 +128,9 @@ export default function ProfileIndex({ authUser = {} }) {
                                     className="mwadmin-profile-avatar"
                                     src={profile.profile_photo_url || '/images/UserProfile_photo/no_user.png'}
                                     alt=""
+                                    onError={(e) => {
+                                        e.currentTarget.src = '/images/categoryImages/boxImages/no_img.gif';
+                                    }}
                                 />
                             </div>
                             <div className="mwadmin-profile-sidebar-name">{displayName}</div>
@@ -150,7 +150,7 @@ export default function ProfileIndex({ authUser = {} }) {
 
                         <section className="mwadmin-profile-main">
                             <div className="mwadmin-profile-card">
-                                <h2 className="mwadmin-profile-card-title">Profile account</h2>
+                                <h2 className="mwadmin-profile-card-title">Profile Account</h2>
                                 <div className="mwadmin-profile-tabs">
                                     <button
                                         type="button"

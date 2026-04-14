@@ -52,9 +52,13 @@ class ProfileApiController extends Controller
             'modifiedby' => $id,
         ]);
 
+        $fresh = DB::table('users')->where('userid', $id)->first();
         $session = (array) $request->session()->get('ishnews_session', []);
         $session['first_name'] = ucwords($validated['first_name']);
         $session['last_name'] = ucwords($validated['last_name']);
+        if ($fresh) {
+            $session['profile_photo'] = $fresh->profile_photo ?? null;
+        }
         $request->session()->put('ishnews_session', $session);
 
         return response()->json(['message' => 'Profile updated successfully.']);

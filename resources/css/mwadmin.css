@@ -1263,3 +1263,398 @@
     background: #fffdf9;
     color: #3a332c;
 }
+
+/* Header user avatar (legacy-style) */
+.mwadmin-header-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* My Profile page — structure */
+.mwadmin-profile-page .mwadmin-pagebar {
+    margin-bottom: 12px;
+}
+
+.mwadmin-profile-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    max-width: 1100px;
+}
+
+.mwadmin-profile-sidebar {
+    flex: 0 0 260px;
+    border-radius: 10px;
+    padding: 24px 16px 20px;
+}
+
+.mwadmin-profile-avatar-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.mwadmin-profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.mwadmin-profile-sidebar-name {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.mwadmin-profile-nav {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 8px;
+}
+
+.mwadmin-profile-nav button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+}
+
+.mwadmin-profile-nav-help:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.mwadmin-profile-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.mwadmin-profile-card {
+    border-radius: 10px;
+    padding: 24px 28px 28px;
+}
+
+.mwadmin-profile-card-title {
+    margin: 0 0 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.mwadmin-profile-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding-bottom: 0;
+}
+
+.mwadmin-profile-tabs button {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+}
+
+.mwadmin-profile-loading {
+    padding: 32px;
+    text-align: center;
+}
+
+.mwadmin-profile-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+}
+
+.mwadmin-profile-form-grid--narrow {
+    grid-template-columns: minmax(0, 420px);
+}
+
+.mwadmin-profile-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.mwadmin-profile-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.mwadmin-profile-form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 28px;
+    padding-top: 8px;
+}
+
+.mwadmin-profile-btn-primary {
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.mwadmin-profile-btn-primary:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.mwadmin-profile-btn-secondary {
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Light theme — match warm mwadmin panels */
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-sidebar {
+    background: #fffdf9;
+    border: 1px solid #d4c9bc;
+    box-shadow: 0 2px 14px rgba(58, 44, 32, 0.07);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-avatar {
+    border: 3px solid #e8dfd3;
+    background: #faf6ef;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-sidebar-name {
+    color: #3d342b;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-nav {
+    border-top: 1px solid #ebe3d6;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-nav button {
+    color: #6b5d50;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-nav button:hover:not(:disabled) {
+    background: #faf6ef;
+    color: #2f261f;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-nav button.is-active {
+    color: #0f766e;
+    background: #ecfdf5;
+    border-left-color: #14b8a6;
+    font-weight: 600;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-card {
+    background: #fffdf9;
+    border: 1px solid #d4c9bc;
+    box-shadow: 0 2px 14px rgba(58, 44, 32, 0.07);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-card-title {
+    color: #3d342b;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-tabs {
+    border-bottom: 1px solid #e0d5c8;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-tabs button {
+    color: #6b5d50;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-tabs button:hover {
+    color: #2f261f;
+    background: #faf6ef;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-tabs button.is-active {
+    color: #0f766e;
+    border-bottom-color: #14b8a6;
+    background: #ecfdf5;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-loading {
+    color: #6b5d50;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-form label {
+    color: #5a4e44;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-form input {
+    border: 1px solid #c9b8a4;
+    background: #fffdf9;
+    color: #3a332c;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-form input[readonly] {
+    background: #f3ebe0;
+    color: #5a4e44;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-btn-primary {
+    color: #fffdf7;
+    background: linear-gradient(180deg, #0d9488 0%, #0f766e 100%);
+    border: 1px solid #0f766e;
+    box-shadow: 0 2px 4px rgba(45, 32, 22, 0.12);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-btn-primary:hover:not(:disabled) {
+    filter: brightness(1.05);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-btn-secondary {
+    color: #5a4e44;
+    background: #faf6ef;
+    border: 1px solid #d4c9bc;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-profile-btn-secondary:hover {
+    background: #f3ebe0;
+}
+
+/* Dark theme — match mwadmin dark panels / forms */
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-sidebar {
+    background: #151b24;
+    border: 1px solid #2d3544;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-avatar {
+    border: 3px solid #2d3544;
+    background: #1e293b;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-sidebar-name {
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-nav {
+    border-top: 1px solid #2d3544;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-nav button {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-nav button:hover:not(:disabled) {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-nav button.is-active {
+    color: #5eead4;
+    background: rgba(45, 106, 94, 0.35);
+    border-left-color: #2dd4bf;
+    font-weight: 600;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-card {
+    background: #151b24;
+    border: 1px solid #2d3544;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-card-title {
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-tabs {
+    border-bottom: 1px solid #2d3544;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-tabs button {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-tabs button:hover {
+    color: #e2e8f0;
+    background: #1e293b;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-tabs button.is-active {
+    color: #5eead4;
+    border-bottom-color: #2dd4bf;
+    background: rgba(45, 212, 191, 0.1);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-loading {
+    color: #94a3b8;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-form label {
+    color: #cbd5e1;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-form input {
+    border: 1px solid #475569;
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-form input[readonly] {
+    background: #0f172a;
+    color: #94a3b8;
+    border-color: #334155;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-btn-primary {
+    color: #ecfdf9;
+    background: linear-gradient(180deg, #2a9d8f 0%, #238b7e 100%);
+    border: 1px solid #1d7370;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-btn-primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-btn-secondary {
+    color: #e2e8f0;
+    background: #1e293b;
+    border: 1px solid #475569;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-profile-btn-secondary:hover {
+    background: #334155;
+    border-color: #64748b;
+}
+
+@media (max-width: 900px) {
+    .mwadmin-profile-layout {
+        flex-direction: column;
+    }
+
+    .mwadmin-profile-sidebar {
+        flex: none;
+        width: 100%;
+    }
+
+    .mwadmin-profile-form-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -24,6 +24,11 @@ Route::prefix('mwadmin')->group(function (): void {
                 $request->session()->put('ishnews_session', $session);
             }
 
+            $photo = (string) ($session['profile_photo'] ?? '');
+            $profilePhotoUrl = $photo !== ''
+                ? '/images/UserProfile_photo/'.basename(str_replace('\\', '/', $photo))
+                : null;
+
             return [
                 'authUser' => [
                     'user_id' => (int) ($session['user_id'] ?? 0),
@@ -32,6 +37,7 @@ Route::prefix('mwadmin')->group(function (): void {
                     'last_name' => (string) ($session['last_name'] ?? ''),
                     'superaccess' => (bool) ($session['superaccess'] ?? false),
                     'modules' => (array) ($session['modules'] ?? []),
+                    'profile_photo_url' => $profilePhotoUrl,
                 ],
             ];
         };
@@ -39,6 +45,10 @@ Route::prefix('mwadmin')->group(function (): void {
         Route::get('/access-denied', function (Request $request) use ($authProps) {
             return Inertia::render('Mwadmin/AccessDenied', $authProps($request));
         })->name('mwadmin.access_denied');
+
+        Route::get('/profile', function (Request $request) use ($authProps) {
+            return Inertia::render('Mwadmin/Profile/Index', $authProps($request));
+        })->name('mwadmin.profile');
 
         Route::middleware('mwadmin.can:dashboard')->group(function () use ($authProps): void {
             Route::get('/dashboard', function (Request $request) use ($authProps) {

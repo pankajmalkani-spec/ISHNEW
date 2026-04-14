@@ -9,6 +9,7 @@ use App\Http\Controllers\Mwadmin\FlowchartApiController;
 use App\Http\Controllers\Mwadmin\NewsletterApiController;
 use App\Http\Controllers\Mwadmin\NewslistingApiController;
 use App\Http\Controllers\Mwadmin\NewsourceApiController;
+use App\Http\Controllers\Mwadmin\ProfileApiController;
 use App\Http\Controllers\Mwadmin\RolesApiController;
 use App\Http\Controllers\Mwadmin\ScheduleApiController;
 use App\Http\Controllers\Mwadmin\SponsorCategoryApiController;
@@ -22,6 +23,10 @@ Route::middleware('web')->prefix('mwadmin')->group(function (): void {
     Route::middleware('mwadmin.auth')->group(function (): void {
         Route::get('/me', [AuthController::class, 'meApi'])->name('api.mwadmin.me');
         Route::post('/logout', [AuthController::class, 'logoutApi'])->name('api.mwadmin.logout');
+
+        Route::get('/profile', [ProfileApiController::class, 'show'])->name('api.mwadmin.profile.show');
+        Route::put('/profile', [ProfileApiController::class, 'update'])->name('api.mwadmin.profile.update');
+        Route::post('/profile/password', [ProfileApiController::class, 'updatePassword'])->name('api.mwadmin.profile.password');
 
         Route::middleware('mwadmin.can:dashboard')->group(function (): void {
             Route::get('/dashboard/options', [DashboardApiController::class, 'options'])->name('api.mwadmin.dashboard.options');
