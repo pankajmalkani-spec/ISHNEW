@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 
 const PERMISSION_COLUMNS = [
     { key: 'allow_access', label: 'Full Access' },
@@ -10,6 +10,12 @@ const PERMISSION_COLUMNS = [
     { key: 'allow_import', label: 'Import' },
     { key: 'allow_export', label: 'Export' },
 ];
+
+/** True if any permission flag is set on any module (matches server syncRolePermissions logic). */
+export function hasAnyPermissionSelected(permissionsMap) {
+    const keys = PERMISSION_COLUMNS.map((c) => c.key);
+    return Object.values(permissionsMap || {}).some((row) => keys.some((k) => Boolean(row[k])));
+}
 
 export function buildDefaultPermissions(modules, existingMap = {}) {
     return (modules || []).reduce((acc, m) => {
@@ -71,6 +77,8 @@ export default function RolePermissionsMatrix({ modules = [], permissions = {}, 
         });
     };
 
+    const colCount = 2 + PERMISSION_COLUMNS.length;
+
     const selectAll = (checked) => {
         if (!setPermissions || disabled) return;
         setPermissions((prev) => {
@@ -112,28 +120,32 @@ export default function RolePermissionsMatrix({ modules = [], permissions = {}, 
                     </thead>
                     <tbody>
                         {groupedModules.map(([group, groupModules]) => (
-                            groupModules.map((m, idx) => {
-                                const p = permissions[String(m.moduleid)] || {};
-                                return (
-                                    <tr key={m.moduleid}>
-                                        {idx === 0 ? (
-                                            <td className="mwadmin-role-group" colSpan={10}>{group}</td>
-                                        ) : null}
-                                        <td>{idx + 1}</td>
-                                        <td>{m.modulelabel || m.modulename}</td>
-                                        {PERMISSION_COLUMNS.map((col) => (
-                                            <td key={`${m.moduleid}_${col.key}`}>
-                                                <input
-                                                    type="checkbox"
-                                                    disabled={disabled}
-                                                    checked={Boolean(p[col.key])}
-                                                    onChange={(e) => applyModulePermission(m.moduleid, col.key, e.target.checked)}
-                                                />
-                                            </td>
-                                        ))}
-                                    </tr>
-                                );
-                            })
+                            <Fragment key={group}>
+                                <tr className="mwadmin-role-group-row">
+                                    <td className="mwadmin-role-group" colSpan={colCount}>
+                                        {group}
+                                    </td>
+                                </tr>
+                                {groupModules.map((m, idx) => {
+                                    const p = permissions[String(m.moduleid)] || {};
+                                    return (
+                                        <tr key={m.moduleid}>
+                                            <td>{idx + 1}</td>
+                                            <td>{m.modulelabel || m.modulename}</td>
+                                            {PERMISSION_COLUMNS.map((col) => (
+                                                <td key={`${m.moduleid}_${col.key}`}>
+                                                    <input
+                                                        type="checkbox"
+                                                        disabled={disabled}
+                                                        checked={Boolean(p[col.key])}
+                                                        onChange={(e) => applyModulePermission(m.moduleid, col.key, e.target.checked)}
+                                                    />
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    );
+                                })}
+                            </Fragment>
                         ))}
                     </tbody>
                 </table>

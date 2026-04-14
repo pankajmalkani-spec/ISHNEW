@@ -469,6 +469,128 @@
     height: auto !important;
 }
 
+/* Roles listing: stretch grid + readable Role/Description (wrap, no ellipsis) */
+.mwadmin-roles-grid-panel {
+    display: flex;
+    flex-direction: column;
+    height: min(72vh, 880px);
+    min-height: 520px;
+}
+
+.mwadmin-roles-grid-panel > .mwadmin-toolbar {
+    flex-shrink: 0;
+}
+
+.mwadmin-roles-grid-panel > .mwadmin-table-wrap {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.mwadmin-roles-grid-panel > .mwadmin-pagination {
+    flex-shrink: 0;
+}
+
+.mwadmin-roles-grid-panel .mwadmin-table-wrap > .mwadmin-filter-bar {
+    flex-shrink: 0;
+}
+
+/* Fill the panel like Sub-Category listing: fixed viewport height so space remains below the last row */
+.mwadmin-roles-grid-panel .mwadmin-table-wrap > .mwadmin-ag-grid {
+    flex: 1 1 0;
+    min-height: 280px;
+    min-width: 0;
+    width: 100%;
+    height: 100% !important;
+    align-self: stretch;
+}
+
+/* AG Grid: flex height chain so the body can scroll when row count is large (“Show All”, wrap + autoHeight) */
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-root-wrapper {
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-root-wrapper-body.ag-layout-normal {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 0 !important;
+}
+
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-body {
+    min-height: 0 !important;
+}
+
+/* Vertical scroll gutter (Quartz often hides scrollbar on center viewport — keep scroll area usable) */
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-body-vertical-scroll-viewport {
+    overflow-y: scroll !important;
+    min-height: 0 !important;
+}
+
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-cell.mwadmin-ag-cell-wrap {
+    align-items: flex-start !important;
+    white-space: normal !important;
+    word-break: break-word;
+    line-height: 1.45;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-cell.mwadmin-ag-cell-wrap .ag-cell-value {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+}
+
+/* Let the grid body scroll when many rows; autoHeight rows still expand inside the viewport */
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-body-viewport {
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Single-line columns (ID, Actions, counts): vertically center vs wrapped Role/Description */
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-cell.mwadmin-ag-cell-vcenter {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-cell.mwadmin-ag-cell-vcenter.ag-right-aligned-cell {
+    justify-content: flex-end;
+}
+
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-cell.mwadmin-ag-cell-vcenter .ag-cell-wrapper,
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-cell.mwadmin-ag-cell-vcenter .ag-cell-value {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 0;
+}
+
+.mwadmin-roles-listing-grid.mwadmin-ag-grid .ag-cell.mwadmin-ag-cell-actions {
+    overflow: visible !important;
+}
+
+/* Compact Actions dropdown — override global 30px rule (must beat .mwadmin-shell … select.mwadmin-grid-action) */
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-roles-listing-grid.mwadmin-ag-grid select.mwadmin-grid-action,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-roles-listing-grid.mwadmin-ag-grid select.mwadmin-grid-action {
+    height: 26px;
+    min-height: 26px;
+    max-height: 26px;
+    padding: 2px 22px 2px 8px;
+    line-height: 1.2;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+/* Breathing room between grid and pagination */
+.mwadmin-roles-grid-panel > .mwadmin-pagination {
+    margin-top: 10px;
+    padding-top: 14px;
+}
+
 /* User profile photo: same editor UX as category box, constrained width */
 .mwadmin-user-profile-photo-row .mwadmin-category-image-field {
     max-width: 280px;
@@ -759,6 +881,19 @@
     border: 1px solid #475569;
     border-radius: 6px;
     box-sizing: border-box;
+}
+
+/* AG Grid Quartz adds ellipsis on .ag-cell-value; native <select> leaves “…” next to the control */
+.mwadmin-ag-grid .ag-cell:has(select.mwadmin-grid-action) {
+    overflow: visible !important;
+}
+
+.mwadmin-ag-grid .ag-cell:has(select.mwadmin-grid-action) .ag-cell-wrapper,
+.mwadmin-ag-grid .ag-cell:has(select.mwadmin-grid-action) .ag-cell-value {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    max-width: none !important;
 }
 
 /* —— Classic dialog / modals —— */
@@ -1649,4 +1784,199 @@
 
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-category-image-placeholder {
     color: #64748b;
+}
+
+/* Toast notifications (ClassicDialog.toast) */
+.mwadmin-toast-stack {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10050;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    pointer-events: none;
+    max-width: min(420px, calc(100vw - 32px));
+}
+
+.mwadmin-toast {
+    pointer-events: auto;
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.35;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+    border: 1px solid transparent;
+    animation: mwadminToastIn 0.28s ease;
+}
+
+@keyframes mwadminToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mwadmin-toast--success {
+    background: #e9f8ef;
+    border-color: #96d7ae;
+    color: #1e4d2e;
+}
+
+.mwadmin-toast--error {
+    background: #fbe9e9;
+    border-color: #edb4b4;
+    color: #7a1e1e;
+}
+
+.mwadmin-toast--info {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-toast--success {
+    background: rgba(22, 101, 52, 0.35);
+    border-color: #166534;
+    color: #bbf7d0;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-toast--error {
+    background: rgba(127, 29, 29, 0.45);
+    border-color: #991b1b;
+    color: #fecaca;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-toast--info {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+/* Role create/edit — permissions matrix + section */
+.mwadmin-form-section-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-section-label {
+    color: #cbd5e1;
+}
+
+.mwadmin-role-permissions-section {
+    min-width: 0;
+}
+
+.mwadmin-role-permissions-loading,
+.mwadmin-role-form-loading {
+    margin: 0;
+    padding: 12px 0;
+    font-size: 13px;
+    color: #666;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-role-permissions-loading,
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-role-form-loading {
+    color: #94a3b8;
+}
+
+.mwadmin-role-permissions-wrap {
+    margin-top: 0;
+}
+
+.mwadmin-role-permissions-toolbar {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.mwadmin-role-permissions-toolbar label {
+    cursor: pointer;
+    user-select: none;
+}
+
+.mwadmin-role-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-role-table-wrap {
+    border-color: #334155;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.mwadmin-role-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.mwadmin-role-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 6px;
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-role-table thead th {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.mwadmin-role-table tbody td {
+    border-bottom: 1px solid #eee;
+    padding: 6px;
+    vertical-align: middle;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-role-table tbody td {
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.mwadmin-role-group-row td {
+    border-bottom: 1px solid #ccc;
+}
+
+.mwadmin-role-group {
+    font-weight: 700;
+    background: #ececec;
+    color: #333;
+    padding: 8px 10px;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-role-group {
+    background: #0f172a;
+    color: #94a3b8;
+    border-color: #334155;
+}
+
+.mwadmin-role-table tbody tr:hover td:not(.mwadmin-role-group) {
+    background: #fafafa;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-role-table tbody tr:hover td:not(.mwadmin-role-group) {
+    background: rgba(51, 65, 85, 0.35);
+}
+
+.mwadmin-role-table input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }

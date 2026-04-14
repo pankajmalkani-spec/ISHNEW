@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class RolesApiController extends Controller
 {
@@ -45,7 +46,10 @@ class RolesApiController extends Controller
         }
 
         if ($filterName !== '') {
-            $query->where('ar.rolename', 'like', "%{$filterName}%");
+            $query->where(function ($q) use ($filterName): void {
+                $q->where('ar.rolename', 'like', "%{$filterName}%")
+                    ->orWhere('ar.description', 'like', "%{$filterName}%");
+            });
         }
 
         if ($filterStatus !== '') {
@@ -99,6 +103,12 @@ class RolesApiController extends Controller
             'permissions.*.allow_export' => ['nullable', 'boolean'],
         ]);
 
+        if ($this->activeModuleCount() > 0 && !$this->permissionsHasAtLeastOne($validated['permissions'] ?? [])) {
+            throw ValidationException::withMessages([
+                'permissions' => ['Select at least one module permission.'],
+            ]);
+        }
+
         $userId = $this->resolveRealUserId($request);
         $now = now();
 
@@ -106,6 +116,7 @@ class RolesApiController extends Controller
             'rolename' => trim((string) $validated['rolename']),
             'description' => (string) ($validated['description'] ?? ''),
             'status' => (int) $validated['status'],
+            'staff' => 0,
             'addeddate' => $now,
             'addedby' => $userId,
             'modifieddate' => $now,
@@ -183,6 +194,12 @@ class RolesApiController extends Controller
             'permissions.*.allow_export' => ['nullable', 'boolean'],
         ]);
 
+        if ($this->activeModuleCount() > 0 && !$this->permissionsHasAtLeastOne($validated['permissions'] ?? [])) {
+            throw ValidationException::withMessages([
+                'permissions' => ['Select at least one module permission.'],
+            ]);
+        }
+
         $userId = $this->resolveRealUserId($request);
         $now = now();
 
@@ -198,20 +215,53 @@ class RolesApiController extends Controller
         return response()->json(['message' => 'Role updated successfully.']);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $role = DB::table('access_roles')->where('arid', $id)->where('deleted', 0)->first();
         abort_if(!$role, 404);
 
-        $isAssigned = DB::table('usersrole')->where('roleid', $id)->exists();
-        if ($isAssigned) {
-            return response()->json(['message' => 'Role cannot be deleted. User(s) assigned to role.'], 422);
+        if ((int) ($role->status ?? 0) === 0) {
+            return response()->json(['message' => 'Role is already inactive.']);
         }
 
-        DB::table('access_role_modules')->where('roleid', $id)->delete();
-        DB::table('access_roles')->where('arid', $id)->delete();
+        $userId = $this->resolveRealUserId($request);
+        $now = now();
 
-        return response()->json(['message' => 'Role deleted successfully.']);
+        DB::table('access_roles')->where('arid', $id)->update([
+            'status' => 0,
+            'modifieddate' => $now,
+            'modifiedby' => $userId,
+        ]);
+
+        return response()->json(['message' => 'Role has been marked as inactive.']);
+    }
+
+    private function activeModuleCount(): int
+    {
+        return (int) DB::table('access_modules')->where('status', 1)->count();
+    }
+
+    private function permissionsHasAtLeastOne(array $permissions): bool
+    {
+        foreach ($permissions as $perm) {
+            if (!is_array($perm)) {
+                continue;
+            }
+            if (
+                (bool) ($perm['allow_access'] ?? false)
+                || (bool) ($perm['allow_view'] ?? false)
+                || (bool) ($perm['allow_add'] ?? false)
+                || (bool) ($perm['allow_edit'] ?? false)
+                || (bool) ($perm['allow_delete'] ?? false)
+                || (bool) ($perm['allow_print'] ?? false)
+                || (bool) ($perm['allow_import'] ?? false)
+                || (bool) ($perm['allow_export'] ?? false)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function syncRolePermissions(int $roleId, array $permissions, int $userId): void

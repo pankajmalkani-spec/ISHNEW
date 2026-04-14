@@ -1,14 +1,20 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 const ClassicDialogContext = createContext({
     confirm: async () => false,
     alert: async () => {},
     alertTimed: async () => {},
     prompt: async () => null,
+    toast: () => {},
 });
 
 export function ClassicDialogProvider({ children }) {
     const [dialog, setDialog] = useState(null);
+    const [toasts, setToasts] = useState([]);
+
+    const dismissToast = useCallback((id) => {
+        setToasts((list) => list.filter((t) => t.id !== id));
+    }, []);
 
     const api = useMemo(
         () => ({
@@ -50,8 +56,14 @@ export function ClassicDialogProvider({ children }) {
                         resolve,
                     });
                 }),
+            toast: (message, type = 'info') => {
+                const id = `${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+                const safeType = ['success', 'error', 'info'].includes(type) ? type : 'info';
+                setToasts((list) => [...list, { id, message: String(message ?? ''), type: safeType }]);
+                window.setTimeout(() => dismissToast(id), 3800);
+            },
         }),
-        []
+        [dismissToast]
     );
 
     const close = (result) => {
@@ -74,6 +86,13 @@ export function ClassicDialogProvider({ children }) {
     return (
         <ClassicDialogContext.Provider value={api}>
             {children}
+            <div className="mwadmin-toast-stack" aria-live="polite">
+                {toasts.map((t) => (
+                    <div key={t.id} role="status" className={`mwadmin-toast mwadmin-toast--${t.type}`}>
+                        {t.message}
+                    </div>
+                ))}
+            </div>
             {dialog && (
                 <div className="mwadmin-modal-backdrop" role="presentation">
                     {dialog.type === 'alert_timed' ? (

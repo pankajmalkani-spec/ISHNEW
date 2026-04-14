@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
@@ -9,6 +9,7 @@ import MwadminThemedAgGrid from '../../../Components/Mwadmin/MwadminThemedAgGrid
 
 export default function RolesIndex({ authUser = {} }) {
     const dialog = useClassicDialog();
+    const gridApiRef = useRef(null);
     const [rows, setRows] = useState([]);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState('');
@@ -43,30 +44,81 @@ export default function RolesIndex({ authUser = {} }) {
         loadData();
     }, [query]);
 
-    const deleteRow = async (id) => {
-        if (!(await dialog.confirm('Delete this role?', 'Delete Role'))) return;
-        await axios.delete(`/api/mwadmin/roles/${id}`);
-        await loadData();
+    const refreshRowHeights = useCallback(() => {
+        const api = gridApiRef.current;
+        if (!api) return;
+        window.requestAnimationFrame(() => {
+            api.resetRowHeights();
+            window.requestAnimationFrame(() => {
+                api.resetRowHeights();
+            });
+        });
+    }, []);
+
+    useEffect(() => {
+        if (loading) return;
+        refreshRowHeights();
+        const t = window.setTimeout(() => refreshRowHeights(), 120);
+        return () => window.clearTimeout(t);
+    }, [rows, loading, refreshRowHeights]);
+
+    const rowRange = useMemo(() => {
+        const total = meta.total || 0;
+        if (total === 0) return { from: 0, to: 0 };
+        if (perPage === 'all') return { from: 1, to: total };
+        const p = Math.max(1, parseInt(String(perPage), 10) || 10);
+        const current = meta.current_page || 1;
+        const from = (current - 1) * p + 1;
+        const to = Math.min(current * p, total);
+        return { from, to };
+    }, [meta.total, meta.current_page, perPage]);
+
+    const deactivateRole = async (id) => {
+        if (
+            !(await dialog.confirm(
+                'Mark this role as inactive? It will stay in the database but will not be offered for new user assignments.',
+                'Deactivate Role'
+            ))
+        ) {
+            return;
+        }
+        try {
+            await axios.delete(`/api/mwadmin/roles/${id}`);
+            dialog.toast('Role has been marked as inactive.', 'success');
+            await loadData();
+        } catch (err) {
+            const msg = err?.response?.data?.message || 'Unable to deactivate role.';
+            dialog.toast(msg, 'error');
+        }
     };
 
     const handleAction = async (id, action) => {
         if (!action) return;
         if (action === 'view') return window.location.assign(`/mwadmin/roles/${id}/view`);
         if (action === 'edit') return window.location.assign(`/mwadmin/roles/${id}/edit`);
-        if (action === 'delete') await deleteRow(id);
+        if (action === 'deactivate') await deactivateRole(id);
     };
 
     const columns = useMemo(
         () => [
-            { field: 'arid', headerName: 'ID', width: 70, minWidth: 70, maxWidth: 85, sortable: true },
             {
-                field: 'actions',
+                field: 'arid',
+                headerName: 'ID',
+                width: 70,
+                minWidth: 70,
+                maxWidth: 85,
+                sortable: true,
+                cellClass: 'mwadmin-ag-cell-vcenter',
+            },
+            {
+                colId: 'actions',
                 headerName: 'Actions',
-                width: 135,
+                width: 132,
                 minWidth: 120,
-                maxWidth: 145,
+                maxWidth: 148,
                 sortable: false,
                 filter: false,
+                cellClass: 'mwadmin-ag-cell-vcenter mwadmin-ag-cell-actions',
                 cellRenderer: (params) => (
                     <select
                         className="mwadmin-grid-action"
@@ -80,13 +132,39 @@ export default function RolesIndex({ authUser = {} }) {
                         <option value="">Actions</option>
                         <option value="view">View</option>
                         <option value="edit">Edit</option>
-                        <option value="delete">Delete</option>
+                        <option value="deactivate">Deactivate</option>
                     </select>
                 ),
             },
-            { field: 'rolename', headerName: 'Role', minWidth: 220, flex: 1.2 },
-            { field: 'description', headerName: 'Description', minWidth: 260, flex: 1.6 },
-            { field: 'usercount', headerName: 'Total Users', minWidth: 120, flex: 0.8 },
+            {
+                field: 'rolename',
+                headerName: 'Role',
+                minWidth: 200,
+                flex: 1,
+                wrapText: true,
+                autoHeight: true,
+                cellClass: 'mwadmin-ag-cell-wrap',
+                tooltipValueGetter: (p) => (p.value == null ? '' : String(p.value)),
+            },
+            {
+                field: 'description',
+                headerName: 'Description',
+                minWidth: 220,
+                flex: 1.4,
+                wrapText: true,
+                autoHeight: true,
+                cellClass: 'mwadmin-ag-cell-wrap',
+                tooltipValueGetter: (p) => (p.value == null ? '' : String(p.value)),
+            },
+            {
+                field: 'usercount',
+                headerName: 'Total Users',
+                width: 120,
+                minWidth: 110,
+                maxWidth: 140,
+                type: 'rightAligned',
+                cellClass: 'mwadmin-ag-cell-vcenter',
+            },
             {
                 field: 'status',
                 headerName: 'Status',
@@ -108,7 +186,7 @@ export default function RolesIndex({ authUser = {} }) {
                         <span className="sep">›</span> <strong>Role Listing</strong>
                     </div>
                     <h1 className="mwadmin-title">Roles</h1>
-                    <section className="mwadmin-panel">
+                    <section className="mwadmin-panel mwadmin-roles-grid-panel">
                         <div className="mwadmin-toolbar">
                             <div>
                                 Show
@@ -127,7 +205,7 @@ export default function RolesIndex({ authUser = {} }) {
                             <div className="mwadmin-filter-bar">
                                 <input
                                     type="text"
-                                    placeholder="Filter Role"
+                                    placeholder="Filter role or description"
                                     value={columnFilters.name}
                                     onChange={(e) => {
                                         setPage(1);
@@ -147,20 +225,40 @@ export default function RolesIndex({ authUser = {} }) {
                                     Clear
                                 </button>
                             </div>
-                            <MwadminThemedAgGrid>
+                            <MwadminThemedAgGrid
+                                className="mwadmin-roles-listing-grid"
+                                style={{ flex: '1 1 0', minHeight: 0, height: '100%', width: '100%' }}
+                            >
                                 <AgGridReact
                                     rowData={rows}
                                     columnDefs={columns}
                                     defaultColDef={{ resizable: true, sortable: true, filter: false }}
                                     suppressCellFocus
-                                    rowHeight={32}
-                                    headerHeight={32}
+                                    alwaysShowVerticalScroll
+                                    rowBuffer={20}
+                                    headerHeight={36}
+                                    tooltipShowDelay={200}
+                                    tooltipHideDelay={100}
+                                    onGridReady={(e) => {
+                                        gridApiRef.current = e.api;
+                                        refreshRowHeights();
+                                    }}
+                                    onFirstDataRendered={() => refreshRowHeights()}
+                                    onColumnResized={(e) => {
+                                        if (e.finished) refreshRowHeights();
+                                    }}
                                     overlayNoRowsTemplate={loading ? 'Loading...' : 'No data available in table'}
                                 />
                             </MwadminThemedAgGrid>
                         </div>
                         <div className="mwadmin-pagination">
-                            <span>Showing page {meta.current_page} of {meta.last_page} ({meta.total} records)</span>
+                            <span>
+                                Rows {rowRange.from}–{rowRange.to} of {meta.total}
+                                {perPage !== 'all' && meta.last_page > 1
+                                    ? ` · Page ${meta.current_page} of ${meta.last_page}`
+                                    : ''}
+                                {meta.total !== 1 ? ' records' : ' record'}
+                            </span>
                             <div>
                                 <button disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>Prev</button>
                                 <button disabled={page >= meta.last_page} onClick={() => setPage((p) => p + 1)}>Next</button>
