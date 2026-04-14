@@ -89,9 +89,11 @@ export default function ScheduleIndex({ authUser = {} }) {
         }
     };
 
-    const applyDateFilter = () => {
-        if (!dateFilter) return;
-        loadWeek(dateFilter);
+    const jumpYearAndLoad = (deltaYears) => {
+        const next = shiftDateYears(dateFilter || weekStart, deltaYears);
+        if (!next) return;
+        setDateFilter(next);
+        loadWeek(next);
     };
 
     const visibleCategories =
@@ -130,28 +132,25 @@ export default function ScheduleIndex({ authUser = {} }) {
                                         id="mwadmin-schedule-date"
                                         type="date"
                                         value={dateFilter}
-                                        onChange={(e) => setDateFilter(e.target.value)}
+                                        onChange={(e) => {
+                                            const next = e.target.value;
+                                            setDateFilter(next);
+                                            if (next) loadWeek(next);
+                                        }}
                                     />
                                     <button
                                         type="button"
                                         className="mwadmin-filter-clear"
-                                        onClick={() =>
-                                            setDateFilter((prev) => shiftDateYears(prev || weekStart, -1))
-                                        }
+                                        onClick={() => jumpYearAndLoad(-1)}
                                     >
                                         Prev Year
                                     </button>
                                     <button
                                         type="button"
                                         className="mwadmin-filter-clear"
-                                        onClick={() =>
-                                            setDateFilter((prev) => shiftDateYears(prev || weekStart, 1))
-                                        }
+                                        onClick={() => jumpYearAndLoad(1)}
                                     >
                                         Next Year
-                                    </button>
-                                    <button type="button" className="mwadmin-filter-clear" onClick={applyDateFilter}>
-                                        Apply
                                     </button>
                                     <button
                                         type="button"
