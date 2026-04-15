@@ -1,11 +1,13 @@
 import { Head, router } from '@inertiajs/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
 
 export default function ProfileIndex({ authUser = {} }) {
     const dialog = useClassicDialog();
+    const reduceMotion = useReducedMotion();
     const [tab, setTab] = useState('personal');
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -121,9 +123,27 @@ export default function ProfileIndex({ authUser = {} }) {
                         <span>Account</span> <span className="sep">›</span> <strong>My Profile</strong>
                     </div>
 
-                    <div className="mwadmin-profile-layout">
+                    <motion.div
+                        className="mwadmin-profile-layout"
+                        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={
+                            reduceMotion
+                                ? { duration: 0.01 }
+                                : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+                        }
+                    >
                         <aside className="mwadmin-profile-sidebar">
-                            <div className="mwadmin-profile-avatar-wrap">
+                            <motion.div
+                                className="mwadmin-profile-avatar-wrap"
+                                initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={
+                                    reduceMotion
+                                        ? { duration: 0.01 }
+                                        : { delay: 0.05, duration: 0.35, ease: [0.22, 1, 0.36, 1] }
+                                }
+                            >
                                 <img
                                     className="mwadmin-profile-avatar"
                                     src={profile.profile_photo_url || '/images/UserProfile_photo/no_user.png'}
@@ -132,7 +152,7 @@ export default function ProfileIndex({ authUser = {} }) {
                                         e.currentTarget.src = '/images/categoryImages/boxImages/no_img.gif';
                                     }}
                                 />
-                            </div>
+                            </motion.div>
                             <div className="mwadmin-profile-sidebar-name">{displayName}</div>
                             <nav className="mwadmin-profile-nav">
                                 <button
@@ -171,8 +191,19 @@ export default function ProfileIndex({ authUser = {} }) {
                                 {loading ? (
                                     <div className="mwadmin-profile-loading">Loading…</div>
                                 ) : (
-                                    <>
+                                    <AnimatePresence mode="wait">
                                         {tab === 'personal' && (
+                                            <motion.div
+                                                key="personal"
+                                                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                                                transition={
+                                                    reduceMotion
+                                                        ? { duration: 0.01 }
+                                                        : { duration: 0.22, ease: 'easeOut' }
+                                                }
+                                            >
                                             <form className="mwadmin-profile-form" onSubmit={onSavePersonal}>
                                                 <div className="mwadmin-profile-form-grid">
                                                     <div>
@@ -234,9 +265,21 @@ export default function ProfileIndex({ authUser = {} }) {
                                                     </button>
                                                 </div>
                                             </form>
+                                            </motion.div>
                                         )}
 
                                         {tab === 'password' && (
+                                            <motion.div
+                                                key="password"
+                                                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                                                transition={
+                                                    reduceMotion
+                                                        ? { duration: 0.01 }
+                                                        : { duration: 0.22, ease: 'easeOut' }
+                                                }
+                                            >
                                             <form className="mwadmin-profile-form" onSubmit={onSavePassword}>
                                                 <div className="mwadmin-profile-form-grid mwadmin-profile-form-grid--narrow">
                                                     <div>
@@ -285,12 +328,13 @@ export default function ProfileIndex({ authUser = {} }) {
                                                     </button>
                                                 </div>
                                             </form>
+                                            </motion.div>
                                         )}
-                                    </>
+                                    </AnimatePresence>
                                 )}
                             </div>
                         </section>
-                    </div>
+                    </motion.div>
                 </div>
             </MwadminLayout>
         </>

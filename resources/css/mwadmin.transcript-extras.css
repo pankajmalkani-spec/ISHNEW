@@ -973,6 +973,47 @@
     backdrop-filter: blur(1px);
 }
 
+/* Full-screen transition before Inertia navigates to login after logout */
+.mwadmin-signing-out-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(35, 28, 22, 0.52);
+    backdrop-filter: blur(2px);
+}
+
+.mwadmin-signing-out-card {
+    padding: 18px 28px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #f8f2e8 0%, #efe3d2 100%);
+    border: 1px solid #cdbba2;
+    box-shadow: 0 18px 40px rgba(45, 31, 18, 0.28);
+}
+
+.mwadmin-signing-out-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #4b3a2d;
+    letter-spacing: 0.02em;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-signing-out-overlay {
+    background: rgba(2, 6, 18, 0.72);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-signing-out-card {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border-color: #334155;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-signing-out-text {
+    color: #e2e8f0;
+}
+
 .mwadmin-modal-card {
     width: min(460px, calc(100vw - 32px));
     background: linear-gradient(180deg, #f8f2e8 0%, #efe3d2 100%);

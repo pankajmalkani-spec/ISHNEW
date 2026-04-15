@@ -1,13 +1,19 @@
-import { Link } from '@inertiajs/react';
-import { useEffect, useMemo, useState } from 'react';
+import { Link, router } from '@inertiajs/react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { canAccessModule } from '../../lib/mwadminPermissions';
+import { useClassicDialog } from './ClassicDialog';
 import { MwadminThemeContext } from './MwadminThemeContext';
 
 export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard', children }) {
+    const dialog = useClassicDialog();
+    const reduceMotion = useReducedMotion();
     const [isAdministratorOpen, setIsAdministratorOpen] = useState(true);
     const [isMastersOpen, setIsMastersOpen] = useState(true);
     const [isContentOpen, setIsContentOpen] = useState(true);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [signingOut, setSigningOut] = useState(false);
+    const logoutVisitStarted = useRef(false);
     const [themeMode, setThemeMode] = useState(() => {
         if (typeof window === 'undefined') return 'light';
         try {
@@ -62,6 +68,35 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
     const headerAvatarSrc =
         authUser.profile_photo_url ||
         '/images/UserProfile_photo/no_user.png';
+
+    const onLogoutClick = useCallback(async () => {
+        setIsUserMenuOpen(false);
+        const ok = await dialog.confirm(
+            'You will need to sign in again to access MW Admin.',
+            'Log out?'
+        );
+        if (!ok) return;
+        setSigningOut(true);
+    }, [dialog]);
+
+    useEffect(() => {
+        if (!signingOut) {
+            logoutVisitStarted.current = false;
+            return;
+        }
+        const ms = reduceMotion ? 48 : 400;
+        const t = window.setTimeout(() => {
+            if (logoutVisitStarted.current) return;
+            logoutVisitStarted.current = true;
+            router.post('/mwadmin/logout', {}, {
+                onError: () => {
+                    logoutVisitStarted.current = false;
+                    setSigningOut(false);
+                },
+            });
+        }, ms);
+        return () => window.clearTimeout(t);
+    }, [signingOut, reduceMotion]);
 
     useEffect(() => {
         try {
@@ -131,26 +166,43 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                                 {isUserMenuOpen ? '▴' : '▾'}
                             </span>
                         </button>
-                        {isUserMenuOpen && (
-                            <div className="mwadmin-user-menu">
-                                <Link
-                                    href="/mwadmin/profile"
-                                    className="mwadmin-user-menu-item"
-                                    onClick={() => setIsUserMenuOpen(false)}
+                        <AnimatePresence>
+                            {isUserMenuOpen && (
+                                <motion.div
+                                    className="mwadmin-user-menu"
+                                    style={{ transformOrigin: 'top right' }}
+                                    initial={
+                                        reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }
+                                    }
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={
+                                        reduceMotion
+                                            ? { opacity: 0 }
+                                            : { opacity: 0, y: -4, scale: 0.99 }
+                                    }
+                                    transition={
+                                        reduceMotion
+                                            ? { duration: 0.01 }
+                                            : { type: 'spring', stiffness: 520, damping: 34 }
+                                    }
                                 >
-                                    My Profile
-                                </Link>
-                                <Link
-                                    href="/mwadmin/logout"
-                                    method="post"
-                                    as="button"
-                                    className="mwadmin-user-menu-item"
-                                    onClick={() => setIsUserMenuOpen(false)}
-                                >
-                                    Log Out
-                                </Link>
-                            </div>
-                        )}
+                                    <Link
+                                        href="/mwadmin/profile"
+                                        className="mwadmin-user-menu-item"
+                                        onClick={() => setIsUserMenuOpen(false)}
+                                    >
+                                        My Profile
+                                    </Link>
+                                    <button
+                                        type="button"
+                                        className="mwadmin-user-menu-item"
+                                        onClick={onLogoutClick}
+                                    >
+                                        Log Out
+                                    </button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
             </header>
@@ -230,6 +282,37 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
 
                 <main className="mwadmin-content">{children}</main>
             </div>
+
+            <AnimatePresence>
+                {signingOut && (
+                    <motion.div
+                        className="mwadmin-signing-out-overlay"
+                        role="status"
+                        aria-live="polite"
+                        aria-busy="true"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{
+                            duration: reduceMotion ? 0.01 : 0.38,
+                            ease: [0.22, 1, 0.36, 1],
+                        }}
+                    >
+                        <motion.div
+                            className="mwadmin-signing-out-card"
+                            initial={reduceMotion ? false : { opacity: 0, y: 14, scale: 0.96 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={
+                                reduceMotion
+                                    ? { duration: 0.01 }
+                                    : { delay: 0.06, duration: 0.34, ease: [0.22, 1, 0.36, 1] }
+                            }
+                        >
+                            <span className="mwadmin-signing-out-text">Signing out…</span>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
         </MwadminThemeContext.Provider>
     );

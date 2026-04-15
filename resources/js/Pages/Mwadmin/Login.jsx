@@ -77,18 +77,27 @@ export default function Login() {
     const showError = phase === 'error' && message;
     const showSuccess = phase === 'success' && message;
 
+    const pageTransition = reduceMotion
+        ? { duration: 0.01 }
+        : { duration: 0.42, ease: [0.22, 1, 0.36, 1] };
+
     const cardTransition = reduceMotion
         ? { duration: 0.01 }
-        : { duration: 0.55, ease: [0.22, 1, 0.36, 1] };
+        : { duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.1 };
 
     return (
         <>
             <Head title="MW Admin Login" />
-            <div className="mwadmin-auth-canvas text-zinc-100">
+            <motion.div
+                className="mwadmin-auth-canvas text-zinc-100"
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={pageTransition}
+            >
                 <main className="relative z-10 mx-auto flex min-h-dvh max-w-md items-center px-6 py-10">
                     <motion.div
                         className="w-full rounded-2xl border border-zinc-800/90 bg-zinc-900/85 p-6 shadow-[0_22px_70px_rgba(2,6,23,0.55)] backdrop-blur-sm"
-                        initial={reduceMotion ? false : { opacity: 0, y: 28, scale: 0.98 }}
+                        initial={reduceMotion ? false : { opacity: 0, y: 32, scale: 0.97 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={cardTransition}
                     >
@@ -223,7 +232,7 @@ export default function Login() {
                         </form>
                     </motion.div>
                 </main>
-            </div>
+            </motion.div>
         </>
     );
 }
