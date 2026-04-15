@@ -13,7 +13,9 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
     const [isContentOpen, setIsContentOpen] = useState(true);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [signingOut, setSigningOut] = useState(false);
+    const [openingModule, setOpeningModule] = useState(null);
     const logoutVisitStarted = useRef(false);
+    const moduleVisitStarted = useRef(false);
     const [themeMode, setThemeMode] = useState(() => {
         if (typeof window === 'undefined') return 'light';
         try {
@@ -79,6 +81,22 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
         setSigningOut(true);
     }, [dialog]);
 
+    const startModuleNavigation = useCallback((event, href, label) => {
+        if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+        ) {
+            return;
+        }
+        event.preventDefault();
+        if (window.location.pathname === href) return;
+        setOpeningModule({ href, label });
+    }, []);
+
     useEffect(() => {
         if (!signingOut) {
             logoutVisitStarted.current = false;
@@ -97,6 +115,25 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
         }, ms);
         return () => window.clearTimeout(t);
     }, [signingOut, reduceMotion]);
+
+    useEffect(() => {
+        if (!openingModule) {
+            moduleVisitStarted.current = false;
+            return;
+        }
+        const ms = reduceMotion ? 40 : 260;
+        const t = window.setTimeout(() => {
+            if (moduleVisitStarted.current) return;
+            moduleVisitStarted.current = true;
+            router.visit(openingModule.href, {
+                onError: () => {
+                    moduleVisitStarted.current = false;
+                    setOpeningModule(null);
+                },
+            });
+        }, ms);
+        return () => window.clearTimeout(t);
+    }, [openingModule, reduceMotion]);
 
     useEffect(() => {
         try {
@@ -212,7 +249,12 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                     <ul className="mwadmin-menu">
                         {can('dashboard') && (
                             <li className={activeMenu === 'dashboard' ? 'active' : ''}>
-                                <Link href="/mwadmin/dashboard">Dashboard</Link>
+                                <Link
+                                    href="/mwadmin/dashboard"
+                                    onClick={(e) => startModuleNavigation(e, '/mwadmin/dashboard', 'Dashboard')}
+                                >
+                                    Dashboard
+                                </Link>
                             </li>
                         )}
                         {adminLinks.length > 0 && (
@@ -229,7 +271,12 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                                     <ul className="mwadmin-submenu">
                                         {adminLinks.map((item) => (
                                             <li key={item.href} className={activeMenu === item.menu ? 'active' : ''}>
-                                                <Link href={item.href}>{item.label}</Link>
+                                                <Link
+                                                    href={item.href}
+                                                    onClick={(e) => startModuleNavigation(e, item.href, item.label)}
+                                                >
+                                                    {item.label}
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>
@@ -249,7 +296,12 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                                     <ul className="mwadmin-submenu">
                                         {masterLinks.map((item) => (
                                             <li key={item.href} className={activeMenu === item.menu ? 'active' : ''}>
-                                                <Link href={item.href}>{item.label}</Link>
+                                                <Link
+                                                    href={item.href}
+                                                    onClick={(e) => startModuleNavigation(e, item.href, item.label)}
+                                                >
+                                                    {item.label}
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>
@@ -270,7 +322,12 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                                     <ul className="mwadmin-submenu">
                                         {contentLinks.map((item) => (
                                             <li key={item.href} className={activeMenu === item.menu ? 'active' : ''}>
-                                                <Link href={item.href}>{item.label}</Link>
+                                                <Link
+                                                    href={item.href}
+                                                    onClick={(e) => startModuleNavigation(e, item.href, item.label)}
+                                                >
+                                                    {item.label}
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>
@@ -282,6 +339,37 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
 
                 <main className="mwadmin-content">{children}</main>
             </div>
+
+            <AnimatePresence>
+                {openingModule && (
+                    <motion.div
+                        className="mwadmin-signing-out-overlay"
+                        role="status"
+                        aria-live="polite"
+                        aria-busy="true"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{
+                            duration: reduceMotion ? 0.01 : 0.22,
+                            ease: [0.22, 1, 0.36, 1],
+                        }}
+                    >
+                        <motion.div
+                            className="mwadmin-signing-out-card"
+                            initial={reduceMotion ? false : { opacity: 0, y: 10, scale: 0.97 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={
+                                reduceMotion
+                                    ? { duration: 0.01 }
+                                    : { delay: 0.03, duration: 0.24, ease: [0.22, 1, 0.36, 1] }
+                            }
+                        >
+                            <span className="mwadmin-signing-out-text">Opening {openingModule.label}…</span>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             <AnimatePresence>
                 {signingOut && (
