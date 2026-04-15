@@ -43,7 +43,7 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
                     title: r.title || '',
                     company_name: r.company_name || '',
                     contactperson_name: r.contactperson_name || '',
-                    ad_url: r.ad_url || 'https://',
+                    ad_url: r.ad_url || '',
                     email: r.email || '',
                     mobile: r.mobile ? String(r.mobile) : '',
                     brand: r.brand || '',

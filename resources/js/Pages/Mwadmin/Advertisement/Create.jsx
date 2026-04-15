@@ -11,7 +11,7 @@ export default function AdvertisementCreate({ authUser = {} }) {
         title: '',
         company_name: '',
         contactperson_name: '',
-        ad_url: 'https://',
+        ad_url: '',
         email: '',
         mobile: '',
         brand: '',

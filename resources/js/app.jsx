@@ -3,7 +3,7 @@ import '../css/app.css';
 import '../css/mwadmin.css';
 import '../css/mwadmin.transcript-extras.css';
 import '../css/mwadmin-rich-editor-tinymce.css';
-/* Quartz + font — same family as https://www.ag-grid.com/example/ (see themes docs) */
+/* Quartz + font — AG Grid Quartz theme (see AG Grid themes docs). */
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import 'ag-grid-community/styles/agGridQuartzFont.css';

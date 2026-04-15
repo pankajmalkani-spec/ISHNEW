@@ -10,7 +10,7 @@ export default function SponsorCreate({ authUser = {} }) {
     const [form, setForm] = useState({
         sponsorcategory_id: '',
         organization_name: '',
-        website: 'https://',
+        website: '',
         contact_name: '',
         email: '',
         mobile: '',

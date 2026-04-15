@@ -740,7 +740,7 @@ export default function NewslistingEdit({ authUser = {}, newslistingId, initialS
                                     <input
                                         value={form.youtube_url}
                                         onChange={(e) => setForm((f) => ({ ...f, youtube_url: e.target.value }))}
-                                        placeholder="https://..."
+                                        placeholder="Full URL for this link"
                                         disabled={!form.youtube_url_check}
                                     />
                                 </div>

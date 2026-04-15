@@ -49,7 +49,7 @@ export default function SponsorEdit({ authUser = {}, sponsorId }) {
                 setForm({
                     sponsorcategory_id: String(r.sponsorcategory_id ?? ''),
                     organization_name: r.organization_name || '',
-                    website: r.website || 'https://',
+                    website: r.website || '',
                     contact_name: r.contact_name || '',
                     email: r.email || '',
                     mobile: r.mobile || '',
