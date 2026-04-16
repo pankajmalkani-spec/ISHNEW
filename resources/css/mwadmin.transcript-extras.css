@@ -767,6 +767,8 @@
     padding: 9px 10px;
     vertical-align: middle;
     border-bottom: 1px solid #eceff3;
+    font-size: 12px;
+    line-height: 1.35;
 }
 
 .mwadmin-flowchart-table tbody tr:nth-child(even) {
@@ -1433,6 +1435,9 @@ a.mwadmin-btn-primary {
 
 /* —— Weekly schedule —— */
 .mwadmin-schedule-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: min(80vh, 920px);
     overflow: visible;
     border-top: 0;
 }
@@ -1523,14 +1528,17 @@ a.mwadmin-btn-primary {
 }
 
 .mwadmin-schedule-table-wrap {
+    flex: 1 1 auto;
     overflow-x: auto;
+    min-height: 0;
     padding: 0 14px 12px;
     box-sizing: border-box;
     width: 100%;
 }
 
 .mwadmin-schedule-scroll-wrap {
-    max-height: min(62vh, 620px);
+    height: 100%;
+    max-height: none;
     overflow: auto;
     overscroll-behavior: contain;
 }
@@ -1574,7 +1582,8 @@ a.mwadmin-btn-primary {
 .mwadmin-schedule-table tbody td {
     border: 1px solid #eceef1;
     vertical-align: top;
-    padding: 4px;
+    padding: 8px;
+    height: 135px;
 }
 
 .mwadmin-schedule-td-cat {
@@ -1589,7 +1598,7 @@ a.mwadmin-btn-primary {
 }
 
 .mwadmin-schedule-td-cell {
-    min-height: 36px;
+    height: 135px;
 }
 
 .mwadmin-schedule-chip {
