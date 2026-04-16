@@ -60,6 +60,7 @@ export default function AdvertisementCreate({ authUser = {} }) {
                 return URL.createObjectURL(file);
             });
             if (src instanceof File) setImgSourceFile(src);
+            else setImgSourceFile(null);
         },
         [notify]
     );

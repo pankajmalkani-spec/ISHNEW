@@ -120,6 +120,7 @@ export default function NewslistingEdit({ authUser = {}, newslistingId, initialS
             }
             setBannerFile(file);
             if (src instanceof File) setBannerSourceFile(src);
+            else setBannerSourceFile(null);
         },
         [notify]
     );
@@ -137,6 +138,7 @@ export default function NewslistingEdit({ authUser = {}, newslistingId, initialS
             }
             setCoverFile(file);
             if (src instanceof File) setCoverSourceFile(src);
+            else setCoverSourceFile(null);
         },
         [notify]
     );

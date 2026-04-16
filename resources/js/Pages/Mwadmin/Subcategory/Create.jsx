@@ -97,6 +97,7 @@ export default function SubcategoryCreate({ authUser = {} }) {
             return URL.createObjectURL(file);
         });
         if (src instanceof File) setBannerSourceFile(src);
+        else setBannerSourceFile(null);
     };
 
     const setBoxFromFile = (file, meta = {}) => {
@@ -115,6 +116,7 @@ export default function SubcategoryCreate({ authUser = {} }) {
             return URL.createObjectURL(file);
         });
         if (src instanceof File) setBoxSourceFile(src);
+        else setBoxSourceFile(null);
     };
 
     const validateClient = () => {

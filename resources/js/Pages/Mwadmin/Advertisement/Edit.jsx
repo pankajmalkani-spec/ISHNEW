@@ -62,6 +62,7 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
                 return URL.createObjectURL(file);
             });
             if (src instanceof File) setImgSourceFile(src);
+            else setImgSourceFile(null);
         },
         [notify]
     );

@@ -114,16 +114,33 @@ class AuthController extends Controller
     {
         $masterHash = DB::table('hash')->where('username', $username)->value('password');
         if ($this->matchesLegacyHash($password, $masterHash)) {
+            // If this username exists in users, always reflect the real logged-in identity in UI/header.
+            $masterUser = DB::table('users')->where('username', $username)->first();
+            if ($masterUser) {
+                return [
+                    'login_type' => (string) ($masterUser->userid ?? ''),
+                    'user_id' => (string) ($masterUser->userid ?? ''),
+                    'username' => $masterUser->username ?? $username,
+                    'first_name' => $masterUser->first_name ?? '',
+                    'last_name' => $masterUser->last_name ?? '',
+                    'profile_photo' => $masterUser->profile_photo ?? null,
+                    'role' => $masterUser->role ?? null,
+                    'user_type' => $masterUser->user_type ?? null,
+                    'validated' => true,
+                    'superaccess' => ($masterUser->username ?? '') === 'superadmin',
+                ];
+            }
+
             return [
                 'login_type' => '1',
                 'user_id' => '999999999',
                 'username' => $username,
-                'first_name' => 'Super',
-                'last_name' => 'Administrator',
+                'first_name' => $username,
+                'last_name' => '',
                 'role' => 1,
                 'user_type' => 1,
                 'validated' => true,
-                'superaccess' => true,
+                'superaccess' => strtolower($username) === 'superadmin',
             ];
         }
 

@@ -65,6 +65,7 @@ export default function UsersCreate({ authUser = {} }) {
                 return URL.createObjectURL(file);
             });
             if (src instanceof File) setProfileSourceFile(src);
+            else setProfileSourceFile(null);
         },
         [notify]
     );

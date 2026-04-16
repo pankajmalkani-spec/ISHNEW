@@ -58,6 +58,7 @@ export default function SponsorEdit({ authUser = {}, sponsorId }) {
                 return URL.createObjectURL(file);
             });
             if (src instanceof File) setLogoSourceFile(src);
+            else setLogoSourceFile(null);
         },
         [notify]
     );

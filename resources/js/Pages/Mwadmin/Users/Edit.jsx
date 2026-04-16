@@ -61,6 +61,7 @@ export default function UsersEdit({ authUser = {}, userId }) {
                 return URL.createObjectURL(file);
             });
             if (src instanceof File) setProfileSourceFile(src);
+            else setProfileSourceFile(null);
         },
         [notify]
     );

@@ -93,6 +93,7 @@ export default function NewslistingCreate({ authUser = {} }) {
             }
             setBannerFile(file);
             if (src instanceof File) setBannerSourceFile(src);
+            else setBannerSourceFile(null);
         },
         [notify]
     );
@@ -110,6 +111,7 @@ export default function NewslistingCreate({ authUser = {} }) {
             }
             setCoverFile(file);
             if (src instanceof File) setCoverSourceFile(src);
+            else setCoverSourceFile(null);
         },
         [notify]
     );

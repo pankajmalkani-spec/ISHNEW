@@ -75,6 +75,7 @@ export default function SponsorCreate({ authUser = {} }) {
                 return URL.createObjectURL(file);
             });
             if (src instanceof File) setLogoSourceFile(src);
+            else setLogoSourceFile(null);
         },
         [notify]
     );
