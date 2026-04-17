@@ -236,7 +236,7 @@ export default function SponsorCreate({ authUser = {} }) {
                                 </select>
                             </div>
                             <div className="mwadmin-form-grid-full mwadmin-category-images-row">
-                                <div className="mwadmin-category-image-block mwadmin-category-image-block--full">
+                                <div className="mwadmin-category-image-block">
                                     <label>Logo</label>
                                     <div className="mwadmin-category-image-field">
                                         <div

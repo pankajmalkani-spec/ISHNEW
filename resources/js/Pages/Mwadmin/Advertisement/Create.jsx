@@ -267,7 +267,7 @@ export default function AdvertisementCreate({ authUser = {} }) {
                                 </select>
                             </div>
                             <div className="mwadmin-form-grid-full mwadmin-category-images-row">
-                                <div className="mwadmin-category-image-block mwadmin-category-image-block--full">
+                                <div className="mwadmin-category-image-block">
                                     <label>Image</label>
                                     <div className="mwadmin-category-image-field">
                                         <div

@@ -2036,11 +2036,11 @@ a.mwadmin-btn-primary {
     justify-content: center;
 }
 
-/* Sponsor logo: legacy export 196×160 — full width of grid cell (same as category box column) */
+/* Sponsor logo: legacy export 196×160 — cap frame width (matches legacy ~280px slot, not full form) */
 .mwadmin-category-image-preview-wrap--box.mwadmin-sponsor-logo-preview {
     aspect-ratio: 196 / 160;
     width: 100%;
-    max-width: none;
+    max-width: min(280px, 100%);
 }
 
 /* Single full-width block inside the two-column image grid (ad image, profile photo) */
@@ -2048,11 +2048,12 @@ a.mwadmin-btn-primary {
     grid-column: 1 / -1;
 }
 
-/* Advertisement image — 900×300 export */
+/* Advertisement image — 900×300 export (cap width; full row was comically large on wide forms) */
 .mwadmin-category-image-preview-wrap--ad {
     position: relative;
     box-sizing: border-box;
     width: 100%;
+    max-width: min(560px, 100%);
     aspect-ratio: 900 / 300;
     min-height: 0;
 }
