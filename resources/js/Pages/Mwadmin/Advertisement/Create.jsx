@@ -266,39 +266,32 @@ export default function AdvertisementCreate({ authUser = {} }) {
                                     <option value="0">In-Active</option>
                                 </select>
                             </div>
-                            <div className="mwadmin-form-grid-full mwadmin-user-profile-photo-row">
-                                <div>
+                            <div className="mwadmin-form-grid-full mwadmin-category-images-row">
+                                <div className="mwadmin-category-image-block mwadmin-category-image-block--full">
                                     <label>Image</label>
-                                    <p className="mwadmin-field-hint">
-                                        {MWADMIN_AD_IMAGE.w}px × {MWADMIN_AD_IMAGE.h}px — click to crop
-                                    </p>
-                                </div>
-                                <div className="mwadmin-category-image-field">
-                                    <div
-                                        className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--clickable mwadmin-fixed-aspect-preview"
-                                        style={{
-                                            aspectRatio: `${MWADMIN_AD_IMAGE.w} / ${MWADMIN_AD_IMAGE.h}`,
-                                            maxWidth: 560,
-                                        }}
-                                        role="button"
-                                        tabIndex={0}
-                                        aria-label="Open image editor"
-                                        onClick={() => setImgEditorOpen(true)}
-                                        onKeyDown={(ev) => {
-                                            if (ev.key === 'Enter' || ev.key === ' ') {
-                                                ev.preventDefault();
-                                                setImgEditorOpen(true);
-                                            }
-                                        }}
-                                    >
-                                        {imgPreview ? (
-                                            <img src={imgPreview} alt="" className="mwadmin-category-image-preview" />
-                                        ) : (
-                                            <div className="mwadmin-category-image-placeholder-card">
-                                                NO IMAGE
-                                                <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
-                                            </div>
-                                        )}
+                                    <div className="mwadmin-category-image-field">
+                                        <div
+                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--ad mwadmin-category-image-preview-wrap--clickable"
+                                            role="button"
+                                            tabIndex={0}
+                                            aria-label="Open image editor"
+                                            onClick={() => setImgEditorOpen(true)}
+                                            onKeyDown={(ev) => {
+                                                if (ev.key === 'Enter' || ev.key === ' ') {
+                                                    ev.preventDefault();
+                                                    setImgEditorOpen(true);
+                                                }
+                                            }}
+                                        >
+                                            {imgPreview ? (
+                                                <img src={imgPreview} alt="" className="mwadmin-category-image-preview" />
+                                            ) : (
+                                                <div className="mwadmin-category-image-placeholder-card">
+                                                    NO IMAGE AVAILABLE
+                                                    <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +311,6 @@ export default function AdvertisementCreate({ authUser = {} }) {
                     outputWidth={MWADMIN_AD_IMAGE.w}
                     outputHeight={MWADMIN_AD_IMAGE.h}
                     notify={notify}
-                    placeholderBlurb="AD IMAGE"
                     initialImageFile={imgSourceFile || form.img}
                     initialImageUrl={imgSourceFile || form.img ? null : imgPreview || null}
                     onApply={(file, meta) => setImageFromFile(file, meta)}

@@ -500,10 +500,7 @@ export default function NewslistingCreate({ authUser = {} }) {
 
                             <div className="mwadmin-form-grid-full mwadmin-category-images-row">
                                 <div className="mwadmin-category-image-block">
-                                    <label>Banner image</label>
-                                    <p className="mwadmin-field-hint">
-                                        {MWADMIN_NEWS_BANNER.w}px × {MWADMIN_NEWS_BANNER.h}px — click to crop
-                                    </p>
+                                    <label>Banner Image</label>
                                     <div className="mwadmin-category-image-field">
                                         <div
                                             className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--banner mwadmin-category-image-preview-wrap--clickable"
@@ -522,7 +519,7 @@ export default function NewslistingCreate({ authUser = {} }) {
                                                 <img src={bannerPickUrl} alt="" className="mwadmin-category-image-preview" />
                                             ) : (
                                                 <div className="mwadmin-category-image-placeholder-card">
-                                                    NO BANNER
+                                                    NO IMAGE AVAILABLE
                                                     <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
                                                 </div>
                                             )}
@@ -530,10 +527,7 @@ export default function NewslistingCreate({ authUser = {} }) {
                                     </div>
                                 </div>
                                 <div className="mwadmin-category-image-block">
-                                    <label>Cover image</label>
-                                    <p className="mwadmin-field-hint">
-                                        {MWADMIN_NEWS_COVER.w}px × {MWADMIN_NEWS_COVER.h}px — click to crop
-                                    </p>
+                                    <label>Cover Image</label>
                                     <div className="mwadmin-category-image-field">
                                         <div
                                             className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--box mwadmin-category-image-preview-wrap--clickable"
@@ -552,7 +546,7 @@ export default function NewslistingCreate({ authUser = {} }) {
                                                 <img src={coverPickUrl} alt="" className="mwadmin-category-image-preview" />
                                             ) : (
                                                 <div className="mwadmin-category-image-placeholder-card">
-                                                    NO COVER
+                                                    NO IMAGE AVAILABLE
                                                     <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
                                                 </div>
                                             )}
@@ -604,11 +598,10 @@ export default function NewslistingCreate({ authUser = {} }) {
                 <MwadminImageEditorModal
                     open={bannerEditorOpen}
                     onClose={() => setBannerEditorOpen(false)}
-                    title="News banner image"
+                    title="Banner Image"
                     outputWidth={MWADMIN_NEWS_BANNER.w}
                     outputHeight={MWADMIN_NEWS_BANNER.h}
                     notify={notify}
-                    placeholderBlurb="BANNER IMAGE"
                     initialImageFile={bannerSourceFile || bannerFile}
                     initialImageUrl={bannerSourceFile || bannerFile ? null : bannerPickUrl || null}
                     onApply={(file, meta) => setBannerFromFile(file, meta)}
@@ -616,11 +609,10 @@ export default function NewslistingCreate({ authUser = {} }) {
                 <MwadminImageEditorModal
                     open={coverEditorOpen}
                     onClose={() => setCoverEditorOpen(false)}
-                    title="News cover image"
+                    title="Cover Image"
                     outputWidth={MWADMIN_NEWS_COVER.w}
                     outputHeight={MWADMIN_NEWS_COVER.h}
                     notify={notify}
-                    placeholderBlurb="COVER IMAGE"
                     initialImageFile={coverSourceFile || coverFile}
                     initialImageUrl={coverSourceFile || coverFile ? null : coverPickUrl || null}
                     onApply={(file, meta) => setCoverFromFile(file, meta)}

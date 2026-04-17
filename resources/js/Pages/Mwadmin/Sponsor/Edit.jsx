@@ -286,35 +286,32 @@ export default function SponsorEdit({ authUser = {}, sponsorId }) {
                                     <option value="0">In-Active</option>
                                 </select>
                             </div>
-                            <div className="mwadmin-form-grid-full mwadmin-user-profile-photo-row">
-                                <div>
+                            <div className="mwadmin-form-grid-full mwadmin-category-images-row">
+                                <div className="mwadmin-category-image-block mwadmin-category-image-block--full">
                                     <label>Logo</label>
-                                    <p className="mwadmin-field-hint">
-                                        Image size — {SPONSOR_LOGO_EXPORT.w}px × {SPONSOR_LOGO_EXPORT.h}px
-                                    </p>
-                                </div>
-                                <div className="mwadmin-category-image-field">
-                                    <div
-                                        className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--box mwadmin-sponsor-logo-preview mwadmin-category-image-preview-wrap--clickable mwadmin-user-profile-preview"
-                                        role="button"
-                                        tabIndex={0}
-                                        aria-label="Open logo editor"
-                                        onClick={() => setLogoEditorOpen(true)}
-                                        onKeyDown={(ev) => {
-                                            if (ev.key === 'Enter' || ev.key === ' ') {
-                                                ev.preventDefault();
-                                                setLogoEditorOpen(true);
-                                            }
-                                        }}
-                                    >
-                                        {logoDisplaySrc ? (
-                                            <img src={logoDisplaySrc} alt="" className="mwadmin-category-image-preview" />
-                                        ) : (
-                                            <div className="mwadmin-category-image-placeholder-card">
-                                                NO LOGO
-                                                <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
-                                            </div>
-                                        )}
+                                    <div className="mwadmin-category-image-field">
+                                        <div
+                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--box mwadmin-sponsor-logo-preview mwadmin-category-image-preview-wrap--clickable"
+                                            role="button"
+                                            tabIndex={0}
+                                            aria-label="Open logo editor"
+                                            onClick={() => setLogoEditorOpen(true)}
+                                            onKeyDown={(ev) => {
+                                                if (ev.key === 'Enter' || ev.key === ' ') {
+                                                    ev.preventDefault();
+                                                    setLogoEditorOpen(true);
+                                                }
+                                            }}
+                                        >
+                                            {logoDisplaySrc ? (
+                                                <img src={logoDisplaySrc} alt="" className="mwadmin-category-image-preview" />
+                                            ) : (
+                                                <div className="mwadmin-category-image-placeholder-card">
+                                                    NO IMAGE AVAILABLE
+                                                    <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -334,7 +331,6 @@ export default function SponsorEdit({ authUser = {}, sponsorId }) {
                     outputWidth={SPONSOR_LOGO_EXPORT.w}
                     outputHeight={SPONSOR_LOGO_EXPORT.h}
                     notify={notify}
-                    placeholderBlurb="SPONSOR LOGO GOES HERE"
                     initialImageFile={logoSourceFile || logoFile}
                     initialImageUrl={logoSourceFile || logoFile ? null : logoDisplaySrc || null}
                     onApply={(file, meta) => setLogoFromFile(file, meta)}

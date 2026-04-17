@@ -237,30 +237,32 @@ export default function UsersEdit({ authUser = {}, userId }) {
                                     </div>
                                 </div>
 
-                                <div className="mwadmin-form-grid-full mwadmin-user-profile-photo-row">
-                                    <label>Profile Photo</label>
-                                    <div className="mwadmin-category-image-field">
-                                        <div
-                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--box mwadmin-category-image-preview-wrap--clickable mwadmin-user-profile-preview"
-                                            role="button"
-                                            tabIndex={0}
-                                            aria-label="Open profile photo editor"
-                                            onClick={() => setProfileEditorOpen(true)}
-                                            onKeyDown={(ev) => {
-                                                if (ev.key === 'Enter' || ev.key === ' ') {
-                                                    ev.preventDefault();
-                                                    setProfileEditorOpen(true);
-                                                }
-                                            }}
-                                        >
-                                            {profilePreview ? (
-                                                <img src={profilePreview} alt="" className="mwadmin-category-image-preview" />
-                                            ) : (
-                                                <div className="mwadmin-category-image-placeholder-card">
-                                                    NO IMAGE
-                                                    <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
-                                                </div>
-                                            )}
+                                <div className="mwadmin-form-grid-full mwadmin-category-images-row">
+                                    <div className="mwadmin-category-image-block mwadmin-category-image-block--full">
+                                        <label>Profile Photo</label>
+                                        <div className="mwadmin-category-image-field">
+                                            <div
+                                                className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--box mwadmin-category-image-preview-wrap--clickable"
+                                                role="button"
+                                                tabIndex={0}
+                                                aria-label="Open profile photo editor"
+                                                onClick={() => setProfileEditorOpen(true)}
+                                                onKeyDown={(ev) => {
+                                                    if (ev.key === 'Enter' || ev.key === ' ') {
+                                                        ev.preventDefault();
+                                                        setProfileEditorOpen(true);
+                                                    }
+                                                }}
+                                            >
+                                                {profilePreview ? (
+                                                    <img src={profilePreview} alt="" className="mwadmin-category-image-preview" />
+                                                ) : (
+                                                    <div className="mwadmin-category-image-placeholder-card">
+                                                        NO IMAGE AVAILABLE
+                                                        <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
