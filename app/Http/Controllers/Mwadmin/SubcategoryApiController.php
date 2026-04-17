@@ -41,7 +41,9 @@ class SubcategoryApiController extends Controller
             'ignore_id' => ['nullable', 'integer'],
         ]);
 
-        $query = Subcategory::query()->where('sort', $validated['sort']);
+        $query = Subcategory::query()
+            ->where('sort', $validated['sort'])
+            ->where('status', 1);
         if (!empty($validated['ignore_id'])) {
             $query->where('id', '!=', (int) $validated['ignore_id']);
         }
@@ -126,7 +128,11 @@ class SubcategoryApiController extends Controller
             'category_id' => ['required', 'integer', Rule::exists('categorymst', 'id')->where('status', 1)],
             'subcat_code' => ['required', 'string', 'max:25', 'unique:subcategorymst,subcat_code'],
             'color' => ['required', 'string', 'max:20'],
-            'sort' => ['required', 'integer', 'unique:subcategorymst,sort'],
+            'sort' => [
+                'required',
+                'integer',
+                Rule::unique('subcategorymst', 'sort')->where(fn ($query) => $query->where('status', 1)),
+            ],
             'status' => ['required', 'in:0,1'],
             'banner_img' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
             'box_img' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
@@ -178,7 +184,11 @@ class SubcategoryApiController extends Controller
             'category_id' => ['required', 'integer', 'exists:categorymst,id'],
             'subcat_code' => ['required', 'string', 'max:25', Rule::unique('subcategorymst', 'subcat_code')->ignore($id)],
             'color' => ['required', 'string', 'max:20'],
-            'sort' => ['required', 'integer', Rule::unique('subcategorymst', 'sort')->ignore($id)],
+            'sort' => [
+                'required',
+                'integer',
+                Rule::unique('subcategorymst', 'sort')->ignore($id)->where(fn ($query) => $query->where('status', 1)),
+            ],
             'status' => ['required', 'in:0,1'],
             'banner_img' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
             'box_img' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
