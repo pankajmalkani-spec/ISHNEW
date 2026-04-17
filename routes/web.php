@@ -63,21 +63,21 @@ Route::prefix('mwadmin')->group(function (): void {
 
             Route::get('/category/create', function (Request $request) use ($authProps) {
                 return Inertia::render('Mwadmin/Category/Create', $authProps($request));
-            })->name('mwadmin.category.create');
+            })->middleware('mwadmin.canFlag:category,allow_add')->name('mwadmin.category.create');
 
             Route::get('/category/{id}/edit', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Category/Edit', array_merge(
                     $authProps($request),
                     ['categoryId' => $id]
                 ));
-            })->name('mwadmin.category.edit');
+            })->middleware('mwadmin.canFlag:category,allow_edit')->name('mwadmin.category.edit');
 
             Route::get('/category/{id}/view', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Category/View', array_merge(
                     $authProps($request),
                     ['categoryId' => $id]
                 ));
-            })->name('mwadmin.category.view');
+            })->middleware('mwadmin.canFlag:category,allow_view')->name('mwadmin.category.view');
         });
 
         Route::middleware('mwadmin.can:subcategory')->group(function () use ($authProps): void {
@@ -87,21 +87,21 @@ Route::prefix('mwadmin')->group(function (): void {
 
             Route::get('/subcategory/create', function (Request $request) use ($authProps) {
                 return Inertia::render('Mwadmin/Subcategory/Create', $authProps($request));
-            })->name('mwadmin.subcategory.create');
+            })->middleware('mwadmin.canFlag:subcategory,allow_add')->name('mwadmin.subcategory.create');
 
             Route::get('/subcategory/{id}/edit', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Subcategory/Edit', array_merge(
                     $authProps($request),
                     ['subcategoryId' => $id]
                 ));
-            })->name('mwadmin.subcategory.edit');
+            })->middleware('mwadmin.canFlag:subcategory,allow_edit')->name('mwadmin.subcategory.edit');
 
             Route::get('/subcategory/{id}/view', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Subcategory/View', array_merge(
                     $authProps($request),
                     ['subcategoryId' => $id]
                 ));
-            })->name('mwadmin.subcategory.view');
+            })->middleware('mwadmin.canFlag:subcategory,allow_view')->name('mwadmin.subcategory.view');
         });
 
         Route::middleware('mwadmin.can:sponsorcategory')->group(function () use ($authProps): void {
@@ -111,21 +111,21 @@ Route::prefix('mwadmin')->group(function (): void {
 
             Route::get('/sponsorcategory/create', function (Request $request) use ($authProps) {
                 return Inertia::render('Mwadmin/Sponsorcategory/Create', $authProps($request));
-            })->name('mwadmin.sponsorcategory.create');
+            })->middleware('mwadmin.canFlag:sponsorcategory,allow_add')->name('mwadmin.sponsorcategory.create');
 
             Route::get('/sponsorcategory/{id}/edit', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Sponsorcategory/Edit', array_merge(
                     $authProps($request),
                     ['sponsorcategoryId' => $id]
                 ));
-            })->name('mwadmin.sponsorcategory.edit');
+            })->middleware('mwadmin.canFlag:sponsorcategory,allow_edit')->name('mwadmin.sponsorcategory.edit');
 
             Route::get('/sponsorcategory/{id}/view', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Sponsorcategory/View', array_merge(
                     $authProps($request),
                     ['sponsorcategoryId' => $id]
                 ));
-            })->name('mwadmin.sponsorcategory.view');
+            })->middleware('mwadmin.canFlag:sponsorcategory,allow_view')->name('mwadmin.sponsorcategory.view');
         });
 
         Route::middleware('mwadmin.can:users')->group(function () use ($authProps): void {
@@ -135,21 +135,21 @@ Route::prefix('mwadmin')->group(function (): void {
 
             Route::get('/users/create', function (Request $request) use ($authProps) {
                 return Inertia::render('Mwadmin/Users/Create', $authProps($request));
-            })->name('mwadmin.users.create');
+            })->middleware('mwadmin.canFlag:users,allow_add')->name('mwadmin.users.create');
 
             Route::get('/users/{id}/edit', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Users/Edit', array_merge(
                     $authProps($request),
                     ['userId' => $id]
                 ));
-            })->name('mwadmin.users.edit');
+            })->middleware('mwadmin.canFlag:users,allow_edit')->name('mwadmin.users.edit');
 
             Route::get('/users/{id}/view', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Users/View', array_merge(
                     $authProps($request),
                     ['userId' => $id]
                 ));
-            })->name('mwadmin.users.view');
+            })->middleware('mwadmin.canFlag:users,allow_view')->name('mwadmin.users.view');
         });
 
         Route::middleware('mwadmin.can:roles')->group(function () use ($authProps): void {
@@ -159,21 +159,21 @@ Route::prefix('mwadmin')->group(function (): void {
 
             Route::get('/roles/create', function (Request $request) use ($authProps) {
                 return Inertia::render('Mwadmin/Roles/Create', $authProps($request));
-            })->name('mwadmin.roles.create');
+            })->middleware('mwadmin.canFlag:roles,allow_add')->name('mwadmin.roles.create');
 
             Route::get('/roles/{id}/edit', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Roles/Edit', array_merge(
                     $authProps($request),
                     ['roleId' => $id]
                 ));
-            })->name('mwadmin.roles.edit');
+            })->middleware('mwadmin.canFlag:roles,allow_edit')->name('mwadmin.roles.edit');
 
             Route::get('/roles/{id}/view', function (Request $request, int $id) use ($authProps) {
                 return Inertia::render('Mwadmin/Roles/View', array_merge(
                     $authProps($request),
                     ['roleId' => $id]
                 ));
-            })->name('mwadmin.roles.view');
+            })->middleware('mwadmin.canFlag:roles,allow_view')->name('mwadmin.roles.view');
         });
 
         Route::middleware('mwadmin.can:newsletter')->group(function () use ($authProps): void {
@@ -184,8 +184,8 @@ Route::prefix('mwadmin')->group(function (): void {
 
         Route::middleware('mwadmin.can:newslisting')->group(function () use ($authProps): void {
             Route::get('/newslisting', fn (Request $request) => Inertia::render('Mwadmin/Newslisting/Index', $authProps($request)))->name('mwadmin.newslisting.index');
-            Route::get('/newslisting/create', fn (Request $request) => Inertia::render('Mwadmin/Newslisting/Create', $authProps($request)))->name('mwadmin.newslisting.create');
-            Route::get('/newslisting/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Newslisting/Edit', array_merge($authProps($request), ['newslistingId' => $id])))->name('mwadmin.newslisting.edit');
+            Route::get('/newslisting/create', fn (Request $request) => Inertia::render('Mwadmin/Newslisting/Create', $authProps($request)))->middleware('mwadmin.canFlag:newslisting,allow_add')->name('mwadmin.newslisting.create');
+            Route::get('/newslisting/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Newslisting/Edit', array_merge($authProps($request), ['newslistingId' => $id])))->middleware('mwadmin.canFlag:newslisting,allow_edit')->name('mwadmin.newslisting.edit');
         });
 
         Route::middleware('mwadmin.can:schedule')->group(function () use ($authProps): void {
@@ -194,35 +194,35 @@ Route::prefix('mwadmin')->group(function (): void {
 
         Route::middleware('mwadmin.can:newsource')->group(function () use ($authProps): void {
             Route::get('/newsource', fn (Request $request) => Inertia::render('Mwadmin/Newsource/Index', $authProps($request)))->name('mwadmin.newsource.index');
-            Route::get('/newsource/create', fn (Request $request) => Inertia::render('Mwadmin/Newsource/Create', $authProps($request)))->name('mwadmin.newsource.create');
-            Route::get('/newsource/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Newsource/Edit', array_merge($authProps($request), ['newsourceId' => $id])))->name('mwadmin.newsource.edit');
+            Route::get('/newsource/create', fn (Request $request) => Inertia::render('Mwadmin/Newsource/Create', $authProps($request)))->middleware('mwadmin.canFlag:newsource,allow_add')->name('mwadmin.newsource.create');
+            Route::get('/newsource/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Newsource/Edit', array_merge($authProps($request), ['newsourceId' => $id])))->middleware('mwadmin.canFlag:newsource,allow_edit')->name('mwadmin.newsource.edit');
         });
 
         Route::middleware('mwadmin.can:designation')->group(function () use ($authProps): void {
             Route::get('/designation', fn (Request $request) => Inertia::render('Mwadmin/Designation/Index', $authProps($request)))->name('mwadmin.designation.index');
-            Route::get('/designation/create', fn (Request $request) => Inertia::render('Mwadmin/Designation/Create', $authProps($request)))->name('mwadmin.designation.create');
-            Route::get('/designation/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Designation/Edit', array_merge($authProps($request), ['designationId' => $id])))->name('mwadmin.designation.edit');
+            Route::get('/designation/create', fn (Request $request) => Inertia::render('Mwadmin/Designation/Create', $authProps($request)))->middleware('mwadmin.canFlag:designation,allow_add')->name('mwadmin.designation.create');
+            Route::get('/designation/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Designation/Edit', array_merge($authProps($request), ['designationId' => $id])))->middleware('mwadmin.canFlag:designation,allow_edit')->name('mwadmin.designation.edit');
         });
 
         Route::middleware('mwadmin.can:sponsor')->group(function () use ($authProps): void {
             Route::get('/sponsor', fn (Request $request) => Inertia::render('Mwadmin/Sponsor/Index', $authProps($request)))->name('mwadmin.sponsor.index');
-            Route::get('/sponsor/create', fn (Request $request) => Inertia::render('Mwadmin/Sponsor/Create', $authProps($request)))->name('mwadmin.sponsor.create');
-            Route::get('/sponsor/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Sponsor/Edit', array_merge($authProps($request), ['sponsorId' => $id])))->name('mwadmin.sponsor.edit');
-            Route::get('/sponsor/{id}/view', fn (Request $request, int $id) => Inertia::render('Mwadmin/Sponsor/View', array_merge($authProps($request), ['sponsorId' => $id])))->name('mwadmin.sponsor.view');
+            Route::get('/sponsor/create', fn (Request $request) => Inertia::render('Mwadmin/Sponsor/Create', $authProps($request)))->middleware('mwadmin.canFlag:sponsor,allow_add')->name('mwadmin.sponsor.create');
+            Route::get('/sponsor/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Sponsor/Edit', array_merge($authProps($request), ['sponsorId' => $id])))->middleware('mwadmin.canFlag:sponsor,allow_edit')->name('mwadmin.sponsor.edit');
+            Route::get('/sponsor/{id}/view', fn (Request $request, int $id) => Inertia::render('Mwadmin/Sponsor/View', array_merge($authProps($request), ['sponsorId' => $id])))->middleware('mwadmin.canFlag:sponsor,allow_view')->name('mwadmin.sponsor.view');
         });
 
         Route::middleware('mwadmin.can:advertisement')->group(function () use ($authProps): void {
             Route::get('/advertisement', fn (Request $request) => Inertia::render('Mwadmin/Advertisement/Index', $authProps($request)))->name('mwadmin.advertisement.index');
-            Route::get('/advertisement/create', fn (Request $request) => Inertia::render('Mwadmin/Advertisement/Create', $authProps($request)))->name('mwadmin.advertisement.create');
-            Route::get('/advertisement/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Advertisement/Edit', array_merge($authProps($request), ['advertisementId' => $id])))->name('mwadmin.advertisement.edit');
-            Route::get('/advertisement/{id}/view', fn (Request $request, int $id) => Inertia::render('Mwadmin/Advertisement/View', array_merge($authProps($request), ['advertisementId' => $id])))->name('mwadmin.advertisement.view');
+            Route::get('/advertisement/create', fn (Request $request) => Inertia::render('Mwadmin/Advertisement/Create', $authProps($request)))->middleware('mwadmin.canFlag:advertisement,allow_add')->name('mwadmin.advertisement.create');
+            Route::get('/advertisement/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Advertisement/Edit', array_merge($authProps($request), ['advertisementId' => $id])))->middleware('mwadmin.canFlag:advertisement,allow_edit')->name('mwadmin.advertisement.edit');
+            Route::get('/advertisement/{id}/view', fn (Request $request, int $id) => Inertia::render('Mwadmin/Advertisement/View', array_merge($authProps($request), ['advertisementId' => $id])))->middleware('mwadmin.canFlag:advertisement,allow_view')->name('mwadmin.advertisement.view');
         });
 
         Route::middleware('mwadmin.can:flowchart')->group(function () use ($authProps): void {
             Route::get('/flowchart', fn (Request $request) => Inertia::render('Mwadmin/Flowchart/Index', $authProps($request)))->name('mwadmin.flowchart.index');
-            Route::get('/flowchart/create', fn (Request $request) => Inertia::render('Mwadmin/Flowchart/Create', $authProps($request)))->name('mwadmin.flowchart.create');
-            Route::get('/flowchart/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Flowchart/Edit', array_merge($authProps($request), ['flowchartId' => $id])))->name('mwadmin.flowchart.edit');
-            Route::get('/flowchart/{id}/view', fn (Request $request, int $id) => Inertia::render('Mwadmin/Flowchart/View', array_merge($authProps($request), ['flowchartId' => $id])))->name('mwadmin.flowchart.view');
+            Route::get('/flowchart/create', fn (Request $request) => Inertia::render('Mwadmin/Flowchart/Create', $authProps($request)))->middleware('mwadmin.canFlag:flowchart,allow_add')->name('mwadmin.flowchart.create');
+            Route::get('/flowchart/{id}/edit', fn (Request $request, int $id) => Inertia::render('Mwadmin/Flowchart/Edit', array_merge($authProps($request), ['flowchartId' => $id])))->middleware('mwadmin.canFlag:flowchart,allow_edit')->name('mwadmin.flowchart.edit');
+            Route::get('/flowchart/{id}/view', fn (Request $request, int $id) => Inertia::render('Mwadmin/Flowchart/View', array_merge($authProps($request), ['flowchartId' => $id])))->middleware('mwadmin.canFlag:flowchart,allow_view')->name('mwadmin.flowchart.view');
         });
     });
 });

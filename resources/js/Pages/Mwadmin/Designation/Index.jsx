@@ -95,6 +95,11 @@ export default function DesignationIndex({ authUser = {} }) {
                 cellRenderer: (params) => (
                     <MwadminActionsDropdown
                         flags={{ edit: perms.edit, deactivate: perms.delete }}
+                        noActionsNode={
+                            <span className="mwadmin-grid-action-locked" title="No action rights for this role">
+                                <span aria-hidden>🔒</span> Locked
+                            </span>
+                        }
                         onAction={(a) => handleAction(params.data.id, a)}
                     />
                 ),

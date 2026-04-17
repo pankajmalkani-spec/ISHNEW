@@ -105,6 +105,7 @@ export default function SponsorCategoryIndex({ authUser = {} }) {
                             edit: perms.edit,
                             deactivate: perms.deactivate,
                         }}
+                        lockIfOnlyView
                         onAction={(a) => handleAction(params.data.id, a)}
                     />
                 ),

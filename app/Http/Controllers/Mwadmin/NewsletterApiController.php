@@ -73,7 +73,8 @@ class NewsletterApiController extends Controller
      */
     public function export(Request $request): Response
     {
-        if ($deny = $this->mwadminDenyUnless($request, 'newsletter', 'allow_export')) {
+        // Legacy parity: newsletter export is allowed with module access.
+        if ($deny = $this->mwadminDenyUnless($request, 'newsletter', 'allow_access')) {
             return $deny;
         }
 

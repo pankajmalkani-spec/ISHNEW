@@ -1,11 +1,24 @@
 /**
  * Row-level Actions &lt;select&gt; shown only for operations the user may perform (mwadmin module flags).
  */
-export default function MwadminActionsDropdown({ onAction, flags = {} }) {
+export default function MwadminActionsDropdown({
+    onAction,
+    flags = {},
+    noActionsLabel = 'Locked',
+    noActionsNode = null,
+    lockIfOnlyView = false,
+}) {
     const { view, edit, delete: canDel, resetPassword, deactivate } = flags;
-    const hasAny = !!(view || edit || canDel || resetPassword || deactivate);
-    if (!hasAny) {
-        return <span className="mwadmin-grid-action-muted">—</span>;
+    const hasMutatingAction = !!(edit || canDel || resetPassword || deactivate);
+    const hasAny = !!(view || hasMutatingAction);
+    const shouldLock = !hasAny || (lockIfOnlyView && !!view && !hasMutatingAction);
+    if (shouldLock) {
+        if (noActionsNode) return noActionsNode;
+        return (
+            <span className="mwadmin-grid-action-locked" title="No action rights for this role">
+                <span aria-hidden>🔒</span> {noActionsLabel}
+            </span>
+        );
     }
     return (
         <select

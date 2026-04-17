@@ -3928,3 +3928,16 @@ html.mwadmin-ui-dark .mwadmin-modal-timed-hint {
     height: 16px;
     cursor: pointer;
 }
+
+.mwadmin-grid-action-locked {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7f8c8d;
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-grid-action-locked {
+    color: #94a3b8;
+}

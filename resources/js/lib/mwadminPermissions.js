@@ -37,13 +37,13 @@ export function moduleFlags(authUser, moduleKey) {
 
 export function canAccessModule(authUser, moduleKey) {
     const f = moduleFlags(authUser, moduleKey);
-    return f.allow_access === 1 || f.allow_view === 1;
+    return f.allow_access === 1;
 }
 
 /** Detail / view screen */
 export function canViewDetail(authUser, moduleKey) {
     const f = moduleFlags(authUser, moduleKey);
-    return f.allow_view === 1 || f.allow_access === 1;
+    return f.allow_view === 1;
 }
 
 export function canAdd(authUser, moduleKey) {

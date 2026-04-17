@@ -17,9 +17,6 @@ trait AuthorizesMwadminPermissions
             return true;
         }
         $row = $session['modules'][$module] ?? [];
-        if ($flag === 'allow_view') {
-            return ! empty($row['allow_view']) || ! empty($row['allow_access']);
-        }
 
         return ! empty($row[$flag]);
     }

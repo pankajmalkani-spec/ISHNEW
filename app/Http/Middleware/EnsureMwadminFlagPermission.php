@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureMwadminModulePermission
+class EnsureMwadminFlagPermission
 {
     public function __construct(
         private readonly MwadminAccessService $accessService,
@@ -17,9 +17,14 @@ class EnsureMwadminModulePermission
 
     /**
      * @param  string  $module  access_modules.modulename (e.g. category, dashboard)
+     * @param  string  $flag    access_role_modules flag (e.g. allow_view, allow_add, allow_edit)
      */
-    public function handle(Request $request, Closure $next, string $module): Response|RedirectResponse|JsonResponse
-    {
+    public function handle(
+        Request $request,
+        Closure $next,
+        string $module,
+        string $flag
+    ): Response|RedirectResponse|JsonResponse {
         $session = $request->session()->get('ishnews_session');
         if (! is_array($session) || empty($session['validated'])) {
             if ($request->is('api/mwadmin', 'api/mwadmin/*') || $request->expectsJson()) {
@@ -40,20 +45,18 @@ class EnsureMwadminModulePermission
 
         $modules = $session['modules'] ?? [];
         $flags = $modules[$module] ?? null;
-        // Legacy parity: module entry/menu require allow_access.
-        $allowed = is_array($flags) && ! empty($flags['allow_access']);
+        $allowed = is_array($flags) && ! empty($flags[$flag]);
 
         if ($allowed) {
             return $next($request);
         }
 
         if ($request->is('api/mwadmin', 'api/mwadmin/*') || $request->expectsJson()) {
-            return response()->json(['message' => 'You do not have access to this section.'], 403);
+            return response()->json(['message' => 'Forbidden.'], 403);
         }
 
-        // Never send users to /dashboard when they lack access — that route re-checks the same permission and loops.
         return redirect()
             ->route('mwadmin.access_denied')
-            ->with('error', 'You do not have access to that section.');
+            ->with('error', 'You do not have access to that action.');
     }
 }
