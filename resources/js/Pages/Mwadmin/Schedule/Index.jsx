@@ -7,7 +7,7 @@ import { Calendar, Views } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
-import { canEdit } from '../../../lib/mwadminPermissions';
+import { canAccessModule, canEdit } from '../../../lib/mwadminPermissions';
 import { buildScheduleCalendarEvents } from './scheduleCalendarEvents';
 import { scheduleCalendarLocalizer } from './scheduleCalendarLocalizer';
 
@@ -34,7 +34,9 @@ export default function ScheduleIndex({ authUser = {} }) {
     const dialog = useClassicDialog();
     const reduceMotion = useReducedMotion();
     const canUpdateStatus = canEdit(authUser, 'schedule');
-    const canOpenManageContent = canEdit(authUser, 'newslisting');
+    /** Same bar as sidebar: must reach News Listing, and edit matches /newslisting/{id}/edit. */
+    const canOpenManageContent =
+        canAccessModule(authUser, 'newslisting') && canEdit(authUser, 'newslisting');
     const [loading, setLoading] = useState(true);
     const [weekStart, setWeekStart] = useState('');
     const [dateFilter, setDateFilter] = useState('');
