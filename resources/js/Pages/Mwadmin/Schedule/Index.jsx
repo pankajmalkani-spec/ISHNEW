@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import axios from 'axios';
 import { format, startOfWeek } from 'date-fns';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
@@ -7,7 +7,7 @@ import { Calendar, Views } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
-import { canAccessModule, canEdit } from '../../../lib/mwadminPermissions';
+import { canEdit } from '../../../lib/mwadminPermissions';
 import { buildScheduleCalendarEvents } from './scheduleCalendarEvents';
 import { scheduleCalendarLocalizer } from './scheduleCalendarLocalizer';
 
@@ -34,9 +34,6 @@ export default function ScheduleIndex({ authUser = {} }) {
     const dialog = useClassicDialog();
     const reduceMotion = useReducedMotion();
     const canUpdateStatus = canEdit(authUser, 'schedule');
-    /** Same bar as sidebar: must reach News Listing, and edit matches /newslisting/{id}/edit. */
-    const canOpenManageContent =
-        canAccessModule(authUser, 'newslisting') && canEdit(authUser, 'newslisting');
     const [loading, setLoading] = useState(true);
     const [weekStart, setWeekStart] = useState('');
     const [dateFilter, setDateFilter] = useState('');
@@ -436,14 +433,6 @@ export default function ScheduleIndex({ authUser = {} }) {
                                 <button type="button" className="mwadmin-news-create-cancel" onClick={() => setModal(null)}>
                                     Cancel
                                 </button>
-                                {canOpenManageContent ? (
-                                    <Link
-                                        href={`/mwadmin/newslisting/${modal.id}/edit`}
-                                        className="mwadmin-schedule-edit-link"
-                                    >
-                                        Open in Manage Content
-                                    </Link>
-                                ) : null}
                             </div>
                         </div>
                     </div>

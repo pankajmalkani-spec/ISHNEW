@@ -2600,14 +2600,6 @@ a.mwadmin-btn-primary {
     cursor: pointer;
 }
 
-.mwadmin-schedule-edit-link {
-    margin-left: auto;
-    font-size: 13px;
-    font-weight: 600;
-    color: #0a6ebd;
-    text-decoration: underline;
-}
-
 /* Dark theme: dashboard, schedule, news flows (avoid white inline panels) */
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-advanced-search-grid label,
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-advanced-search-field-heading {
@@ -2771,10 +2763,6 @@ a.mwadmin-btn-primary {
     background: #1e293b;
     border-color: #475569;
     color: #e2e8f0;
-}
-
-.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-edit-link {
-    color: #38bdf8;
 }
 
 /* Classic dialog: multi-line validation messages */
