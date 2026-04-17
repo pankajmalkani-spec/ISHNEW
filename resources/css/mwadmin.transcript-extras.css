@@ -2105,6 +2105,165 @@ a.mwadmin-btn-primary {
     background: rgba(49, 184, 165, 0.12);
 }
 
+/* Light theme: warm beige week grid (override RBC default #ddd greys) */
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc {
+    --mwadmin-rbc-l-border: #e8dfd2;
+    --mwadmin-rbc-l-border-strong: #dacbb8;
+    --mwadmin-rbc-l-surface: #fffefb;
+    --mwadmin-rbc-l-surface-2: #faf6f0;
+    --mwadmin-rbc-l-text: #3f3328;
+    --mwadmin-rbc-l-muted: #6b5d4d;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-toolbar {
+    margin-bottom: 0;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-toolbar .rbc-toolbar-label {
+    color: var(--mwadmin-rbc-l-text);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-toolbar button:hover,
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-toolbar button:focus {
+    background: #fffefb !important;
+    border-color: var(--mwadmin-rbc-l-border-strong) !important;
+    color: var(--mwadmin-rbc-l-text) !important;
+    box-shadow: 0 1px 3px rgba(58, 44, 32, 0.08) !important;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-toolbar button.rbc-active:hover,
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-toolbar button.rbc-active:focus {
+    background: linear-gradient(180deg, #3fd5c0 0%, #31b8a5 100%) !important;
+    border-color: rgba(15, 118, 110, 0.45) !important;
+    color: #fff !important;
+    box-shadow: 0 1px 3px rgba(15, 118, 110, 0.25) !important;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-view {
+    border: 1px solid var(--mwadmin-rbc-l-border);
+    background: var(--mwadmin-rbc-l-surface);
+    border-radius: 0 0 10px 10px;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-header {
+    border-bottom: 1px solid var(--mwadmin-rbc-l-border);
+    background: linear-gradient(180deg, #fffefb 0%, #faf6f0 100%);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-header-content {
+    border-left-color: var(--mwadmin-rbc-l-border);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-header {
+    padding: 10px 6px;
+    border-bottom-color: var(--mwadmin-rbc-l-border);
+    color: var(--mwadmin-rbc-l-text);
+    font-size: 12px;
+    font-weight: 700;
+    background: transparent;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-header + .rbc-header {
+    border-left-color: var(--mwadmin-rbc-l-border);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-content {
+    border-top: 1px solid var(--mwadmin-rbc-l-border-strong);
+    background: var(--mwadmin-rbc-l-surface);
+    scrollbar-color: #c9b8a4 #fffefb;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-content::-webkit-scrollbar-track {
+    background: #fffefb;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-content::-webkit-scrollbar-thumb {
+    background: #d4c4b2;
+    border-radius: 4px;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-gutter {
+    background: var(--mwadmin-rbc-l-surface-2);
+    border-right: 1px solid var(--mwadmin-rbc-l-border);
+    color: var(--mwadmin-rbc-l-muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-gutter .rbc-timeslot-group {
+    border-bottom-color: rgba(218, 203, 184, 0.85);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-label {
+    padding-right: 8px;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-day-bg + .rbc-day-bg {
+    border-left-color: var(--mwadmin-rbc-l-border);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-today {
+    background: linear-gradient(
+        180deg,
+        rgba(63, 213, 192, 0.2) 0%,
+        rgba(255, 254, 251, 0.95) 72%
+    );
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-day-slot .rbc-time-slot {
+    border-top-color: rgba(232, 223, 210, 0.9);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-timeslot-group {
+    border-bottom-color: rgba(218, 203, 184, 0.75);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-time-column .rbc-day-slot {
+    background: rgba(255, 254, 251, 0.65);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-off-range {
+    color: #a89888;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-off-range-bg {
+    background: #f3ede6;
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-current-time-indicator {
+    background-color: #e11d48;
+    height: 2px;
+    box-shadow: 0 0 8px rgba(225, 29, 72, 0.35);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-agenda-view {
+    background: var(--mwadmin-rbc-l-surface);
+    color: var(--mwadmin-rbc-l-text);
+    border-color: var(--mwadmin-rbc-l-border);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-agenda-view table {
+    border-color: var(--mwadmin-rbc-l-border);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-agenda-date-cell,
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc .rbc-agenda-time-cell {
+    color: var(--mwadmin-rbc-l-muted);
+}
+
+.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-schedule-rbc-empty {
+    color: var(--mwadmin-rbc-l-muted);
+    background: rgba(63, 213, 192, 0.12);
+    border-bottom-color: var(--mwadmin-rbc-l-border);
+}
+
 /* Dark theme: full week grid polish (time gutter, slots, today column, toolbar label) */
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-rbc {
     --mwadmin-rbc-border: #2a3344;
