@@ -2847,7 +2847,8 @@ a.mwadmin-btn-primary {
     }
 
     .mwadmin-category-images-row .mwadmin-category-image-preview-wrap--banner,
-    .mwadmin-category-images-row .mwadmin-category-image-preview-wrap--box {
+    .mwadmin-category-images-row
+        .mwadmin-category-image-preview-wrap--box:not(.mwadmin-user-profile-preview) {
         flex: 1 1 auto;
         aspect-ratio: unset;
         min-height: clamp(200px, 28vw, 320px);
@@ -2947,6 +2948,19 @@ a.mwadmin-btn-primary {
     aspect-ratio: 196 / 160;
     width: 100%;
     max-width: min(280px, 100%);
+}
+
+/* User profile photo: same square export intent as --box, but never span full viewport width */
+.mwadmin-category-image-preview-wrap--box.mwadmin-user-profile-preview {
+    width: 100%;
+    max-width: min(220px, 100%);
+    aspect-ratio: 1 / 1;
+}
+
+.mwadmin-user-profile-preview .mwadmin-category-image-placeholder-card {
+    padding: 16px 12px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
 }
 
 /* Single full-width block inside the two-column image grid (ad image, profile photo) */

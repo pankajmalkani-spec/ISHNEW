@@ -224,7 +224,7 @@ export default function UsersCreate({ authUser = {} }) {
                                     <label>Profile Photo</label>
                                     <div className="mwadmin-category-image-field">
                                         <div
-                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--box mwadmin-category-image-preview-wrap--clickable"
+                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--box mwadmin-user-profile-preview mwadmin-category-image-preview-wrap--clickable"
                                             role="button"
                                             tabIndex={0}
                                             aria-label="Open profile photo editor"
