@@ -1,20 +1,39 @@
-<?php $Base_url = url('/').'/'; ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
+@php
+  $isModern = ($frontendTheme ?? 'legacy') === 'modern';
+@endphp
 <head>
   <meta http-equiv="Cache-control" content="public">
   <meta name="description" content="Daily News, Inspirational, Entertaining, Humorous and Role-Playing stories in Sign Language ISL with Subtitles and Voice Over for the Deaf.">
   <meta name="keywords" content="News, Deaf, Sign Language, Entertainment, Humour, Moral Stories, Jokes, Daily">
   <title>Information Beyond Words | ISH News</title>
   @include('frontend.inc_htmlhead')
+  @if($isModern)
+  <link rel="stylesheet" href="{{ url('/assets/css/home-modern.css') }}">
+  @endif
 </head>
-<body class="ish-theme ish-theme-{{ $frontendTheme ?? 'legacy' }}">
+<body @class([
+  'ish-theme',
+  'ish-theme-'.($frontendTheme ?? 'legacy'),
+  'ish-home-modern' => $isModern,
+])>
 <div id="container">
   <header class="clearfix">
     @include('frontend.inc_header')
-    @include('frontend.inc_navbar')
+    @if($isModern)
+      @include('frontend.inc_navbar_modern')
+    @else
+      @include('frontend.inc_navbar')
+    @endif
   </header>
 
+  @if($isModern)
+    <main id="content" class="ish-home-modern-main">
+      @include('frontend.home_modern')
+    </main>
+    @include('frontend.inc_carousel_slider')
+  @else
   <div id="content">
     @include('frontend.banner')
     <div class="container">
@@ -28,13 +47,13 @@
           </div>
         </div>
       </div>
+    </div>
 
       <div class="desktop-view">
         @include('frontend.breaking_news_section')
         <section id="content-section">
           <div class="row">
             <div class="col-lg-9">
-              {{-- Dynamic sections: layout is determined only by categorymst.sort (2–5). Sort 1 = Breaking News above. --}}
               @foreach([2, 3, 4, 5] as $slot)
                 @php
                   $TCatData = ($CategorySet1 ?? [])[$slot] ?? null;
@@ -67,21 +86,29 @@
           </div>
         </section>
       </div>
-    </div>
     @include('frontend.inc_carousel_slider')
   </div>
+  @endif
 
   @include('frontend.inc_footerbottom')
 </div>
 @include('frontend.inc_footerscript')
 <script>
-$(document).ready(function () {
-  $('#frmSearch').validate({
-    rules: { sKeyword: { required: true } },
-    messages: { sKeyword: 'Please enter the text to search.' },
-    submitHandler: function (form) { form.submit(); }
+(function () {
+  var isModernHome = @json($isModern);
+  $(document).ready(function () {
+    var opts = {
+      rules: { sKeyword: { required: true } },
+      messages: { sKeyword: 'Please enter the text to search.' },
+      submitHandler: function (form) { form.submit(); }
+    };
+    if (isModernHome) {
+      $('#frmSearchModern').validate(opts);
+    } else {
+      $('#frmSearch').validate(opts);
+    }
   });
-});
+})();
 </script>
 </body>
 </html>
