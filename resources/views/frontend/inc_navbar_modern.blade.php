@@ -18,11 +18,11 @@
           </li>
           @foreach(($menu ?? []) as $cat)
             <li class="ish-nav-modern__item ish-nav-modern__item--mega">
-              <a class="ish-nav-modern__link" href="{{ url('/category/'.($cat['code'] ?? '')) }}">
+              <button type="button" class="ish-nav-modern__link ish-nav-modern__link--mega-trigger" aria-expanded="false" aria-controls="ish-mega-{{ $loop->index }}" aria-haspopup="true">
                 {{ $cat['title'] ?? '' }}
                 <span class="ish-nav-modern__chev" aria-hidden="true"></span>
-              </a>
-              <div class="ish-nav-mega" role="region" aria-label="{{ $cat['title'] ?? 'Category' }}">
+              </button>
+              <div class="ish-nav-mega" id="ish-mega-{{ $loop->index }}" role="region" aria-label="{{ $cat['title'] ?? 'Category' }}">
                 <div class="ish-nav-mega__inner container">
                   @if(!empty($cat['subcategories']) && count($cat['subcategories']) > 0)
                     <div class="ish-nav-mega__filters">
@@ -91,13 +91,48 @@
   }
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') setOpen(false);
+    if (e.key !== 'Escape') return;
+    setOpen(false);
+    nav.querySelectorAll('.ish-nav-modern__item--mega-open').forEach(function (el) {
+      el.classList.remove('ish-nav-modern__item--mega-open');
+      var bt = el.querySelector('.ish-nav-modern__link--mega-trigger');
+      if (bt) bt.setAttribute('aria-expanded', 'false');
+    });
   });
 
   // Close mobile menu when following in-panel link
   panel.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () {
       if (window.matchMedia('(max-width: 991px)').matches) setOpen(false);
+    });
+  });
+
+  // Desktop (lg+): category label is a <button> — toggles mega (no navigation from label; use “All” / pills / cards).
+  nav.querySelectorAll('.ish-nav-modern__link--mega-trigger').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (!window.matchMedia('(min-width: 992px)').matches) return;
+      var li = btn.closest('.ish-nav-modern__item--mega');
+      if (!li || !li.querySelector('.ish-nav-mega')) return;
+      var opening = !li.classList.contains('ish-nav-modern__item--mega-open');
+      nav.querySelectorAll('.ish-nav-modern__item--mega-open').forEach(function (el) {
+        el.classList.remove('ish-nav-modern__item--mega-open');
+        var b = el.querySelector('.ish-nav-modern__link--mega-trigger');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+      if (opening) {
+        li.classList.add('ish-nav-modern__item--mega-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!window.matchMedia('(min-width: 992px)').matches) return;
+    if (nav.contains(e.target)) return;
+    nav.querySelectorAll('.ish-nav-modern__item--mega-open').forEach(function (el) {
+      el.classList.remove('ish-nav-modern__item--mega-open');
+      var b = el.querySelector('.ish-nav-modern__link--mega-trigger');
+      if (b) b.setAttribute('aria-expanded', 'false');
     });
   });
 })();

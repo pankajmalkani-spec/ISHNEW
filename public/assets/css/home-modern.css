@@ -34,11 +34,30 @@ body.ish-home-modern #header-banner {
   display: none !important;
 }
 
+/*
+ * Stacking: <main> comes after <header> in the DOM. Without an explicit order, the page
+ * body paints later siblings on top, so the hero sits above the mega dropdown and steals
+ * every hover/touch even though the menu looks visible.
+ */
+body.ish-home-modern header {
+  position: relative;
+  z-index: 10000;
+  overflow: visible;
+}
+
+body.ish-home-modern main#content {
+  position: relative;
+  z-index: 0;
+}
+
 /* ——— Modern nav ——— */
 .ish-nav-modern {
   position: sticky;
   top: 0;
   z-index: 2000;
+  overflow: visible;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(
     180deg,
     rgba(38, 40, 54, 0.97) 0%,
@@ -136,26 +155,68 @@ body.ish-home-modern #header-banner {
   min-width: 0;
 }
 
+/* Desktop: stretch each <li> to full nav row height so hover/focus isn’t lost in the
+   vertical gap between the link and the mega panel (classic “can’t reach dropdown” bug). */
+@media (min-width: 992px) {
+  .ish-nav-modern__list {
+    align-items: stretch;
+  }
+
+  .ish-nav-modern__item {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (min-width: 992px) {
+  .ish-nav-modern__item--mega > .ish-nav-modern__link {
+    touch-action: manipulation;
+  }
+}
+
 .ish-nav-modern__link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 10px 12px;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 11px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 8px;
+  line-height: 1.25;
   transition: background 0.25s ease, color 0.25s ease, letter-spacing 0.25s ease;
+}
+
+@media (min-width: 992px) {
+  .ish-nav-modern__link {
+    padding: 10px 14px;
+  }
+}
+
+/* Category row uses <button>; match <a> styling (label does not navigate — use “All” in mega). */
+button.ish-nav-modern__link--mega-trigger {
+  font: inherit;
+  font-family: inherit;
+  background: none;
+  border: none;
+  margin: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  text-align: inherit;
+  color: inherit;
+  width: auto;
+  max-width: 100%;
 }
 
 .ish-nav-modern__link:hover,
 .ish-nav-modern__link:focus-visible {
   color: #fff;
   background: rgba(255, 255, 255, 0.07);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
   outline: none;
 }
 
@@ -168,7 +229,8 @@ body.ish-home-modern #header-banner {
   transition: transform 0.25s ease;
 }
 
-.ish-nav-modern__item--mega:hover .ish-nav-modern__chev {
+.ish-nav-modern__item--mega.ish-nav-modern__item--mega-open .ish-nav-modern__chev,
+.ish-nav-modern__item--mega:focus-within .ish-nav-modern__chev {
   transform: rotate(180deg);
 }
 
@@ -189,7 +251,8 @@ body.ish-home-modern #header-banner {
   color: #fff;
   padding: 8px 12px;
   min-width: 160px;
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.35;
 }
 
 .ish-nav-modern__search input::placeholder {
@@ -209,16 +272,28 @@ body.ish-home-modern #header-banner {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Mega panel (desktop): centered panel under category */
+/* Mega panel (desktop): wide panel — anchor to full nav row, not the narrow <li>,
+   or left-side categories center a 1100px box on the link and spill off the viewport left. */
 .ish-nav-modern__item--mega {
   position: relative;
 }
 
 @media (min-width: 992px) {
+  .ish-nav-modern__bar-inner {
+    position: relative;
+  }
+
+  /* Let .ish-nav-mega position against .ish-nav-modern__bar-inner (full row width). */
+  .ish-nav-modern__item--mega {
+    position: static;
+  }
+
   .ish-nav-mega {
     position: absolute;
+    /* Pull up slightly so the panel’s box overlaps the nav strip — removes sub-pixel gap
+       where the pointer left the <li> before entering the mega (drops hover / blocks clicks). */
     left: 50%;
-    top: 100%;
+    top: calc(100% - 1px);
     width: min(1100px, 96vw);
     padding: 24px 16px 28px;
     margin-top: 0;
@@ -233,10 +308,12 @@ body.ish-home-modern #header-banner {
       transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
       visibility 0.38s;
     pointer-events: none;
-    z-index: 50;
+    /* Above page hero / content (nav is 2000; mega must win inside extended hit area). */
+    z-index: 5000;
   }
 
-  .ish-nav-modern__item--mega:hover .ish-nav-mega,
+  /* Open via button (.mega-open) or keyboard focus moving into the panel (:focus-within). */
+  .ish-nav-modern__item--mega.ish-nav-modern__item--mega-open .ish-nav-mega,
   .ish-nav-modern__item--mega:focus-within .ish-nav-mega {
     opacity: 1;
     visibility: visible;
@@ -248,16 +325,17 @@ body.ish-home-modern #header-banner {
 .ish-nav-mega__filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
 .ish-nav-mega__pill {
   display: inline-block;
-  padding: 6px 14px;
-  font-size: 12px;
+  padding: 8px 16px;
+  font-size: 14px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   text-decoration: none;
@@ -304,18 +382,20 @@ body.ish-home-modern #header-banner {
 
 .ish-nav-mega__card-title {
   display: block;
-  padding: 10px 12px 14px;
-  font-size: 12px;
+  padding: 12px 12px 14px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
 }
 
 .ish-nav-mega__empty {
   margin: 0;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .ish-nav-mega__empty a {
@@ -373,9 +453,10 @@ body.ish-home-modern #header-banner {
   }
 
   .ish-nav-modern__link {
-    font-size: 12px;
-    letter-spacing: 0.08em;
+    font-size: 14px;
+    letter-spacing: 0.04em;
     padding: 12px 0;
+    line-height: 1.35;
   }
 
   .ish-nav-modern__item--mega {
