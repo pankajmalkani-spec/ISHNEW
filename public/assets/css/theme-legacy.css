@@ -1,0 +1,226 @@
+/**
+ * Legacy theme — compact home layout aligned with production (ishnews.tv):
+ * Breaking News + four category blocks in a dense vertical rhythm.
+ * Loaded only when body has .ish-theme-legacy.
+ */
+
+body.ish-theme-legacy {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ——— Main column: match live tighter padding between the five sections ——— */
+body.ish-theme-legacy #content-section {
+  padding: 14px 0 20px;
+}
+
+body.ish-theme-legacy #content-section .posts-block {
+  margin-bottom: 10px;
+}
+
+body.ish-theme-legacy div.search-box {
+  margin: 12px 0;
+}
+
+body.ish-theme-legacy #BreakingNews-section {
+  padding: 8px 0 0;
+}
+
+/* Section row titles: “Breaking News”, “Awareness”, … + More */
+body.ish-theme-legacy .title-section {
+  margin-bottom: 8px;
+}
+
+body.ish-theme-legacy .title-section h1 {
+  font-size: 15px;
+  line-height: 1.3;
+  padding-bottom: 8px;
+  margin: 0;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+body.ish-theme-legacy .title-section h1 .btn-more {
+  font-size: 10px;
+  padding: 3px 8px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+/* Owl prev/next sits beside title — pull up slightly vs default -60px */
+body.ish-theme-legacy #content .owl-theme .owl-controls {
+  margin-top: -50px;
+}
+
+body.ish-theme-legacy #BreakingNews-section .owl-theme .owl-controls,
+body.ish-theme-legacy .posts-block--horizontal-scroll .owl-theme .owl-controls {
+  margin-right: 68px;
+}
+
+/* Card headlines (Breaking + horizontal carousels + grids): live uses small, dense titles */
+body.ish-theme-legacy #content .standart-post h2,
+body.ish-theme-legacy #content .video-post h2 {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  margin-bottom: 3px;
+}
+
+body.ish-theme-legacy #content .standart-post .post-image {
+  margin-bottom: 8px;
+}
+
+body.ish-theme-legacy #content .thumb-post h2 {
+  font-size: 11px;
+  line-height: 1.38;
+}
+
+/* Sort-3: two-column grid — tighter gutters like a dense news grid */
+body.ish-theme-legacy .posts-block--sort-3 > .row {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+body.ish-theme-legacy .posts-block--sort-3 > .row > [class*="col-"] {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* Sort-2: featured + 2×2 */
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__row {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__row > [class*="col-"] {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .standart-post p {
+  font-size: 12px;
+  line-height: 1.42;
+  margin-top: 4px;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .thumb-post h2 {
+  font-size: 11px;
+  min-height: 0;
+}
+
+/* Sort-5: featured + small-posts list */
+body.ish-theme-legacy .posts-block--sort-5 > .row {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+body.ish-theme-legacy .posts-block--sort-5 > .row > [class*="col-"] {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+body.ish-theme-legacy #content .posts-block--sort-5 ul.small-posts > li {
+  margin-bottom: 8px;
+}
+
+body.ish-theme-legacy #content .posts-block--sort-5 ul.small-posts > li > a {
+  width: 100px;
+  margin-right: 12px;
+}
+
+body.ish-theme-legacy #content .posts-block--sort-5 ul.small-posts > li .post-cont {
+  margin-left: 112px;
+  padding-top: 2px;
+}
+
+body.ish-theme-legacy #content .posts-block--sort-5 ul.small-posts > li h2 {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* Top featured strip (#ish-featured) — hero titles smaller than default 30px */
+body.ish-theme-legacy .wide-news-heading .large-image-post h2 {
+  font-size: 17px;
+  line-height: 1.22;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+body.ish-theme-legacy .large-image-post .hover-box {
+  padding: 28px 14px 14px;
+}
+
+body.ish-theme-legacy .large-image-post .hover-box a.category {
+  margin-bottom: 8px;
+}
+
+/* Meta lines under cards */
+body.ish-theme-legacy #content ul.post-tags {
+  margin-top: 2px;
+}
+
+body.ish-theme-legacy #content ul.post-tags li {
+  font-size: 10px;
+}
+
+body.ish-theme-legacy #content ul.post-tags li i {
+  font-size: 10px;
+  margin-right: 3px;
+}
+
+body.ish-theme-legacy #content a.category {
+  font-size: 9px;
+  padding: 1px 6px;
+  line-height: 1.35;
+}
+
+/* Owl carousels (Breaking + horizontal category) */
+body.ish-theme-legacy #content .owl-carousel {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+body.ish-theme-legacy #content .owl-carousel .item {
+  padding: 0 8px;
+}
+
+body.ish-theme-legacy #content .owl-carousel .news-post {
+  margin-bottom: 8px;
+}
+
+/* Home search */
+body.ish-theme-legacy #content form.search-form input.form-control,
+body.ish-theme-legacy #content form.search-form input[type="search"] {
+  font-size: 12px;
+  padding: 7px 10px;
+  text-transform: none;
+  line-height: 1.35;
+}
+
+body.ish-theme-legacy #content form.search-form .btn {
+  padding: 5px 12px;
+  font-size: 12px;
+}
+
+body.ish-theme-legacy #content form.search-form .my-2 {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+/* Main + sidebar: slightly tighter sidebar widgets on legacy home */
+body.ish-theme-legacy #content-section .sidebar {
+  padding-left: 8px;
+}
+
+body.ish-theme-legacy #content-section .sidebar .widget {
+  margin-bottom: 18px;
+}
+
+body.ish-theme-legacy #content-section .sidebar h1 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}

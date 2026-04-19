@@ -5,6 +5,8 @@
 <link rel="stylesheet" type="text/css" href="{{ url('/assets/css/style.css') }}">
 @if(($frontendTheme ?? 'legacy') === 'modern')
 <link rel="stylesheet" type="text/css" href="{{ url('/assets/css/theme-modern.css') }}">
+@else
+<link rel="stylesheet" type="text/css" href="{{ url('/assets/css/theme-legacy.css') }}">
 @endif
 <script src="{{ url('/assets/js/lazysizes.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
