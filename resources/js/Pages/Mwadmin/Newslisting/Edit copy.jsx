@@ -15,8 +15,8 @@ const MAX_NEWS_IMAGE_BYTES = 8 * 1024 * 1024;
 const MAX_NEWS_VIDEO_BYTES = 500 * 1024 * 1024;
 
 const DRAFT_STATUS = ['Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold'];
-//const EDIT_STATUS = [...DRAFT_STATUS, 'Released', 'Booked'];
-const EDIT_STATUS = [...DRAFT_STATUS];
+const EDIT_STATUS = [...DRAFT_STATUS, 'Released', 'Booked'];
+
 /** Legacy mwadmin/newslisting/edit/{id}/{step}: 1=P2D, 2=Checklist, 3=Text, 4=Multimedia, 5=Reviews */
 const LEGACY_EDIT_STEPS = [
     { id: 1, label: 'P2D Process' },
@@ -575,7 +575,11 @@ export default function NewslistingEdit({
     };
 
     const releaseStatusReady = form.status1 === 'Ready';
-    const releaseDateEditable = true;
+
+    useEffect(() => {
+        if (releaseStatusReady) return;
+        setForm((f) => ({ ...f, schedule_date: '', schedule_time: '' }));
+    }, [releaseStatusReady]);
 
     const isSuper = !!authUser?.superaccess;
     const modules = authUser?.modules ?? {};
@@ -774,7 +778,7 @@ export default function NewslistingEdit({
                                 <div
                                     className={
                                         'mwadmin-news-create-release-row mwadmin-news-create-release-group ' +
-                                        (releaseDateEditable
+                                        (releaseStatusReady
                                             ? 'mwadmin-news-create-release-group--ready'
                                             : 'mwadmin-news-create-release-group--muted')
                                     }
@@ -795,7 +799,7 @@ export default function NewslistingEdit({
                                                 }));
                                             }}
                                             placeholder="dd-mm-yyyy"
-                                            disabled={!releaseDateEditable}
+                                            disabled={!releaseStatusReady}
                                         />
                                     </div>
                                     <div>
@@ -805,7 +809,7 @@ export default function NewslistingEdit({
                                             density="compact"
                                             value={form.schedule_time}
                                             onChange={(hhmm) => setForm((f) => ({ ...f, schedule_time: hhmm }))}
-                                            disabled={!releaseDateEditable}
+                                            disabled={!releaseStatusReady}
                                         />
                                     </div>
                                 </div>

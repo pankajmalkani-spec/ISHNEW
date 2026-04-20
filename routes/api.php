@@ -68,6 +68,11 @@ Route::middleware('web')->prefix('mwadmin')->group(function (): void {
         Route::middleware('mwadmin.can:newslisting')->group(function (): void {
             Route::get('/newslistings/options', [NewslistingApiController::class, 'options'])->name('api.mwadmin.newslistings.options');
             Route::get('/newslistings/next-meta', [NewslistingApiController::class, 'nextMeta'])->name('api.mwadmin.newslistings.next-meta');
+        
+            Route::post('/newslistings/title-check', [NewslistingApiController::class, 'titleCheck'])->name('api.mwadmin.newslistings.title-check');
+            Route::post('/newslistings/permalink-check', [NewslistingApiController::class, 'permalinkCheck'])->name('api.mwadmin.newslistings.permalink-check');
+            Route::post('/newslistings/release-date-check', [NewslistingApiController::class, 'releaseDateCheck'])->name('api.mwadmin.newslistings.release-date-check');
+        
             Route::put('/newslistings/{id}/text-article', [NewslistingApiController::class, 'updateTextArticle'])->name('api.mwadmin.newslistings.text-article');
             Route::get('/newslistings/{id}/checklist', [NewslistingApiController::class, 'checklist'])->name('api.mwadmin.newslistings.checklist');
             Route::post('/newslistings/{id}/checklist/preview', [NewslistingApiController::class, 'previewChecklistTemplate'])->name('api.mwadmin.newslistings.checklist.preview');

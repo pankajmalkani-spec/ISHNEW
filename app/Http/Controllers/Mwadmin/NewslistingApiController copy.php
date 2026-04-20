@@ -53,8 +53,6 @@ class NewslistingApiController extends Controller
             : [];
 
         $nextId = (int) (DB::table('contenttrans')->max('id') ?? 0) + 1;
-        $userId = $this->resolveRealUserId($request);
-        $userInitials = (string) (DB::table('users')->where('userid', $userId)->value('p2d_intials') ?? '');
 
         return response()->json([
             'categories' => $categories,
@@ -63,7 +61,6 @@ class NewslistingApiController extends Controller
             'users' => $users,
             'subcategories' => $subcategories,
             'suggested_next_id' => $nextId,
-            'user_initials' => $userInitials,
         ]);
     }
 
@@ -77,111 +74,16 @@ class NewslistingApiController extends Controller
         $validated = $request->validate([
             'category_id' => ['required', 'integer', 'exists:categorymst,id'],
         ]);
-
         $categoryId = (int) $validated['category_id'];
         $maxSerial = (int) (DB::table('contenttrans')->where('category_id', $categoryId)->max('last_serialno') ?? 0);
         $lastSerial = $maxSerial > 0 ? $maxSerial + 1 : 1;
         $catCode = (string) (DB::table('categorymst')->where('id', $categoryId)->value('code') ?? '');
-
-        $userId = $this->resolveRealUserId($request);
-        $userInitials = (string) (DB::table('users')->where('userid', $userId)->value('p2d_intials') ?? '');
-
-        $suggestedP2dCaseNo = trim($catCode) !== ''
-            ? strtoupper($catCode).'-'.str_pad((string) $lastSerial, 5, '0', STR_PAD_LEFT).($userInitials !== '' ? '-'.$userInitials : '')
-            : str_pad((string) $lastSerial, 5, '0', STR_PAD_LEFT).($userInitials !== '' ? '-'.$userInitials : '');
+        $nextId = (int) (DB::table('contenttrans')->max('id') ?? 0) + 1;
 
         return response()->json([
             'last_serialno' => $lastSerial,
             'cat_code' => $catCode,
-            'user_initials' => $userInitials,
-            'suggested_p2d_caseno' => $suggestedP2dCaseNo,
-        ]);
-    }
-
-    public function titleCheck(Request $request): JsonResponse
-    {
-        if ($deny = $this->mwadminDenyUnlessAny($request, 'newslisting', ['allow_add', 'allow_edit', 'allow_view'])) {
-            return $deny;
-        }
-
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'max:200'],
-            'id' => ['nullable', 'integer'],
-        ]);
-
-        $query = DB::table('contenttrans')
-            ->where('title', trim((string) $validated['title']))
-            ->where('final_releasestatus', '1');
-
-        if (! empty($validated['id'])) {
-            $query->where('id', '!=', (int) $validated['id']);
-        }
-
-        return response()->json([
-            'exists' => $query->exists(),
-        ]);
-    }
-
-    public function permalinkCheck(Request $request): JsonResponse
-    {
-        if ($deny = $this->mwadminDenyUnlessAny($request, 'newslisting', ['allow_add', 'allow_edit', 'allow_view'])) {
-            return $deny;
-        }
-
-        $validated = $request->validate([
-            'permalink' => ['required', 'string', 'max:150'],
-            'id' => ['nullable', 'integer'],
-        ]);
-
-        $query = DB::table('contenttrans')
-            ->where('permalink', ucwords(trim((string) $validated['permalink'])));
-
-        if (! empty($validated['id'])) {
-            $query->where('id', '!=', (int) $validated['id']);
-        }
-
-        return response()->json([
-            'exists' => $query->exists(),
-        ]);
-    }
-
-    public function releaseDateCheck(Request $request): JsonResponse
-    {
-        if ($deny = $this->mwadminDenyUnlessAny($request, 'newslisting', ['allow_add', 'allow_edit', 'allow_view'])) {
-            return $deny;
-        }
-
-        $validated = $request->validate([
-            'rel_date' => ['required', 'string'],
-            'rel_time' => ['nullable', 'string', 'max:10'],
-        ]);
-
-        $dateInput = trim((string) $validated['rel_date']);
-        $timeInput = trim((string) ($validated['rel_time'] ?? '00:00'));
-        if ($timeInput === '') {
-            $timeInput = '00:00';
-        }
-
-        try {
-            // Frontend sends dd-mm-yyyy from create page.
-            $schedule = Carbon::createFromFormat('d-m-Y H:i', $dateInput.' '.$timeInput);
-        } catch (\Throwable) {
-            try {
-                $schedule = Carbon::parse($dateInput.' '.$timeInput);
-            } catch (\Throwable) {
-                return response()->json([
-                    'status' => null,
-                    'message' => 'Invalid release date.',
-                ], 422);
-            }
-        }
-
-        $now = Carbon::now();
-        $status = $schedule->lte($now) ? 'Released' : 'Booked';
-
-        return response()->json([
-            'status' => $status,
-            'schedule_datetime' => $schedule->format('Y-m-d H:i:s'),
+            'suggested_p2d_caseno' => (string) $nextId,
         ]);
     }
 
@@ -1048,14 +950,14 @@ class NewslistingApiController extends Controller
                 $schedTime = '';
             }
         }
-    
+
         $status1 = (string) ($row['status1'] ?? 'Pending');
         if ($status1 === 'Released' || $status1 === 'Booked') {
             $statusForForm = 'Pending';
         } else {
             $statusForForm = $status1;
         }
-    
+
         return [
             'id' => (int) $row['id'],
             'category_id' => (int) ($row['category_id'] ?? 0),

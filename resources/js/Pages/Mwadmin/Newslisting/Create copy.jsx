@@ -176,52 +176,6 @@ export default function NewslistingCreate({
 
     const titleOk = form.title.trim().length > 0;
 
-    const checkTitleExists = async (title) => {
-        const cleanTitle = String(title || '').trim();
-        if (!cleanTitle) return false;
-
-        try {
-            const { data } = await axios.post('/api/mwadmin/newslistings/title-check', {
-                title: cleanTitle,
-            });
-            return !!data?.exists;
-        } catch {
-            dialog.toast('Error checking title.', 'error');
-            return false;
-        }
-    };
-
-    const checkPermalinkExists = async (permalink) => {
-        const cleanPermalink = String(permalink || '').trim();
-        if (!cleanPermalink) return false;
-
-        try {
-            const { data } = await axios.post('/api/mwadmin/newslistings/permalink-check', {
-                permalink: cleanPermalink,
-            });
-            return !!data?.exists;
-        } catch {
-            dialog.toast('Error checking permalink.', 'error');
-            return false;
-        }
-    };
-
-    const checkReleaseDateStatus = async (dmyDate, hhmmTime) => {
-        const cleanDate = String(dmyDate || '').trim();
-        if (!cleanDate) return null;
-
-        try {
-            const { data } = await axios.post('/api/mwadmin/newslistings/release-date-check', {
-                rel_date: cleanDate,
-                rel_time: hhmmTime || '00:00',
-            });
-            return data?.status || null;
-        } catch {
-            dialog.toast('Error checking release date.', 'error');
-            return null;
-        }
-    };
-
     useEffect(() => {
         let c = false;
         (async () => {
@@ -313,19 +267,6 @@ export default function NewslistingCreate({
             dialog.toast('P2D Date and Due Date are required (dd-mm-yyyy).', 'error');
             return;
         }
-
-        const titleExists = await checkTitleExists(form.title);
-        if (titleExists) {
-            dialog.toast('Same Title already exists for Other created Content(s)..', 'error');
-            return;
-        }
-
-        const permalinkExists = await checkPermalinkExists(form.permalink);
-        if (permalinkExists) {
-            dialog.toast('Same Permalink already exists for Other created Content(s)..', 'error');
-            return;
-        }
-
         const hasInvalidMembers = memberRows.some(
             (m) => !m.designation_id || !m.user_id
         );
@@ -459,16 +400,7 @@ export default function NewslistingCreate({
                                 </label>
                                 <DmyDateInput
                                     value={dateValues.schedule_date}
-                                    onChange={async (dmy) => {
-                                        setDateValues((s) => ({ ...s, schedule_date: dmy }));
-
-                                        const status = await checkReleaseDateStatus(dmy, form.schedule_time);
-                                        if (status === 'Released') {
-                                            dialog.toast('Selected release date/time will be marked as Released.', 'success');
-                                        } else if (status === 'Booked') {
-                                            dialog.toast('Selected release date/time will be marked as Booked.', 'info');
-                                        }
-                                    }}
+                                    onChange={(dmy) => setDateValues((s) => ({ ...s, schedule_date: dmy }))}
                                     placeholder="dd-mm-yyyy"
                                     normalizeOnBlur
                                     disabled={!releaseStatusReady}
@@ -573,13 +505,6 @@ export default function NewslistingCreate({
                                 <input
                                     value={form.title}
                                     onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                                    onBlur={async () => {
-                                        const exists = await checkTitleExists(form.title);
-                                        if (exists) {
-                                            dialog.toast('Same Title already exists for Other created Content(s)..', 'error');
-                                            setForm((f) => ({ ...f, title: '' }));
-                                        }
-                                    }}
                                     required
                                     autoComplete="off"
                                 />
@@ -591,13 +516,6 @@ export default function NewslistingCreate({
                                 <input
                                     value={form.permalink}
                                     onChange={(e) => setForm((f) => ({ ...f, permalink: e.target.value }))}
-                                    onBlur={async () => {
-                                        const exists = await checkPermalinkExists(form.permalink);
-                                        if (exists) {
-                                            dialog.toast('Same Permalink already exists for Other created Content(s)..', 'error');
-                                            setForm((f) => ({ ...f, permalink: '' }));
-                                        }
-                                    }}
                                     required
                                     autoComplete="off"
                                 />
@@ -663,12 +581,6 @@ export default function NewslistingCreate({
                                 <input
                                     value={form.shared_folder}
                                     onChange={(e) => setForm((f) => ({ ...f, shared_folder: e.target.value }))}
-                                    onBlur={() => {
-                                        const value = String(form.shared_folder || '').trim();
-                                        if (value && !/^https?:\/\//i.test(value)) {
-                                            setForm((f) => ({ ...f, shared_folder: `http://${value}` }));
-                                        }
-                                    }}
                                     autoComplete="off"
                                 />
                             </div>
