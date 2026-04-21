@@ -332,8 +332,98 @@ class NewslistingApiController extends Controller
             'data' => ['id' => $id, 'next_step' => 2],
         ], 201);
     }
-
     public function update(Request $request, int $id): JsonResponse
+{
+    if ($deny = $this->mwadminDenyUnless($request, 'newslisting', 'allow_edit')) {
+        return $deny;
+    }
+
+    $existing = DB::table('contenttrans')->where('id', $id)->first();
+    if (! $existing) {
+        return response()->json(['message' => 'Not found.'], 404);
+    }
+
+    $validated = $this->validateContent($request, $id);
+    $this->assertUniqueTitleAndPermalink($validated['title'], $validated['permalink'], $id);
+
+    [$status1, $scheduleDate] = $this->resolveStatusAndSchedule($request);
+    $userId = $this->resolveRealUserId($request);
+    $now = now();
+
+    $featured = ! empty($validated['featured_content']) ? 1 : 0;
+    $compYmd = $this->parseOptionalDateColumnYmd($validated['completion_date'] ?? null);
+
+    $bannerName = (string) ($existing->banner_img ?? '');
+    $coverName = (string) ($existing->cover_img ?? '');
+
+    if ($request->hasFile('banner_img')) {
+        $this->deleteNewsImageIfExists($bannerName, 'banner');
+        $bannerName = $this->storeNewsImage($request->file('banner_img'), 'banner');
+    }
+
+    if ($request->hasFile('cover_img')) {
+        $this->deleteNewsImageIfExists($coverName, 'cover');
+        $coverName = $this->storeNewsImage($request->file('cover_img'), 'cover');
+    }
+
+    $videoName = $this->resolveYoutubeVideoFilenameForUpdate(
+        $request,
+        $validated,
+        (string) ($existing->youtube_video ?? '')
+    );
+
+    $descRaw = (string) ($validated['description'] ?? '');
+    $description = $descRaw !== '' ? ucfirst($descRaw) : '';
+    $description = Str::limit($description, 200, '');
+
+    $youtubeUrl = (string) ($validated['youtube_url'] ?? '');
+
+    $finalReleaseStatus = $this->resolveFinalReleaseStatusForContent(
+        $id,
+        $status1,
+        $youtubeUrl,
+        (string) $videoName
+    );
+
+    $payload = [
+        'category_id' => (int) $validated['category_id'],
+        'subcategory_id' => (int) $validated['subcategory_id'],
+        'last_serialno' => (int) $validated['last_serialno'],
+        'p2d_caseno' => Str::limit(strtoupper((string) $validated['p2d_caseno']), 80, ''),
+        'permalink' => ucwords(Str::limit($validated['permalink'], 150, '')),
+        'status1' => $status1,
+        'title' => Str::limit($validated['title'], 200, ''),
+        'seo_keyword' => Str::limit($validated['seo_keyword'], 100, ''),
+        'featured_content' => $featured,
+        'news_source' => (string) (int) $validated['news_source'],
+        'shared_folder' => Str::limit((string) ($validated['shared_folder'] ?? ''), 255, ''),
+        'description' => $description,
+        'schedule_date' => $this->persistScheduleDate($scheduleDate, $existing->schedule_date ?? null),
+        'due_date' => $this->parseSqlDateColumn($validated['due_date']),
+        'p2d_date' => $this->parseSqlDateColumn($validated['p2d_date']),
+        'completion_date' => $this->persistCompletionDate($compYmd, $existing->completion_date ?? null),
+        'prepared_by' => Str::limit($validated['prepared_by'], 100, ''),
+        'authorized_by' => Str::limit($validated['authorized_by'], 100, ''),
+        'banner_img' => Str::limit($bannerName, 80, ''),
+        'cover_img' => Str::limit($coverName, 80, ''),
+        'youtube_url_check' => $this->legacyTinyint($validated['youtube_url_check'] ?? null),
+        'youtube_url' => Str::limit($youtubeUrl, 100, ''),
+        'youtube_video_check' => $this->legacyTinyint($validated['youtube_video_check'] ?? null),
+        'youtube_video' => Str::limit((string) $videoName, 100, ''),
+        'youtube_subtitles' => Str::limit((string) ($validated['youtube_subtitles'] ?? ''), 100, ''),
+        'modifieddate' => $now,
+        'modifiedby' => $userId,
+        'final_releasestatus' => $finalReleaseStatus,
+    ];
+
+    DB::table('contenttrans')->where('id', $id)->update($payload);
+
+    return response()->json([
+        'message' => 'News content updated successfully.',
+        'data' => ['id' => $id],
+    ]);
+}
+    public function updateold(Request $request, int $id): JsonResponse
     {
         if ($deny = $this->mwadminDenyUnless($request, 'newslisting', 'allow_edit')) {
             return $deny;
@@ -917,34 +1007,97 @@ class NewslistingApiController extends Controller
     /**
      * @return array{0: string, 1: ?string}
      */
-    private function resolveStatusAndSchedule(Request $request): array
-    {
-        $now = Carbon::now();
-        $scheduleDateInput = trim((string) $request->input('schedule_date', ''));
-        $scheduleTime = trim((string) $request->input('schedule_time', '00:00'));
-        if ($scheduleTime === '') {
-            $scheduleTime = '00:00';
-        }
+   /**
+ * @return array{0: string, 1: ?string}
+ */
 
-        $statusFromForm = (string) $request->input('status1', 'Pending');
-        $statusval = $statusFromForm;
-        $scheduleStr = null;
+ /**
+ * @return array{0: string, 1: ?string}
+ */
+/**
+ * @return array{0: string, 1: ?string}
+ */
+private function resolveStatusAndSchedule(Request $request): array
+{
+    $now = Carbon::now();
+    $scheduleDateInput = trim((string) $request->input('schedule_date', ''));
+    $scheduleTime = trim((string) $request->input('schedule_time', '00:00'));
 
-        if ($scheduleDateInput !== '') {
-            try {
-                $sch = Carbon::parse($scheduleDateInput.' '.$scheduleTime);
-            } catch (\Throwable) {
-                abort(response()->json(['message' => 'Invalid schedule date or time.'], 422));
-            }
-            if ($sch->lt($now)) {
-                abort(response()->json(['message' => 'Schedule date cannot be earlier than the current time.'], 422));
-            }
-            $scheduleStr = $sch->format('Y-m-d H:i:s');
-            $statusval = $sch->lte($now) ? 'Released' : 'Booked';
-        }
-
-        return [$statusval, $scheduleStr];
+    if ($scheduleTime === '') {
+        $scheduleTime = '00:00';
     }
+
+    $statusFromForm = trim((string) $request->input('status1', 'Pending'));
+    if ($statusFromForm === '') {
+        $statusFromForm = 'Pending';
+    }
+
+    $statusval = $statusFromForm;
+    $scheduleStr = null;
+
+    if ($scheduleDateInput !== '') {
+        try {
+            $sch = Carbon::parse($scheduleDateInput . ' ' . $scheduleTime);
+        } catch (\Throwable) {
+            abort(response()->json(['message' => 'Invalid schedule date or time.'], 422));
+        }
+
+        $scheduleStr = $sch->format('Y-m-d H:i:s');
+
+        // Legacy-like behavior:
+        // only auto-switch when status is Ready
+        if ($statusFromForm === 'Ready') {
+            if ($sch->lte($now)) {
+                $statusval = 'Released';
+            } else {
+                $statusval = 'Booked';
+            }
+        }
+    }
+
+    return [$statusval, $scheduleStr];
+}
+private function resolveStatusAndScheduleold(Request $request): array
+{
+    $now = Carbon::now();
+    $scheduleDateInput = trim((string) $request->input('schedule_date', ''));
+    $scheduleTime = trim((string) $request->input('schedule_time', '00:00'));
+
+    if ($scheduleTime === '') {
+        $scheduleTime = '00:00';
+    }
+
+    $statusFromForm = trim((string) $request->input('status1', 'Pending'));
+    if ($statusFromForm === '') {
+        $statusFromForm = 'Pending';
+    }
+
+    $statusval = $statusFromForm;
+    $scheduleStr = null;
+
+    if ($scheduleDateInput !== '') {
+        try {
+            $sch = Carbon::parse($scheduleDateInput . ' ' . $scheduleTime);
+        } catch (\Throwable) {
+            abort(response()->json(['message' => 'Invalid schedule date or time.'], 422));
+        }
+
+        $scheduleStr = $sch->format('Y-m-d H:i:s');
+
+        // Legacy-like behavior:
+        // do not throw error for past dates on update
+        // only auto-switch when status is Ready
+        if ($statusFromForm === 'Ready') {
+            if ($sch->lte($now)) {
+                $statusval = 'Released';
+            } else {
+                $statusval = 'Booked';
+            }
+        }
+    }
+
+    return [$statusval, $scheduleStr];
+}
 
     /**
      * Normalize legacy/empty DB values so we never write '' into DATETIME columns on update.
@@ -1263,5 +1416,38 @@ class NewslistingApiController extends Controller
         if (is_file($fullPath)) {
             @unlink($fullPath);
         }
+    }
+    private function resolveFinalReleaseStatusForContent(
+        int $id,
+        string $status1,
+        ?string $youtubeUrl = null,
+        ?string $youtubeVideo = null
+    ): int {
+        $checkFlagStatus = true;
+    
+        $activityStatuses = DB::table('contentcharttrans')
+            ->where('contentedit_id', $id)
+            ->pluck('activity_status')
+            ->all();
+    
+        if (count($activityStatuses) > 0) {
+            foreach ($activityStatuses as $activityStatus) {
+                if ((int) $activityStatus !== 3) {
+                    $checkFlagStatus = false;
+                    break;
+                }
+            }
+        } else {
+            $checkFlagStatus = false;
+        }
+    
+        $hasMultimedia = trim((string) ($youtubeUrl ?? '')) !== ''
+            || trim((string) ($youtubeVideo ?? '')) !== '';
+    
+        if ($checkFlagStatus && $hasMultimedia && in_array($status1, ['Released', 'Booked'], true)) {
+            return 1;
+        }
+    
+        return 0;
     }
 }
