@@ -8,7 +8,12 @@ import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import DmyDateInput from '../../../Components/Mwadmin/DmyDateInput';
 import MwadminTimeInput from '../../../Components/Mwadmin/MwadminTimeInput';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
-import { MWADMIN_NEWS_BANNER, MWADMIN_NEWS_COVER } from '../../../lib/mwadminImageEditorTargets';
+import {
+    MWADMIN_NEWS_BANNER,
+    MWADMIN_NEWS_COVER,
+    MWADMIN_NEWS_BANNER_SLOT_STYLE,
+    MWADMIN_NEWS_COVER_SLOT_STYLE,
+} from '../../../lib/mwadminImageEditorTargets';
 import { dmyToIsoDate, isoDateToDmy } from '../Sponsor/sponsorDateFormat';
 
 const MAX_NEWS_IMAGE_BYTES = 8 * 1024 * 1024;
@@ -166,6 +171,7 @@ export default function NewslistingEdit({
     const [reviewItems, setReviewItems] = useState([]);
     const [reviewText, setReviewText] = useState('');
     const [savingReview, setSavingReview] = useState(false);
+    const [memberRows, setMemberRows] = useState([]);
 
     useEffect(() => {
         setActiveStep(clampStep(initialStep));
@@ -204,6 +210,15 @@ export default function NewslistingEdit({
     const bannerDisplaySrc = bannerPickUrl || bannerImgUrl;
     const coverDisplaySrc = coverPickUrl || coverImgUrl;
     const videoDisplaySrc = videoPickUrl || videoServerUrl;
+    const titleOk = form.title.trim().length > 0;
+
+    const onAddMembersClick = () => {
+        if (!titleOk) {
+            dialog.toast('Please Enter News Title, to unlock Add Members button..', 'error');
+            return;
+        }
+        setMemberRows((rows) => [...rows, { designation_id: '', user_id: '', instructions: '' }]);
+    };
 
     const setBannerFromFile = useCallback(
         (file, meta = {}) => {
@@ -299,6 +314,15 @@ export default function NewslistingEdit({
                     d.youtube_video_url && String(d.youtube_video_url).trim() ? String(d.youtube_video_url) : ''
                 );
 
+                const rawMembers = Array.isArray(d.members) ? d.members : [];
+                setMemberRows(
+                    rawMembers.map((m) => ({
+                        designation_id: m.designation_id != null ? String(m.designation_id) : '',
+                        user_id: m.user_id != null ? String(m.user_id) : '',
+                        instructions: m.instructions != null ? String(m.instructions) : '',
+                    }))
+                );
+
                 const cl = clBundle?.data ?? {};
                 setChecklistTemplates(cl.templates || []);
                 const ft = Number(cl.flowchart_templateid ?? 0) || 0;
@@ -392,6 +416,11 @@ export default function NewslistingEdit({
         fd.append('youtube_video_check', form.youtube_video_check ? '1' : '0');
         fd.append('youtube_video', form.youtube_video || '');
         fd.append('youtube_subtitles', form.youtube_subtitles || '');
+        memberRows.forEach((m, i) => {
+            fd.append(`members[${i}][designation_id]`, String(m.designation_id));
+            fd.append(`members[${i}][user_id]`, String(m.user_id));
+            fd.append(`members[${i}][instructions]`, m.instructions || '');
+        });
     };
 
     const onSubmit = async (e) => {
@@ -402,6 +431,11 @@ export default function NewslistingEdit({
         }
         if (!form.p2d_date || !form.due_date) {
             dialog.toast('P2D Date and Due Date are required (d-m-Y).', 'error');
+            return;
+        }
+        const hasInvalidMembers = memberRows.some((m) => !m.designation_id || !m.user_id);
+        if (hasInvalidMembers) {
+            dialog.toast('Each member row must have Designation and User selected.', 'error');
             return;
         }
         setSaving(true);
@@ -433,6 +467,14 @@ export default function NewslistingEdit({
                 ...f,
                 youtube_video: r.youtube_video != null ? String(r.youtube_video) : '',
             }));
+            const rm = Array.isArray(r.members) ? r.members : [];
+            setMemberRows(
+                rm.map((m) => ({
+                    designation_id: m.designation_id != null ? String(m.designation_id) : '',
+                    user_id: m.user_id != null ? String(m.user_id) : '',
+                    instructions: m.instructions != null ? String(m.instructions) : '',
+                }))
+            );
             setArticleContent(r.article_content != null ? String(r.article_content) : articleContent);
             dialog.toast('News content updated successfully.', 'success');
         } catch (err) {
@@ -904,6 +946,122 @@ export default function NewslistingEdit({
                                         }
                                     />
                                 </div>
+                                <div style={{ gridColumn: '1 / -1' }} className="mwadmin-news-members-block">
+                                    <button type="button" className="mwadmin-news-members-btn" onClick={onAddMembersClick}>
+                                        + Add Members Assigned
+                                    </button>
+                                    <div className="mwadmin-news-members-table-wrap">
+                                        <table className="mwadmin-news-members-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Designation</th>
+                                                    <th>User</th>
+                                                    <th>Character / Instructions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {memberRows.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan={3} className="mwadmin-news-members-empty">
+                                                            No members added yet. Enter News Title and click Add Members.
+                                                        </td>
+                                                    </tr>
+                                                ) : (
+                                                    memberRows.map((row, idx) => {
+                                                        const availableUsers = allUsers.filter(
+                                                            (u) =>
+                                                                !row.designation_id ||
+                                                                String(u.designation ?? '') === String(row.designation_id)
+                                                        );
+                                                        return (
+                                                            <tr key={`member-row-${idx}`}>
+                                                                <td>
+                                                                    <select
+                                                                        value={row.designation_id}
+                                                                        onChange={(e) =>
+                                                                            setMemberRows((rows) =>
+                                                                                rows.map((r, i) =>
+                                                                                    i === idx
+                                                                                        ? {
+                                                                                              ...r,
+                                                                                              designation_id: e.target.value,
+                                                                                              user_id: '',
+                                                                                          }
+                                                                                        : r
+                                                                                )
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <option value="">Select Designation</option>
+                                                                        {designations.map((d) => (
+                                                                            <option key={d.id} value={String(d.id)}>
+                                                                                {d.designation}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select
+                                                                        value={row.user_id}
+                                                                        onChange={(e) =>
+                                                                            setMemberRows((rows) =>
+                                                                                rows.map((r, i) =>
+                                                                                    i === idx
+                                                                                        ? { ...r, user_id: e.target.value }
+                                                                                        : r
+                                                                                )
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <option value="">Select User</option>
+                                                                        {availableUsers.map((u) => (
+                                                                            <option key={u.userid} value={String(u.userid)}>
+                                                                                {[u.first_name, u.last_name]
+                                                                                    .filter(Boolean)
+                                                                                    .join(' ') || String(u.userid)}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <div style={{ display: 'flex', gap: 8 }}>
+                                                                        <input
+                                                                            value={row.instructions}
+                                                                            onChange={(e) =>
+                                                                                setMemberRows((rows) =>
+                                                                                    rows.map((r, i) =>
+                                                                                        i === idx
+                                                                                            ? {
+                                                                                                  ...r,
+                                                                                                  instructions: e.target.value,
+                                                                                              }
+                                                                                            : r
+                                                                                    )
+                                                                                )
+                                                                            }
+                                                                            placeholder="Character / instructions"
+                                                                        />
+                                                                        <button
+                                                                            type="button"
+                                                                            className="mwadmin-filter-clear"
+                                                                            onClick={() =>
+                                                                                setMemberRows((rows) =>
+                                                                                    rows.filter((_, i) => i !== idx)
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            Remove
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    })
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                                 <div className="mwadmin-form-actions mwadmin-news-edit-step-actions">
                                     <button type="submit" disabled={saving}>
                                         {saving ? 'Saving...' : pageVariant === 'create' ? 'Save' : 'Update'}
@@ -1270,12 +1428,13 @@ export default function NewslistingEdit({
                                 </div>
 
                                 <h3 className="mwadmin-form-grid-full mwadmin-news-mm-subtitle">Image management</h3>
-                                <div className="mwadmin-form-grid-full mwadmin-category-images-row">
+                                <div className="mwadmin-form-grid-full mwadmin-category-images-row mwadmin-category-images-row--align-form">
                                     <div className="mwadmin-category-image-block">
-                                        <label>Banner Image (Size — 800px × 526px)</label>
+                                        <label>Banner Image (800px × 526px)</label>
                                         <div className="mwadmin-category-image-field">
                                             <div
                                                 className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--news-banner mwadmin-category-image-preview-wrap--clickable"
+                                                style={MWADMIN_NEWS_BANNER_SLOT_STYLE}
                                                 role="button"
                                                 tabIndex={0}
                                                 aria-label="Open banner editor"
@@ -1299,10 +1458,11 @@ export default function NewslistingEdit({
                                         </div>
                                     </div>
                                     <div className="mwadmin-category-image-block">
-                                        <label>Cover Image (Size — 385px × 165px)</label>
+                                        <label>Cover Image (385px × 165px)</label>
                                         <div className="mwadmin-category-image-field">
                                             <div
                                                 className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--news-cover mwadmin-category-image-preview-wrap--clickable"
+                                                style={MWADMIN_NEWS_COVER_SLOT_STYLE}
                                                 role="button"
                                                 tabIndex={0}
                                                 aria-label="Open cover editor"

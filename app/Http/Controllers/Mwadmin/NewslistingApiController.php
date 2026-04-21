@@ -407,7 +407,22 @@ class NewslistingApiController extends Controller
             'final_releasestatus' => $status1 === 'Released' ? 1 : 0,
         ];
 
-        DB::table('contenttrans')->where('id', $id)->update($payload);
+        DB::transaction(function () use ($id, $payload, $validated): void {
+            DB::table('contenttrans')->where('id', $id)->update($payload);
+
+            DB::table('memberstrans')->where('contenttrans_id', $id)->delete();
+            $members = $validated['members'] ?? [];
+            if (is_array($members) && count($members) > 0) {
+                foreach ($members as $m) {
+                    DB::table('memberstrans')->insert([
+                        'contenttrans_id' => $id,
+                        'designation_id' => (int) $m['designation_id'],
+                        'user_id' => (int) $m['user_id'],
+                        'instructions' => (string) ($m['instructions'] ?? ''),
+                    ]);
+                }
+            }
+        });
 
         return response()->json([
             'message' => 'News content updated successfully.',
@@ -1027,6 +1042,26 @@ class NewslistingApiController extends Controller
     }
 
     /**
+     * Assigned members (`memberstrans`) for edit/create forms.
+     *
+     * @return list<array{designation_id: int, user_id: int, instructions: string}>
+     */
+    private function fetchMembersForContent(int $contenttransId): array
+    {
+        return DB::table('memberstrans')
+            ->where('contenttrans_id', $contenttransId)
+            ->orderBy('id')
+            ->get()
+            ->map(fn ($m) => [
+                'designation_id' => (int) $m->designation_id,
+                'user_id' => (int) $m->user_id,
+                'instructions' => (string) ($m->instructions ?? ''),
+            ])
+            ->values()
+            ->all();
+    }
+
+    /**
      * @param  array<string, mixed>  $row
      * @return array<string, mixed>
      */
@@ -1094,6 +1129,7 @@ class NewslistingApiController extends Controller
             'youtube_video_url' => $this->youtubeVideoPublicUrl((string) ($row['youtube_video'] ?? '')),
             'youtube_subtitles' => (string) ($row['youtube_subtitles'] ?? ''),
             'flowchart_templateid' => (int) ($row['flowchart_templateid'] ?? 0),
+            'members' => $this->fetchMembersForContent((int) ($row['id'] ?? 0)),
         ];
     }
 

@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
+import { MWADMIN_AD_IMAGE_SLOT_STYLE } from '../../../lib/mwadminImageEditorTargets';
+
+const AD_IMG_FALLBACK = '/images/AdvertiseImages/no_img.gif';
 
 export default function AdvertisementView({ authUser = {}, advertisementId }) {
     const dialog = useClassicDialog();
@@ -39,6 +42,8 @@ export default function AdvertisementView({ authUser = {}, advertisementId }) {
         );
     }
 
+    const imgSrc = row.image_url || AD_IMG_FALLBACK;
+
     return (
         <>
             <Head title="View Advertisement" />
@@ -59,6 +64,13 @@ export default function AdvertisementView({ authUser = {}, advertisementId }) {
                                 <input value={String(row.id)} readOnly />
                             </div>
                             <div>
+                                <label>Status</label>
+                                <input
+                                    value={Number(row.status) === 1 ? 'Active' : 'In-Active'}
+                                    readOnly
+                                />
+                            </div>
+                            <div>
                                 <label>Title</label>
                                 <input value={row.title || ''} readOnly />
                             </div>
@@ -67,22 +79,53 @@ export default function AdvertisementView({ authUser = {}, advertisementId }) {
                                 <input value={row.company_name || ''} readOnly />
                             </div>
                             <div>
+                                <label>Brand</label>
+                                <input value={row.brand || ''} readOnly />
+                            </div>
+                            <div>
+                                <label>Model</label>
+                                <input value={row.model || ''} readOnly />
+                            </div>
+
+                            <div className="mwadmin-form-grid-full mwadmin-category-images-row mwadmin-category-images-row--align-form">
+                                <div className="mwadmin-category-image-block">
+                                    <label>Ad Image (196px × 160px)</label>
+                                    <div className="mwadmin-category-image-field">
+                                        <div
+                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--ad"
+                                            style={MWADMIN_AD_IMAGE_SLOT_STYLE}
+                                        >
+                                            <img
+                                                src={imgSrc}
+                                                alt=""
+                                                className="mwadmin-category-image-preview"
+                                                onError={(e) => {
+                                                    e.currentTarget.src = AD_IMG_FALLBACK;
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        alignSelf: 'start',
+                                        justifySelf: 'stretch',
+                                        width: '100%',
+                                        minWidth: 0,
+                                    }}
+                                >
+                                    <label>Advertise URL</label>
+                                    <input value={row.ad_url || ''} readOnly />
+                                </div>
+                            </div>
+
+                            <div>
                                 <label>Subcategory</label>
                                 <input value={row.subcat_code || '—'} readOnly />
                             </div>
-                            <div style={{ gridColumn: '1 / -1' }}>
-                                <label>Image</label>
-                                {row.image_url ? (
-                                    <div>
-                                        <img src={row.image_url} alt="" style={{ maxWidth: 200, maxHeight: 80 }} />
-                                    </div>
-                                ) : (
-                                    <input value="—" readOnly />
-                                )}
-                            </div>
                             <div>
-                                <label>Ad URL</label>
-                                <input value={row.ad_url || ''} readOnly />
+                                <label>Ad Type</label>
+                                <input value={String(row.ad_type)} readOnly />
                             </div>
                             <div>
                                 <label>Contact</label>
@@ -97,14 +140,6 @@ export default function AdvertisementView({ authUser = {}, advertisementId }) {
                                 <input value={row.mobile ? String(row.mobile) : '—'} readOnly />
                             </div>
                             <div>
-                                <label>Brand / Model</label>
-                                <input value={`${row.brand || ''} / ${row.model || ''}`} readOnly />
-                            </div>
-                            <div>
-                                <label>Ad Type</label>
-                                <input value={String(row.ad_type)} readOnly />
-                            </div>
-                            <div>
                                 <label>Annual Rates</label>
                                 <input value={row.annual_rates} readOnly />
                             </div>
@@ -115,13 +150,6 @@ export default function AdvertisementView({ authUser = {}, advertisementId }) {
                             <div>
                                 <label>End Date</label>
                                 <input value={row.end_date || '—'} readOnly />
-                            </div>
-                            <div>
-                                <label>Status</label>
-                                <input
-                                    value={Number(row.status) === 1 ? 'Active' : 'In-Active'}
-                                    readOnly
-                                />
                             </div>
                         </div>
                         <div className="mwadmin-form-actions">

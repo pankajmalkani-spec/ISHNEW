@@ -7,7 +7,12 @@ import MwadminTimeInput from '../../../Components/Mwadmin/MwadminTimeInput';
 import MwadminImageEditorModal from '../../../Components/Mwadmin/MwadminImageEditorModal';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
-import { MWADMIN_NEWS_BANNER, MWADMIN_NEWS_COVER } from '../../../lib/mwadminImageEditorTargets';
+import {
+    MWADMIN_NEWS_BANNER,
+    MWADMIN_NEWS_COVER,
+    MWADMIN_NEWS_BANNER_SLOT_STYLE,
+    MWADMIN_NEWS_COVER_SLOT_STYLE,
+} from '../../../lib/mwadminImageEditorTargets';
 import { dmyToIsoDate, isoDateToDmy } from '../Sponsor/sponsorDateFormat';
 
 const MAX_NEWS_IMAGE_BYTES = 8 * 1024 * 1024;
@@ -698,12 +703,13 @@ export default function NewslistingCreate({
                                 />
                             </div>
 
-                            <div className="mwadmin-form-grid-full mwadmin-category-images-row">
+                            <div className="mwadmin-form-grid-full mwadmin-category-images-row mwadmin-category-images-row--align-form">
                                 <div className="mwadmin-category-image-block">
-                                    <label>Banner Image</label>
+                                    <label>Banner Image (800px × 526px)</label>
                                     <div className="mwadmin-category-image-field">
                                         <div
                                             className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--news-banner mwadmin-category-image-preview-wrap--clickable"
+                                            style={MWADMIN_NEWS_BANNER_SLOT_STYLE}
                                             role="button"
                                             tabIndex={0}
                                             aria-label="Open banner editor"
@@ -727,10 +733,11 @@ export default function NewslistingCreate({
                                     </div>
                                 </div>
                                 <div className="mwadmin-category-image-block">
-                                    <label>Cover Image</label>
+                                    <label>Cover Image (385px × 165px)</label>
                                     <div className="mwadmin-category-image-field">
                                         <div
                                             className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--news-cover mwadmin-category-image-preview-wrap--clickable"
+                                            style={MWADMIN_NEWS_COVER_SLOT_STYLE}
                                             role="button"
                                             tabIndex={0}
                                             aria-label="Open cover editor"

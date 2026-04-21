@@ -5,7 +5,7 @@ import MwadminImageEditorModal from '../../../Components/Mwadmin/MwadminImageEdi
 import DmyDateInput from '../../../Components/Mwadmin/DmyDateInput';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
-import { MWADMIN_AD_IMAGE } from '../../../lib/mwadminImageEditorTargets';
+import { MWADMIN_AD_IMAGE, MWADMIN_AD_IMAGE_SLOT_STYLE } from '../../../lib/mwadminImageEditorTargets';
 import { validateMwadminAdvertisementForm } from '../../../lib/mwadminAdvertisementFormValidate';
 import { dmyToIsoDate, isoDateToDmy } from '../Sponsor/sponsorDateFormat';
 
@@ -109,7 +109,7 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
         return () => {
             c = true;
         };
-    }, [advertisementId]);
+    }, [advertisementId, dialog]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -201,40 +201,7 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
                                     onChange={(e) => setForm((f) => ({ ...f, company_name: e.target.value }))}
                                 />
                             </div>
-                            <div>
-                                <label>Contact Person *</label>
-                                <input
-                                    value={form.contactperson_name}
-                                    maxLength={150}
-                                    onChange={(e) => setForm((f) => ({ ...f, contactperson_name: e.target.value }))}
-                                />
-                            </div>
-                            <div>
-                                <label>Ad URL *</label>
-                                <input
-                                    type="url"
-                                    value={form.ad_url}
-                                    maxLength={150}
-                                    onChange={(e) => setForm((f) => ({ ...f, ad_url: e.target.value }))}
-                                />
-                            </div>
-                            <div>
-                                <label>Email</label>
-                                <input
-                                    type="email"
-                                    value={form.email}
-                                    maxLength={150}
-                                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                                />
-                            </div>
-                            <div>
-                                <label>Mobile</label>
-                                <input
-                                    value={form.mobile}
-                                    maxLength={20}
-                                    onChange={(e) => setForm((f) => ({ ...f, mobile: e.target.value }))}
-                                />
-                            </div>
+
                             <div>
                                 <label>Brand</label>
                                 <input
@@ -251,6 +218,54 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
                                     onChange={(e) => setForm((f) => ({ ...f, model: e.target.value }))}
                                 />
                             </div>
+
+                            <div className="mwadmin-form-grid-full mwadmin-category-images-row mwadmin-category-images-row--align-form">
+                                <div className="mwadmin-category-image-block">
+                                    <label>Ad Image (196px × 160px)</label>
+                                    <div className="mwadmin-category-image-field">
+                                        <div
+                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--ad mwadmin-category-image-preview-wrap--clickable"
+                                            style={MWADMIN_AD_IMAGE_SLOT_STYLE}
+                                            role="button"
+                                            tabIndex={0}
+                                            aria-label="Open image editor"
+                                            onClick={() => setImgEditorOpen(true)}
+                                            onKeyDown={(ev) => {
+                                                if (ev.key === 'Enter' || ev.key === ' ') {
+                                                    ev.preventDefault();
+                                                    setImgEditorOpen(true);
+                                                }
+                                            }}
+                                        >
+                                            {imgDisplaySrc ? (
+                                                <img src={imgDisplaySrc} alt="" className="mwadmin-category-image-preview" />
+                                            ) : (
+                                                <div className="mwadmin-category-image-placeholder-card">
+                                                    NO IMAGE AVAILABLE
+                                                    <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        alignSelf: 'start',
+                                        justifySelf: 'stretch',
+                                        width: '100%',
+                                        minWidth: 0,
+                                    }}
+                                >
+                                    <label>Advertise URL *</label>
+                                    <input
+                                        type="url"
+                                        value={form.ad_url}
+                                        maxLength={150}
+                                        onChange={(e) => setForm((f) => ({ ...f, ad_url: e.target.value }))}
+                                    />
+                                </div>
+                            </div>
+
                             <div>
                                 <label>Ad Type *</label>
                                 <select
@@ -283,6 +298,32 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
                                     ))}
                                 </select>
                             </div>
+
+                            <div>
+                                <label>Contact Person *</label>
+                                <input
+                                    value={form.contactperson_name}
+                                    maxLength={150}
+                                    onChange={(e) => setForm((f) => ({ ...f, contactperson_name: e.target.value }))}
+                                />
+                            </div>
+                            <div>
+                                <label>Email</label>
+                                <input
+                                    type="email"
+                                    value={form.email}
+                                    maxLength={150}
+                                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                                />
+                            </div>
+                            <div>
+                                <label>Mobile</label>
+                                <input
+                                    value={form.mobile}
+                                    maxLength={20}
+                                    onChange={(e) => setForm((f) => ({ ...f, mobile: e.target.value }))}
+                                />
+                            </div>
                             <div>
                                 <label>Annual Rates *</label>
                                 <input
@@ -300,8 +341,9 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
                                 <label>End Date (dd-mm-yyyy)</label>
                                 <DmyDateInput value={form.end_date} onChange={(dmy) => setForm((f) => ({ ...f, end_date: dmy }))} />
                             </div>
+                            <div aria-hidden="true" />
                             <div>
-                                <label>Status</label>
+                                <label>Status *</label>
                                 <select
                                     value={form.status}
                                     onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))}
@@ -310,35 +352,7 @@ export default function AdvertisementEdit({ authUser = {}, advertisementId }) {
                                     <option value="0">In-Active</option>
                                 </select>
                             </div>
-                            <div className="mwadmin-form-grid-full mwadmin-category-images-row">
-                                <div className="mwadmin-category-image-block">
-                                    <label>Image</label>
-                                    <div className="mwadmin-category-image-field">
-                                        <div
-                                            className="mwadmin-category-image-preview-wrap mwadmin-category-image-preview-wrap--ad mwadmin-category-image-preview-wrap--clickable"
-                                            role="button"
-                                            tabIndex={0}
-                                            aria-label="Open image editor"
-                                            onClick={() => setImgEditorOpen(true)}
-                                            onKeyDown={(ev) => {
-                                                if (ev.key === 'Enter' || ev.key === ' ') {
-                                                    ev.preventDefault();
-                                                    setImgEditorOpen(true);
-                                                }
-                                            }}
-                                        >
-                                            {imgDisplaySrc ? (
-                                                <img src={imgDisplaySrc} alt="" className="mwadmin-category-image-preview" />
-                                            ) : (
-                                                <div className="mwadmin-category-image-placeholder-card">
-                                                    NO IMAGE AVAILABLE
-                                                    <span className="mwadmin-category-image-click-hint">Click to upload and edit</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div className="mwadmin-form-actions">
                                 <button type="submit" disabled={saving}>
                                     {saving ? 'Saving...' : 'Update'}
