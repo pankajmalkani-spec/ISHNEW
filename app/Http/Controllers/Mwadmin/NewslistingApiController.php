@@ -20,8 +20,9 @@ class NewslistingApiController extends Controller
     use ResolvesMwadminUser;
 
     /** @var list<string> */
-    private const STATUS_DRAFT = ['Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold'];
+    //private const STATUS_DRAFT = ['Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold'];
 
+    private const STATUS_DRAFT = ['Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold', 'Released', 'Booked'];
     /**
      * Legacy DB: `contenttrans.schedule_date` is NOT NULL; CodeIgniter stored '' or 1970-01-01 for “no schedule”.
      * Strict MySQL rejects '' and NULL — use this sentinel (matches mwadmin/newslisting/edit.php checks).
@@ -416,109 +417,28 @@ class NewslistingApiController extends Controller
         'final_releasestatus' => $finalReleaseStatus,
     ];
 
-    DB::table('contenttrans')->where('id', $id)->update($payload);
+    DB::transaction(function () use ($id, $payload, $validated): void {
+        DB::table('contenttrans')->where('id', $id)->update($payload);
+
+        DB::table('memberstrans')->where('contenttrans_id', $id)->delete();
+        $members = $validated['members'] ?? [];
+        if (is_array($members) && count($members) > 0) {
+            foreach ($members as $m) {
+                DB::table('memberstrans')->insert([
+                    'contenttrans_id' => $id,
+                    'designation_id' => (int) $m['designation_id'],
+                    'user_id' => (int) $m['user_id'],
+                    'instructions' => (string) ($m['instructions'] ?? ''),
+                ]);
+            }
+        }
+    });
 
     return response()->json([
         'message' => 'News content updated successfully.',
         'data' => ['id' => $id],
     ]);
 }
-    public function updateold(Request $request, int $id): JsonResponse
-    {
-        if ($deny = $this->mwadminDenyUnless($request, 'newslisting', 'allow_edit')) {
-            return $deny;
-        }
-
-        $existing = DB::table('contenttrans')->where('id', $id)->first();
-        if (! $existing) {
-            return response()->json(['message' => 'Not found.'], 404);
-        }
-
-        $validated = $this->validateContent($request, $id);
-        $this->assertUniqueTitleAndPermalink($validated['title'], $validated['permalink'], $id);
-
-        [$status1, $scheduleDate] = $this->resolveStatusAndSchedule($request);
-        $userId = $this->resolveRealUserId($request);
-        $now = now();
-
-        $featured = ! empty($validated['featured_content']) ? 1 : 0;
-        $compYmd = $this->parseOptionalDateColumnYmd($validated['completion_date'] ?? null);
-
-        $bannerName = (string) ($existing->banner_img ?? '');
-        $coverName = (string) ($existing->cover_img ?? '');
-
-        if ($request->hasFile('banner_img')) {
-            $this->deleteNewsImageIfExists($bannerName, 'banner');
-            $bannerName = $this->storeNewsImage($request->file('banner_img'), 'banner');
-        }
-        if ($request->hasFile('cover_img')) {
-            $this->deleteNewsImageIfExists($coverName, 'cover');
-            $coverName = $this->storeNewsImage($request->file('cover_img'), 'cover');
-        }
-
-        $videoName = $this->resolveYoutubeVideoFilenameForUpdate(
-            $request,
-            $validated,
-            (string) ($existing->youtube_video ?? '')
-        );
-
-        $descRaw = (string) ($validated['description'] ?? '');
-        $description = $descRaw !== '' ? ucfirst($descRaw) : '';
-        $description = Str::limit($description, 200, '');
-
-        $payload = [
-            'category_id' => (int) $validated['category_id'],
-            'subcategory_id' => (int) $validated['subcategory_id'],
-            'last_serialno' => (int) $validated['last_serialno'],
-            'p2d_caseno' => Str::limit(strtoupper((string) $validated['p2d_caseno']), 80, ''),
-            'permalink' => ucwords(Str::limit($validated['permalink'], 150, '')),
-            'status1' => $status1,
-            'title' => Str::limit($validated['title'], 200, ''),
-            'seo_keyword' => Str::limit($validated['seo_keyword'], 100, ''),
-            'featured_content' => $featured,
-            'news_source' => (string) (int) $validated['news_source'],
-            'shared_folder' => Str::limit((string) ($validated['shared_folder'] ?? ''), 255, ''),
-            'description' => $description,
-            'schedule_date' => $this->persistScheduleDate($scheduleDate, $existing->schedule_date ?? null),
-            'due_date' => $this->parseSqlDateColumn($validated['due_date']),
-            'p2d_date' => $this->parseSqlDateColumn($validated['p2d_date']),
-            'completion_date' => $this->persistCompletionDate($compYmd, $existing->completion_date ?? null),
-            'prepared_by' => Str::limit($validated['prepared_by'], 100, ''),
-            'authorized_by' => Str::limit($validated['authorized_by'], 100, ''),
-            'banner_img' => Str::limit($bannerName, 80, ''),
-            'cover_img' => Str::limit($coverName, 80, ''),
-            'youtube_url_check' => $this->legacyTinyint($validated['youtube_url_check'] ?? null),
-            'youtube_url' => Str::limit((string) ($validated['youtube_url'] ?? ''), 100, ''),
-            'youtube_video_check' => $this->legacyTinyint($validated['youtube_video_check'] ?? null),
-            'youtube_video' => Str::limit($videoName, 100, ''),
-            'youtube_subtitles' => Str::limit((string) ($validated['youtube_subtitles'] ?? ''), 100, ''),
-            'modifieddate' => $now,
-            'modifiedby' => $userId,
-            'final_releasestatus' => $status1 === 'Released' ? 1 : 0,
-        ];
-
-        DB::transaction(function () use ($id, $payload, $validated): void {
-            DB::table('contenttrans')->where('id', $id)->update($payload);
-
-            DB::table('memberstrans')->where('contenttrans_id', $id)->delete();
-            $members = $validated['members'] ?? [];
-            if (is_array($members) && count($members) > 0) {
-                foreach ($members as $m) {
-                    DB::table('memberstrans')->insert([
-                        'contenttrans_id' => $id,
-                        'designation_id' => (int) $m['designation_id'],
-                        'user_id' => (int) $m['user_id'],
-                        'instructions' => (string) ($m['instructions'] ?? ''),
-                    ]);
-                }
-            }
-        });
-
-        return response()->json([
-            'message' => 'News content updated successfully.',
-            'data' => ['id' => $id],
-        ]);
-    }
 
     public function destroy(Request $request, int $id): JsonResponse
     {
@@ -1220,70 +1140,64 @@ private function resolveStatusAndScheduleold(Request $request): array
      */
     private function transformRecord(array $row): array
     {
-        $cover = (string) ($row['cover_img'] ?? '');
-        $banner = (string) ($row['banner_img'] ?? '');
-        $sched = $row['schedule_date'] ?? null;
-        $schedDate = '';
-        $schedTime = '';
-        $schedRaw = $sched !== null ? trim((string) $sched) : '';
-        if ($schedRaw !== '' && ! $this->isLegacyEmptyScheduleDatetime($schedRaw)) {
-            try {
-                $c = Carbon::parse($schedRaw);
-                $schedDate = $c->format('Y-m-d');
-                $schedTime = $c->format('H:i');
-            } catch (\Throwable) {
-                $schedDate = '';
-                $schedTime = '';
-            }
+    $cover = (string) ($row['cover_img'] ?? '');
+    $banner = (string) ($row['banner_img'] ?? '');
+    $sched = $row['schedule_date'] ?? null;
+    $schedDate = '';
+    $schedTime = '';
+    $schedRaw = $sched !== null ? trim((string) $sched) : '';
+
+    if ($schedRaw !== '' && ! $this->isLegacyEmptyScheduleDatetime($schedRaw)) {
+        try {
+            $c = Carbon::parse($schedRaw);
+            $schedDate = $c->format('Y-m-d');
+            $schedTime = $c->format('H:i');
+        } catch (\Throwable) {
+            $schedDate = '';
+            $schedTime = '';
         }
-    
-        $status1 = (string) ($row['status1'] ?? 'Pending');
-        if ($status1 === 'Released' || $status1 === 'Booked') {
-            $statusForForm = 'Pending';
-        } else {
-            $statusForForm = $status1;
-        }
-    
-        return [
-            'id' => (int) $row['id'],
-            'category_id' => (int) ($row['category_id'] ?? 0),
-            'subcategory_id' => (int) ($row['subcategory_id'] ?? 0),
-            'category_name' => $row['category_name'] ?? null,
-            'subcategory_name' => $row['subcategory_name'] ?? null,
-            'p2d_caseno' => (string) ($row['p2d_caseno'] ?? ''),
-            'last_serialno' => (int) ($row['last_serialno'] ?? 0),
-            'title' => (string) ($row['title'] ?? ''),
-            'permalink' => (string) ($row['permalink'] ?? ''),
-            'seo_keyword' => (string) ($row['seo_keyword'] ?? ''),
-            'description' => (string) ($row['description'] ?? ''),
-            'news_source' => (int) ($row['news_source'] ?? 0),
-            'news_source_name' => $row['news_source_name'] ?? null,
-            'shared_folder' => (string) ($row['shared_folder'] ?? ''),
-            'featured_content' => (string) ($row['featured_content'] ?? '0'),
-            'p2d_date' => $this->formatDateInput($row['p2d_date'] ?? null),
-            'due_date' => $this->formatDateInput($row['due_date'] ?? null),
-            'completion_date' => $this->formatDateInputForDisplay($row['completion_date'] ?? null),
-            'schedule_date' => $schedDate,
-            'schedule_time' => $schedTime,
-            'status1' => $statusForForm,
-            'status1_display' => (string) ($row['status1'] ?? ''),
-            'prepared_by' => (string) ($row['prepared_by'] ?? ''),
-            'authorized_by' => (string) ($row['authorized_by'] ?? ''),
-            'banner_img' => $banner,
-            'cover_img' => $cover,
-            'banner_img_url' => $banner !== '' ? url('images/NewsContents/bannerImages/'.$banner) : null,
-            'cover_img_url' => FrontendMedia::coverImageUrl($cover !== '' ? $cover : null),
-            'final_releasestatus' => (string) ($row['final_releasestatus'] ?? '0'),
-            'article_content' => (string) ($row['article_content'] ?? ''),
-            'youtube_url_check' => (string) ((int) ($row['youtube_url_check'] ?? 0)),
-            'youtube_url' => (string) ($row['youtube_url'] ?? ''),
-            'youtube_video_check' => (string) ((int) ($row['youtube_video_check'] ?? 0)),
-            'youtube_video' => (string) ($row['youtube_video'] ?? ''),
-            'youtube_video_url' => $this->youtubeVideoPublicUrl((string) ($row['youtube_video'] ?? '')),
-            'youtube_subtitles' => (string) ($row['youtube_subtitles'] ?? ''),
-            'flowchart_templateid' => (int) ($row['flowchart_templateid'] ?? 0),
-            'members' => $this->fetchMembersForContent((int) ($row['id'] ?? 0)),
-        ];
+    }
+
+    return [
+        'id' => (int) $row['id'],
+        'category_id' => (int) ($row['category_id'] ?? 0),
+        'subcategory_id' => (int) ($row['subcategory_id'] ?? 0),
+        'category_name' => $row['category_name'] ?? null,
+        'subcategory_name' => $row['subcategory_name'] ?? null,
+        'p2d_caseno' => (string) ($row['p2d_caseno'] ?? ''),
+        'last_serialno' => (int) ($row['last_serialno'] ?? 0),
+        'title' => (string) ($row['title'] ?? ''),
+        'permalink' => (string) ($row['permalink'] ?? ''),
+        'seo_keyword' => (string) ($row['seo_keyword'] ?? ''),
+        'description' => (string) ($row['description'] ?? ''),
+        'news_source' => (int) ($row['news_source'] ?? 0),
+        'news_source_name' => $row['news_source_name'] ?? null,
+        'shared_folder' => (string) ($row['shared_folder'] ?? ''),
+        'featured_content' => (string) ($row['featured_content'] ?? '0'),
+        'p2d_date' => $this->formatDateInput($row['p2d_date'] ?? null),
+        'due_date' => $this->formatDateInput($row['due_date'] ?? null),
+        'completion_date' => $this->formatDateInputForDisplay($row['completion_date'] ?? null),
+        'schedule_date' => $schedDate,
+        'schedule_time' => $schedTime,
+        'status1' => (string) ($row['status1'] ?? 'Pending'),
+        'status1_display' => (string) ($row['status1'] ?? 'Pending'),
+        'prepared_by' => (string) ($row['prepared_by'] ?? ''),
+        'authorized_by' => (string) ($row['authorized_by'] ?? ''),
+        'banner_img' => $banner,
+        'cover_img' => $cover,
+        'banner_img_url' => $banner !== '' ? url('images/NewsContents/bannerImages/'.$banner) : null,
+        'cover_img_url' => FrontendMedia::coverImageUrl($cover !== '' ? $cover : null),
+        'final_releasestatus' => (string) ($row['final_releasestatus'] ?? '0'),
+        'article_content' => (string) ($row['article_content'] ?? ''),
+        'youtube_url_check' => (string) ((int) ($row['youtube_url_check'] ?? 0)),
+        'youtube_url' => (string) ($row['youtube_url'] ?? ''),
+        'youtube_video_check' => (string) ((int) ($row['youtube_video_check'] ?? 0)),
+        'youtube_video' => (string) ($row['youtube_video'] ?? ''),
+        'youtube_video_url' => $this->youtubeVideoPublicUrl((string) ($row['youtube_video'] ?? '')),
+        'youtube_subtitles' => (string) ($row['youtube_subtitles'] ?? ''),
+        'flowchart_templateid' => (int) ($row['flowchart_templateid'] ?? 0),
+        'members' => $this->fetchMembersForContent((int) ($row['id'] ?? 0)),
+    ];
     }
 
     private function formatDateInput(mixed $value): ?string

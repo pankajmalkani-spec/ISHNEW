@@ -19,10 +19,14 @@ import { dmyToIsoDate, isoDateToDmy } from '../Sponsor/sponsorDateFormat';
 const MAX_NEWS_IMAGE_BYTES = 8 * 1024 * 1024;
 const MAX_NEWS_VIDEO_BYTES = 500 * 1024 * 1024;
 
-const DRAFT_STATUS = ['Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold'];
+//const DRAFT_STATUS = ['Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold'];
 //const EDIT_STATUS = [...DRAFT_STATUS, 'Released', 'Booked'];
-const EDIT_STATUS = [...DRAFT_STATUS];
+//const EDIT_STATUS = [...DRAFT_STATUS];
 /** Legacy mwadmin/newslisting/edit/{id}/{step}: 1=P2D, 2=Checklist, 3=Text, 4=Multimedia, 5=Reviews */
+
+const DRAFT_STATUS = ['Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold'];
+const EDIT_STATUS = [...DRAFT_STATUS, 'Released', 'Booked'];
+
 const LEGACY_EDIT_STEPS = [
     { id: 1, label: 'P2D Process' },
     { id: 2, label: 'P2D CheckList' },
@@ -801,18 +805,18 @@ export default function NewslistingEdit({
                                     />
                                 </div>
                                 <div>
-                                    <label>Status *</label>
-                                    <select
-                                        value={form.status1}
-                                        onChange={(e) => setForm((f) => ({ ...f, status1: e.target.value }))}
-                                    >
-                                        {EDIT_STATUS.map((s) => (
-                                            <option key={s} value={s}>
-                                                {s}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+    <label>Status *</label>
+    <select
+        value={form.status1 || 'Pending'}
+        onChange={(e) => setForm((f) => ({ ...f, status1: e.target.value }))}
+    >
+        {EDIT_STATUS.map((s) => (
+            <option key={s} value={s}>
+                {s}
+            </option>
+        ))}
+    </select>
+</div>
                                 <div
                                     className={
                                         'mwadmin-news-create-release-row mwadmin-news-create-release-group ' +
