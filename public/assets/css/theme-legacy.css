@@ -84,6 +84,25 @@ body.ish-theme-legacy #content .standart-post .post-image {
   margin-bottom: 8px;
 }
 
+body.ish-theme-legacy #content-section .standard-box .entertain-sec .standart-post .post-image {
+  overflow: hidden;
+  background: #eceff1;
+  border-radius: 14px;
+}
+
+body.ish-theme-legacy #content-section .standard-box .entertain-sec .standart-post .post-image > a:first-child {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+body.ish-theme-legacy #content-section .standard-box .entertain-sec .standart-post .post-image > a:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
 body.ish-theme-legacy #content .thumb-post h2 {
   font-size: 11px;
   line-height: 1.38;

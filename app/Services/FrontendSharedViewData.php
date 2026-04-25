@@ -36,7 +36,7 @@ final class FrontendSharedViewData
             $catId = (int) $cat->id;
 
             $subcategories = DB::table('subcategorymst')
-                ->selectRaw('id, name, LOWER(subcat_code) as code')
+                ->selectRaw('id, name, LOWER(subcat_code) as code, color')
                 ->where('status', 1)
                 ->where('category_id', $catId)
                 ->orderBy('sort')

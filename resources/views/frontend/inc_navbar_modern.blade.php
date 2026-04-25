@@ -29,7 +29,11 @@
                       <div class="ish-nav-mega__filters">
                         <a class="ish-nav-mega__pill ish-nav-mega__pill--active" href="{{ url('/category/'.($cat['code'] ?? '')) }}">All</a>
                         @foreach($cat['subcategories'] as $sub)
-                          <a class="ish-nav-mega__pill" href="{{ url('/category/'.($cat['code'] ?? '').'/'.($sub->code ?? '')) }}">{{ $sub->name ?? '' }}</a>
+                          @php
+                            $subColor = trim((string) ($sub->color ?? ''));
+                            $subColorStyle = preg_match('/^#(?:[0-9a-fA-F]{3}){1,2}$/', $subColor) ? '--ish-subcat-color: '.$subColor.';' : '';
+                          @endphp
+                          <a class="ish-nav-mega__pill" style="{{ $subColorStyle }}" href="{{ url('/category/'.($cat['code'] ?? '').'/'.($sub->code ?? '')) }}">{{ $sub->name ?? '' }}</a>
                         @endforeach
                       </div>
                     @endif

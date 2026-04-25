@@ -417,19 +417,23 @@ button.ish-nav-modern__link--mega-trigger:active {
 .ish-nav-mega__filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
 .ish-nav-mega__pill {
-  display: inline-block;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.3;
+  --ish-subcat-color: rgba(255, 255, 255, 0.75);
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
   color: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
+  text-transform: uppercase;
   text-decoration: none;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -437,8 +441,8 @@ button.ish-nav-modern__link--mega-trigger:active {
 .ish-nav-mega__pill:hover,
 .ish-nav-mega__pill--active {
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--ish-subcat-color);
+  background: var(--ish-subcat-color);
 }
 
 .ish-nav-mega__card {
@@ -1470,6 +1474,7 @@ body.ish-home-modern.ish-modern-light .ish-nav-mega__empty a {
 }
 
 body.ish-home-modern.ish-modern-light .ish-nav-mega__pill {
+  --ish-subcat-color: #b9a789;
   background: #fffaf0;
   border-color: #b9a789;
   box-shadow: inset 0 0 0 1px rgba(255, 250, 240, 0.72);
@@ -1478,9 +1483,9 @@ body.ish-home-modern.ish-modern-light .ish-nav-mega__pill {
 body.ish-home-modern.ish-modern-light .ish-nav-mega__pill:hover,
 body.ish-home-modern.ish-modern-light .ish-nav-mega__pill:focus-visible,
 body.ish-home-modern.ish-modern-light .ish-nav-mega__pill--active {
-  color: #1f2430;
-  background: #eadfcd;
-  border-color: #8f7f64;
+  color: #ffffff;
+  background: var(--ish-subcat-color);
+  border-color: var(--ish-subcat-color);
   box-shadow: inset 0 0 0 1px rgba(255, 250, 240, 0.88), 0 6px 16px rgba(31, 36, 48, 0.08);
 }
 
