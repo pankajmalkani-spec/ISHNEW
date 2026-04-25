@@ -11,6 +11,6 @@ return [
     |
     */
 
-    'theme_toggle_enabled' => env('ISH_THEME_TOGGLE_ENABLED', false),
+    'theme_toggle_enabled' => env('ISH_THEME_TOGGLE_ENABLED', true),
 
 ];
