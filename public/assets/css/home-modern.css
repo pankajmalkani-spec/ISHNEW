@@ -694,14 +694,21 @@ button.ish-nav-modern__link--mega-trigger:active {
 }
 
 .ish-hm-hero__cat {
-  display: inline-block;
-  margin-bottom: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 32px;
+  margin-bottom: 16px;
+  padding: 7px 22px;
+  border-radius: 0 999px 999px 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
 }
 
 .ish-hm-hero__cat:hover {
@@ -1396,14 +1403,27 @@ body.ish-home-modern footer .down-footer a.go-top:hover {
 }
 
 .ish-hm-row-card__cat {
-  display: inline-block;
-  margin-bottom: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: calc(100% - 16px);
+  min-height: 30px;
+  margin: 0;
+  padding: 6px 22px 6px 18px;
+  border-radius: 0 999px 999px 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
   text-decoration: none;
+  white-space: normal;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
 }
 
 .ish-hm-row-card__title {
@@ -1734,6 +1754,42 @@ body.ish-home-modern.ish-modern-light footer .down-footer ul.list-footer li a:ho
 
 body.ish-home-modern.ish-modern-light .ish-hm-row__track::-webkit-scrollbar-thumb {
   background: rgba(31, 36, 48, 0.2);
+}
+
+body.ish-home-modern.ish-modern-light,
+body.ish-home-modern.ish-modern-light main#content,
+body.ish-home-modern.ish-modern-light .ish-hm-row,
+body.ish-home-modern.ish-modern-light .ish-hm-row-card,
+body.ish-home-modern.ish-modern-light .ish-hm-hero__content,
+body.ish-home-modern.ish-modern-light .ish-nav-mega,
+body.ish-home-modern.ish-modern-light footer,
+body.ish-home-modern.ish-modern-light h1,
+body.ish-home-modern.ish-modern-light h2,
+body.ish-home-modern.ish-modern-light h3,
+body.ish-home-modern.ish-modern-light h4,
+body.ish-home-modern.ish-modern-light h5,
+body.ish-home-modern.ish-modern-light h6,
+body.ish-home-modern.ish-modern-light p,
+body.ish-home-modern.ish-modern-light li,
+body.ish-home-modern.ish-modern-light span,
+body.ish-home-modern.ish-modern-light a,
+body.ish-home-modern.ish-modern-light input,
+body.ish-home-modern.ish-modern-light button,
+body.ish-home-modern.ish-modern-light .ish-hm-row__title,
+body.ish-home-modern.ish-modern-light .ish-hm-row__more,
+body.ish-home-modern.ish-modern-light .ish-hm-row-card__title a,
+body.ish-home-modern.ish-modern-light .ish-hm-hero__title a,
+body.ish-home-modern.ish-modern-light .ish-hm-hero__meta,
+body.ish-home-modern.ish-modern-light .ish-nav-modern__link,
+body.ish-home-modern.ish-modern-light .ish-nav-mega__card-title,
+body.ish-home-modern.ish-modern-light footer .footer-widget h1,
+body.ish-home-modern.ish-modern-light footer .footer-widget h2,
+body.ish-home-modern.ish-modern-light footer .footer-widget h2 a,
+body.ish-home-modern.ish-modern-light footer p,
+body.ish-home-modern.ish-modern-light footer a {
+  color: #111827 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
 }
 
 @media (max-width: 991px) {

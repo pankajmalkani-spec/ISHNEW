@@ -8,7 +8,7 @@
   $smUrl = url('/videos/'.($news->categorycode ?? '').'/'.($news->permalink ?? ''));
 @endphp
 <div class="single-post">
-  <h1>{{ $news->title ?? '' }}</h1>
+  <h1 class="video-detail-title">{{ $news->title ?? '' }}</h1>
   <div id="ish-news-video-root" class="format-post-video" data-youtube-url="{{ e($news->youtube_url ?? '') }}">
     <div class="embed-responsive embed-responsive-16by9">
       @if($ytCheck)

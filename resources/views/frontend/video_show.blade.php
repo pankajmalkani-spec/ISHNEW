@@ -21,12 +21,17 @@
   'ish-theme',
   'ish-theme-'.($frontendTheme ?? 'legacy'),
   'ish-home-modern' => ($frontendTheme ?? 'legacy') === 'modern',
+  'ish-video-modern' => ($frontendTheme ?? 'legacy') === 'modern',
   'ish-modern-'.($frontendModernScheme ?? 'dark') => ($frontendTheme ?? 'legacy') === 'modern',
 ])>
 <div id="container">
   <header class="clearfix">
     @include('frontend.inc_header')
-    @include('frontend.inc_navbar')
+    @if(($frontendTheme ?? 'legacy') === 'modern')
+      @include('frontend.inc_navbar_modern')
+    @else
+      @include('frontend.inc_navbar')
+    @endif
   </header>
 
   <section id="content-section">

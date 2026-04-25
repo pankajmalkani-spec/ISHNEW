@@ -77,6 +77,38 @@ body.ish-theme-modern .news-post.standart-post {
   transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
+body.ish-theme-modern.ish-video-modern {
+  --ish-canvas: #22242f;
+  --ish-canvas-deep: #1a1c26;
+  --ish-canvas-raised: #2a2d3a;
+  --ish-canvas-muted: #262936;
+  --ish-rgb: 34, 36, 47;
+  --ish-shadow: 15, 18, 32;
+  background: var(--ish-canvas);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+body.ish-theme-modern.ish-video-modern #container {
+  background: var(--ish-canvas);
+}
+
+body.ish-theme-modern.ish-video-modern .top-line {
+  background: var(--ish-canvas-deep) !important;
+  border-bottom: none !important;
+  padding-top: 6px;
+  padding-bottom: 5px;
+}
+
+body.ish-theme-modern.ish-video-modern #header-banner {
+  display: none !important;
+}
+
+body.ish-theme-modern.ish-video-modern header {
+  position: relative;
+  z-index: 10000;
+  overflow: visible;
+}
+
 body.ish-theme-modern #content-section .posts-block.standard-box,
 body.ish-theme-modern .news-post.standart-post {
   border-radius: 12px;
@@ -206,6 +238,17 @@ body.ish-theme-modern #category-loader span,
 body.ish-theme-modern #category-loader i,
 body.ish-theme-modern #content-section .entry-title {
   color: #ffffff !important;
+}
+
+body.ish-theme-modern.ish-video-modern #content-section .single-post > h1,
+body.ish-theme-modern.ish-video-modern #content-section .single-post h1.video-detail-title,
+body.ish-theme-modern.ish-video-modern #content-section .video-detail-title,
+body.ish-theme-modern.ish-video-modern #content-section .sidebar-title h1,
+body.ish-theme-modern.ish-video-modern #content-section #js-video-sidebar h1,
+body.ish-theme-modern.ish-video-modern #content-section #js-video-sidebar h2 a {
+  color: #f7f9ff !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
 }
 
 body.ish-theme-modern #content-section .sidebar h1 {
@@ -586,4 +629,26 @@ body.ish-theme-modern.ish-modern-light #content-section .article-post ul.tags-li
   color: #384154 !important;
   background: #f3eadc;
   border-color: #d6c6ad;
+}
+
+body.ish-theme-modern.ish-modern-light.ish-video-modern,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .single-post,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .sidebar,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section h1,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section h2,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section h3,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section h4,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section h5,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section h6,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section p,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section li,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section span,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section a,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .video-detail-title,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section #js-video-sidebar h1,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section #js-video-sidebar h2 a {
+  color: #111827 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
 }

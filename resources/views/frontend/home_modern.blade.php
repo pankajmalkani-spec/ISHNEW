@@ -1,6 +1,22 @@
 {{-- Modern home: dark shell; same data as legacy --}}
 @php
   $bn = isset($CategorySet1[1]) ? $CategorySet1[1] : null;
+  $modernBadgeStyle = static function ($item): string {
+      $color = trim((string) (($item->subcategorycolor ?? null) ?: ($item->categorycolor ?? null) ?: '#232323'));
+      if (! preg_match('/^#(?:[0-9a-fA-F]{3}){1,2}$/', $color)) {
+          $color = '#232323';
+      }
+
+      $hex = ltrim($color, '#');
+      if (strlen($hex) === 3) {
+          $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
+      }
+
+      $brightness = ((hexdec(substr($hex, 0, 2)) * 299) + (hexdec(substr($hex, 2, 2)) * 587) + (hexdec(substr($hex, 4, 2)) * 114)) / 1000;
+      $textColor = $brightness > 170 ? '#111111' : '#ffffff';
+
+      return 'background-color: '.$color.' !important; color: '.$textColor.' !important;';
+  };
 @endphp
 
 @if(!empty($banner) && count($banner) > 0)
@@ -11,7 +27,7 @@
       <div class="ish-hm-hero__gradient" aria-hidden="true"></div>
     </div>
     <div class="container ish-hm-hero__content">
-      <a class="ish-hm-hero__cat" href="{{ url('/category/'.($hero->categorycode ?? '').'/'.($hero->subcategorycode ?? '')) }}">{{ $hero->categoryname ?? '' }}</a>
+      <a class="ish-hm-hero__cat" style="{{ $modernBadgeStyle($hero) }}" href="{{ url('/category/'.($hero->categorycode ?? '').'/'.($hero->subcategorycode ?? '')) }}">{{ $hero->subcategoryname ?? $hero->categoryname ?? '' }}</a>
       <h1 class="ish-hm-hero__title">
         <a href="{{ url('/videos/'.($hero->categorycode ?? '').'/'.($hero->permalink ?? '')) }}">{{ $hero->title ?? '' }}</a>
       </h1>
@@ -60,9 +76,9 @@
             <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">
               <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
+              <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($slider) }}">{{ $slider->subcategoryname ?? '' }}</span>
             </a>
             <div class="ish-hm-row-card__body">
-              <a class="ish-hm-row-card__cat" href="{{ url('/category/'.($slider->categorycode ?? '').'/'.($slider->subcategorycode ?? '')) }}">{{ $slider->subcategoryname ?? '' }}</a>
               <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">{{ $slider->title ?? '' }}</a></h3>
             </div>
           </article>
@@ -89,9 +105,9 @@
             <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">
               <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
+              <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($item) }}">{{ $item->subcategoryname ?? '' }}</span>
             </a>
             <div class="ish-hm-row-card__body">
-              <a class="ish-hm-row-card__cat" href="{{ url('/category/'.($item->categorycode ?? '').'/'.($item->subcategorycode ?? '')) }}">{{ $item->subcategoryname ?? '' }}</a>
               <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">{{ $item->title ?? '' }}</a></h3>
             </div>
           </article>
