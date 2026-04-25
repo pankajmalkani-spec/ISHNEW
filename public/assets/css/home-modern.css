@@ -946,6 +946,14 @@ body.ish-home-modern #Sponsor-section h2 {
 body.ish-home-modern footer {
   background: var(--ish-canvas-deep);
   border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 14px;
+}
+
+body.ish-home-modern footer > .container {
+  width: 100%;
+  max-width: 100%;
+  padding-left: clamp(20px, 4vw, 72px);
+  padding-right: clamp(20px, 4vw, 72px);
 }
 
 body.ish-home-modern footer .up-footer,
@@ -953,9 +961,291 @@ body.ish-home-modern footer .down-footer {
   color: rgba(255, 255, 255, 0.65);
 }
 
+body.ish-home-modern footer .up-footer {
+  padding-bottom: 12px;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.ish-home-modern footer .up-footer .row {
+  align-items: center;
+  row-gap: 10px;
+}
+
+@media (min-width: 992px) {
+  body.ish-home-modern footer .up-footer .row {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-left: -18px;
+    margin-right: -18px;
+  }
+
+  body.ish-home-modern footer .up-footer .row > .col-lg-3 {
+    flex: 1 1 0;
+    max-width: none;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  body.ish-home-modern footer .up-footer .row > .col-lg-3:first-child {
+    flex: 1.35 1 0;
+  }
+
+  body.ish-home-modern footer .up-footer .row > .col-lg-3:nth-child(2) {
+    flex: 0.95 1 0;
+  }
+
+  body.ish-home-modern footer .up-footer .row > .col-lg-3:nth-child(3) {
+    flex: 1.05 1 0;
+  }
+
+  body.ish-home-modern footer .up-footer .row > .col-lg-3:nth-child(4) {
+    flex: 1.8 1 0;
+  }
+}
+
+body.ish-home-modern footer .footer-widget {
+  margin-bottom: 0;
+}
+
+body.ish-home-modern footer .footer-widget > h1 {
+  min-height: 0;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
 body.ish-home-modern footer .footer-widget h1,
 body.ish-home-modern footer h2 a {
   color: rgba(255, 255, 255, 0.88);
+}
+
+body.ish-home-modern footer .footer-widget #footer-logo {
+  width: 54px;
+  height: auto;
+  border-radius: 2px;
+}
+
+body.ish-home-modern footer p {
+  max-width: none;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0 0 8px;
+}
+
+body.ish-home-modern footer .text-widget p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  overflow: visible;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.social-icons li {
+  float: none;
+  margin: 0;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.social-icons li a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  line-height: 1;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.social-icons li a:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.24);
+  transform: translateY(-1px);
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.small-posts > li {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.small-posts > li > a {
+  flex: 0 0 40px;
+  width: 40px;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.small-posts > li > a img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.small-posts > li .post-cont {
+  margin-left: 10px;
+  padding-top: 0;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.small-posts > li h2 {
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.small-posts > li h2 a {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.post-tags {
+  margin: 0;
+}
+
+body.ish-home-modern footer .up-footer .footer-widget ul.post-tags li,
+body.ish-home-modern footer .up-footer .footer-widget ul.post-tags li a,
+body.ish-home-modern footer .up-footer .footer-widget ul.post-tags li i {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+body.ish-home-modern footer .up-footer .featured-widget .news-post {
+  margin-bottom: 0;
+}
+
+body.ish-home-modern footer .up-footer .featured-widget .news-post .post-image {
+  display: none;
+}
+
+body.ish-home-modern footer .up-footer .featured-widget .news-post .post-image img {
+  border-radius: 8px;
+}
+
+body.ish-home-modern footer .up-footer .featured-widget .news-post h2 {
+  margin: 0 0 5px;
+  line-height: 1.35;
+}
+
+body.ish-home-modern footer .up-footer .featured-widget .news-post h2 a {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+body.ish-home-modern footer .up-footer .featured-widget .news-post h2 a:hover {
+  color: #fff;
+}
+
+body.ish-home-modern footer .up-footer .tags-widget ul.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 0;
+  overflow: visible;
+  max-width: 100%;
+}
+
+body.ish-home-modern footer .up-footer .tags-widget ul.tags-list li {
+  float: none;
+  margin: 0;
+}
+
+body.ish-home-modern footer .up-footer .tags-widget ul.tags-list li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 9px;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+body.ish-home-modern footer .up-footer .tags-widget ul.tags-list li a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+body.ish-home-modern footer .down-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 8px 0 10px;
+}
+
+body.ish-home-modern footer .down-footer ul.list-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: 0;
+}
+
+body.ish-home-modern footer .down-footer ul.list-footer li {
+  margin: 0;
+}
+
+body.ish-home-modern footer .down-footer ul.list-footer li a {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+body.ish-home-modern footer .down-footer ul.list-footer li a:hover {
+  color: #fff;
+}
+
+body.ish-home-modern footer .down-footer p {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.56);
+  line-height: 1.5;
+}
+
+body.ish-home-modern footer .down-footer a.go-top {
+  float: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  line-height: 1;
+}
+
+body.ish-home-modern footer .down-footer a.go-top:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+@media (max-width: 767px) {
+  body.ish-home-modern footer {
+    padding-top: 18px;
+  }
+
+  body.ish-home-modern footer .down-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* Netflix-style row sections */
@@ -1179,6 +1469,21 @@ body.ish-home-modern.ish-modern-light .ish-nav-mega__empty a {
   color: #1f2430;
 }
 
+body.ish-home-modern.ish-modern-light .ish-nav-mega__pill {
+  background: #fffaf0;
+  border-color: #b9a789;
+  box-shadow: inset 0 0 0 1px rgba(255, 250, 240, 0.72);
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-mega__pill:hover,
+body.ish-home-modern.ish-modern-light .ish-nav-mega__pill:focus-visible,
+body.ish-home-modern.ish-modern-light .ish-nav-mega__pill--active {
+  color: #1f2430;
+  background: #eadfcd;
+  border-color: #8f7f64;
+  box-shadow: inset 0 0 0 1px rgba(255, 250, 240, 0.88), 0 6px 16px rgba(31, 36, 48, 0.08);
+}
+
 body.ish-home-modern.ish-modern-light .ish-nav-mega__card {
   background: #f8f0e3;
   border-color: #d6c6ad;
@@ -1303,6 +1608,10 @@ body.ish-home-modern.ish-modern-light footer .down-footer p {
   color: #5f5648;
 }
 
+body.ish-home-modern.ish-modern-light footer .down-footer p {
+  max-width: none;
+}
+
 body.ish-home-modern.ish-modern-light footer .footer-widget > h1,
 body.ish-home-modern.ish-modern-light footer .footer-widget h1,
 body.ish-home-modern.ish-modern-light footer .footer-widget h2,
@@ -1335,11 +1644,21 @@ body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.social
 body.ish-home-modern.ish-modern-light footer .down-footer a.go-top {
   color: #fffaf0;
   background: #2f2a22;
+  border-color: #2f2a22;
 }
 
 body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.social-icons li a:hover,
 body.ish-home-modern.ish-modern-light footer .down-footer a.go-top:hover {
   background: #4a3f31;
+  border-color: #4a3f31;
+}
+
+body.ish-home-modern.ish-modern-light footer .down-footer ul.list-footer li a {
+  color: #5f5648;
+}
+
+body.ish-home-modern.ish-modern-light footer .down-footer ul.list-footer li a:hover {
+  color: #1f2430;
 }
 
 body.ish-home-modern.ish-modern-light .ish-hm-row__track::-webkit-scrollbar-thumb {
