@@ -3610,15 +3610,30 @@ footer {
   color: #f5f5f5;
 }
 
+.ish-theme-toggle-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 12px;
+}
+
 .ish-theme-toggle-wrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
   font-size: 12px;
   line-height: 1.2;
   color: #f5f5f5;
+}
+
+.ish-theme-toggle-separator {
+  display: inline-block;
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .ish-theme-toggle__text {
@@ -3692,4 +3707,10 @@ footer {
 
 .ish-theme-toggle-wrap--modern .ish-theme-toggle__track {
   background: #2e7d32;
+}
+
+@media (max-width: 767px) {
+  .ish-theme-toggle-bar {
+    flex-wrap: wrap;
+  }
 }

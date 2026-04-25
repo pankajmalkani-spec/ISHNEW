@@ -19,7 +19,13 @@ class ShareFrontendTheme
             }
         }
 
+        $modernScheme = (string) $request->cookie('ish_modern_scheme', 'dark');
+        if (! in_array($modernScheme, ['light', 'dark'], true)) {
+            $modernScheme = 'dark';
+        }
+
         View::share('frontendTheme', $theme);
+        View::share('frontendModernScheme', $modernScheme);
 
         return $next($request);
     }

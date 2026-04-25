@@ -59,6 +59,7 @@ body.ish-home-modern main#content {
   top: 0;
   z-index: 2000;
   overflow: visible;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: rgba(8, 10, 14, 0.88);
@@ -190,15 +191,16 @@ body.ish-home-modern main#content {
 .ish-nav-modern__link {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px 24px;
-  min-width: 160px;
+  gap: 10px;
+  padding: 12px 20px;
+  min-width: auto;
   width: auto;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 999px;
@@ -266,14 +268,14 @@ body.ish-home-modern main#content {
 
 @media (min-width: 992px) {
   .ish-nav-modern__link {
-    padding: 10px 0;
+    padding: 12px 20px;
   }
 }
 
 /* Category row uses <button>; match <a> styling (label does not navigate — use “All” in mega). */
 button.ish-nav-modern__link--mega-trigger {
   font: inherit;
-  font-family: inherit;
+  font-family: "Open Sans", sans-serif;
   background: none;
   border: none;
   margin: 0;
@@ -283,7 +285,7 @@ button.ish-nav-modern__link--mega-trigger {
   text-align: inherit;
   color: inherit;
   width: auto;
-  min-width: 152px;
+  min-width: auto;
   max-width: none;
   justify-content: center;
   overflow: visible;
@@ -543,8 +545,8 @@ button.ish-nav-modern__link--mega-trigger:active {
   }
 
   .ish-nav-modern__link {
-    font-size: 14px;
-    letter-spacing: 0.04em;
+    font-size: 12px;
+    letter-spacing: 0;
     padding: 12px 0;
     line-height: 1.35;
     min-width: auto;
@@ -1093,4 +1095,263 @@ body.ish-home-modern footer h2 a {
 
 body.ish-home-modern #Sponsor-section {
   display: none !important;
+}
+
+/* Modern Light mode: home/nav layer */
+body.ish-home-modern.ish-modern-light {
+  --ish-canvas: #f3eadc;
+  --ish-canvas-deep: #fffaf0;
+  --ish-canvas-raised: #fffaf0;
+  --ish-canvas-muted: #eadfcd;
+  --ish-rgb: 243, 234, 220;
+  --ish-shadow: 31, 36, 48;
+  background: #f3eadc;
+  color: #1f2430;
+}
+
+body.ish-home-modern.ish-modern-light #container,
+body.ish-home-modern.ish-modern-light main#content {
+  background: #f3eadc;
+}
+
+body.ish-home-modern.ish-modern-light .top-line {
+  background: #fffaf0 !important;
+  border-bottom: 1px solid #e2d4bd !important;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern {
+  background: rgba(255, 250, 240, 0.94);
+  border-bottom-color: #e2d4bd;
+  box-shadow: 0 8px 28px rgba(31, 36, 48, 0.08);
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern__link {
+  color: #1f2430;
+  background: #f8f0e3;
+  border-color: #d6c6ad;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern__link:hover,
+body.ish-home-modern.ish-modern-light .ish-nav-modern__link:focus-visible,
+body.ish-home-modern.ish-modern-light .ish-nav-modern__item--mega.ish-nav-modern__item--mega-open > .ish-nav-modern__link,
+body.ish-home-modern.ish-modern-light .ish-nav-modern__link--home.active,
+body.ish-home-modern.ish-modern-light .ish-nav-modern__link--active {
+  color: #111827;
+  background: #fffaf0;
+  border-color: #c7b391;
+  box-shadow: 0 10px 24px rgba(31, 36, 48, 0.1);
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern__chev {
+  border-top-color: #4b5565;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern__search {
+  background: #fffaf0;
+  border-color: #d0bea3;
+  box-shadow: none;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern__search input {
+  color: #1f2430;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern__search input::placeholder {
+  color: #7a8496;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern__search button {
+  color: #1f2430;
+  background: #eadfcd;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-mega {
+  background: rgba(255, 250, 240, 0.98);
+  border-color: #dfd2bf;
+  box-shadow: 0 24px 60px rgba(31, 36, 48, 0.14);
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-mega__pill,
+body.ish-home-modern.ish-modern-light .ish-nav-mega__card-title,
+body.ish-home-modern.ish-modern-light .ish-nav-mega__empty,
+body.ish-home-modern.ish-modern-light .ish-nav-mega__empty a {
+  color: #1f2430;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-mega__card {
+  background: #f8f0e3;
+  border-color: #d6c6ad;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-hero__content,
+body.ish-home-modern.ish-modern-light .ish-hm-row-card {
+  background: #fffaf0;
+  border-color: #dfd2bf;
+  box-shadow: 0 18px 44px rgba(31, 36, 48, 0.08);
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-row__title,
+body.ish-home-modern.ish-modern-light .ish-hm-row-card__title a {
+  color: #1f2430;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-row__more,
+body.ish-home-modern.ish-modern-light .ish-hm-row-card__cat {
+  color: #5d6678;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-row-card__title a:hover,
+body.ish-home-modern.ish-modern-light .ish-hm-row__more:hover {
+  color: #2f5fa9;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-hero__media::after {
+  background: radial-gradient(
+    ellipse 90% 80% at 50% 35%,
+    rgba(255, 250, 240, 0.26) 0%,
+    rgba(243, 234, 220, 0.54) 48%,
+    rgba(243, 234, 220, 0.92) 100%
+  );
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-hero__gradient {
+  background: linear-gradient(
+    to top,
+    #f3eadc 0%,
+    rgba(243, 234, 220, 0.92) 36%,
+    rgba(255, 250, 240, 0.48) 68%,
+    rgba(243, 234, 220, 0.72) 100%
+  );
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-hero__cat,
+body.ish-home-modern.ish-modern-light .ish-hm-hero__meta {
+  color: #6f6251;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-hero__title a,
+body.ish-home-modern.ish-modern-light .ish-hm-hero__cat:hover {
+  color: #1f2430;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-strip {
+  border-bottom-color: #dfd2bf;
+  background: #fffaf0;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-strip__track {
+  scrollbar-color: rgba(31, 36, 48, 0.22) transparent;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-strip__track::-webkit-scrollbar-track {
+  background: rgba(31, 36, 48, 0.08);
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-strip__track::-webkit-scrollbar-thumb {
+  background: rgba(31, 36, 48, 0.22);
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-strip__cell {
+  border-color: #dfd2bf;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-strip__cell::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 250, 240, 0.04) 0%,
+    rgba(31, 36, 48, 0.64) 100%
+  );
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-strip__cap {
+  color: #ffffff;
+  background: linear-gradient(transparent, rgba(31, 36, 48, 0.82));
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-search__form {
+  background: #fffaf0;
+  border-color: #d0bea3;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-search__form input {
+  color: #1f2430;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-search__form input::placeholder {
+  color: #7d715f;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-search__form button {
+  color: #1f2430;
+  background: #eadfcd;
+}
+
+body.ish-home-modern.ish-modern-light footer {
+  background: #fffaf0;
+  border-top-color: #d6c6ad;
+}
+
+body.ish-home-modern.ish-modern-light footer .up-footer {
+  border-bottom-color: #c7b391;
+}
+
+body.ish-home-modern.ish-modern-light footer .up-footer,
+body.ish-home-modern.ish-modern-light footer .down-footer,
+body.ish-home-modern.ish-modern-light footer p,
+body.ish-home-modern.ish-modern-light footer .down-footer p {
+  color: #5f5648;
+}
+
+body.ish-home-modern.ish-modern-light footer .footer-widget > h1,
+body.ish-home-modern.ish-modern-light footer .footer-widget h1,
+body.ish-home-modern.ish-modern-light footer .footer-widget h2,
+body.ish-home-modern.ish-modern-light footer .footer-widget h2 a,
+body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.small-posts > li h2 a,
+body.ish-home-modern.ish-modern-light footer .up-footer .featured-widget .news-post h2 a,
+body.ish-home-modern.ish-modern-light footer .down-footer ul.list-footer li a {
+  color: #1f2430;
+}
+
+body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.post-tags li,
+body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.post-tags li a,
+body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.post-tags li i {
+  color: #7b705f;
+}
+
+body.ish-home-modern.ish-modern-light footer .up-footer .tags-widget ul.tags-list li a {
+  color: #5f5648;
+  background: #f8f0e3;
+  border-color: #b9a789;
+}
+
+body.ish-home-modern.ish-modern-light footer .up-footer .tags-widget ul.tags-list li a:hover {
+  color: #1f2430;
+  background: #eadfcd;
+  border-color: #9f8f73;
+}
+
+body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.social-icons li a,
+body.ish-home-modern.ish-modern-light footer .down-footer a.go-top {
+  color: #fffaf0;
+  background: #2f2a22;
+}
+
+body.ish-home-modern.ish-modern-light footer .up-footer .footer-widget ul.social-icons li a:hover,
+body.ish-home-modern.ish-modern-light footer .down-footer a.go-top:hover {
+  background: #4a3f31;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-row__track::-webkit-scrollbar-thumb {
+  background: rgba(31, 36, 48, 0.2);
+}
+
+@media (max-width: 991px) {
+  body.ish-home-modern.ish-modern-light .ish-nav-modern__panel {
+    background: #fffaf0;
+  }
+
+  body.ish-home-modern.ish-modern-light .ish-nav-modern__burger span {
+    background: #1f2430;
+  }
 }

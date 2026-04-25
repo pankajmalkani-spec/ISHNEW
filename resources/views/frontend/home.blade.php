@@ -14,6 +14,7 @@
   'ish-theme',
   'ish-theme-'.($frontendTheme ?? 'legacy'),
   'ish-home-modern' => $isModern,
+  'ish-modern-'.($frontendModernScheme ?? 'dark') => $isModern,
 ])>
 <div id="container">
   <header class="clearfix">

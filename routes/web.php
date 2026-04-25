@@ -32,6 +32,19 @@ Route::get('/set-theme/{theme}', function (Request $request, string $theme) {
         ->cookie('ish_frontend_theme', $theme, 60 * 24 * 365);
 })->name('theme.set');
 
+Route::get('/set-modern-scheme/{scheme}', function (Request $request, string $scheme) {
+    if (! config('ish.theme_toggle_enabled')) {
+        return redirect()->back();
+    }
+    if (! in_array($scheme, ['light', 'dark'], true)) {
+        abort(404);
+    }
+
+    return redirect()
+        ->back()
+        ->cookie('ish_modern_scheme', $scheme, 60 * 24 * 365);
+})->name('theme.modern-scheme.set');
+
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/videos/{categoryCode}/{permalink}', [VideoController::class, 'show'])

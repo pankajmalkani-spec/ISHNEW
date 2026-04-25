@@ -40,6 +40,14 @@ body.ish-theme-modern .ish-theme-toggle__text {
   color: rgba(255, 255, 255, 0.9);
 }
 
+body.ish-theme-modern .ish-theme-toggle-bar {
+  gap: 14px;
+}
+
+body.ish-theme-modern .ish-theme-toggle-separator {
+  background: rgba(255, 255, 255, 0.22);
+}
+
 body.ish-theme-modern .ish-theme-toggle-wrap--legacy .ish-theme-toggle__text--modern,
 body.ish-theme-modern .ish-theme-toggle-wrap--modern .ish-theme-toggle__text--legacy {
   opacity: 0.45;
@@ -93,4 +101,453 @@ body.ish-theme-modern a {
 body.ish-theme-modern .navbar {
   border-radius: 0 0 12px 12px;
   box-shadow: 0 4px 24px rgba(15, 18, 32, 0.18);
+}
+
+/*
+ * Video detail/readability
+ * Legacy text colors are dark because legacy pages sit on white. Modern video
+ * pages sit on a dark canvas, so every written content surface needs an
+ * explicit light foreground.
+ */
+body.ish-theme-modern #content-section,
+body.ish-theme-modern #content-section .single-post,
+body.ish-theme-modern #content-section .posts-block,
+body.ish-theme-modern #content-section .news-post,
+body.ish-theme-modern #content-section .sidebar {
+  color: #ffffff;
+}
+
+body.ish-theme-modern #content-section .single-post > h1,
+body.ish-theme-modern #content-section .single-post h1,
+body.ish-theme-modern #content-section .single-post h2,
+body.ish-theme-modern #content-section .single-post h3,
+body.ish-theme-modern #content-section .title-section h1,
+body.ish-theme-modern #content-section .title-section h1 span,
+body.ish-theme-modern #content-section .posts-block h1,
+body.ish-theme-modern #content-section .posts-block h2,
+body.ish-theme-modern #content-section .posts-block h3,
+body.ish-theme-modern #content-section .standart-post h2,
+body.ish-theme-modern #content-section .standart-post h2 a,
+body.ish-theme-modern #content-section .article-post h2,
+body.ish-theme-modern #content-section .article-post h2 a,
+body.ish-theme-modern #content-section .sidebar h1,
+body.ish-theme-modern #content-section .sidebar h2,
+body.ish-theme-modern #content-section .sidebar h3,
+body.ish-theme-modern #content-section .news-post h2 a,
+body.ish-theme-modern #content-section .sidebar .news-post h2 a {
+  color: #ffffff !important;
+}
+
+body.ish-theme-modern #content-section .single-post p,
+body.ish-theme-modern #content-section .single-post blockquote p,
+body.ish-theme-modern #content-section .single-post .text-boxes,
+body.ish-theme-modern #content-section .single-post .text-boxes p,
+body.ish-theme-modern #content-section .posts-block p,
+body.ish-theme-modern #content-section .news-post p,
+body.ish-theme-modern #content-section .filter-buttons p,
+body.ish-theme-modern #content-section .sidebar p {
+  color: #f2f5fb !important;
+}
+
+body.ish-theme-modern #content-section .single-post a,
+body.ish-theme-modern #content-section .posts-block a:not(.category),
+body.ish-theme-modern #content-section .news-post a:not(.category),
+body.ish-theme-modern #content-section .sidebar a {
+  color: #ffffff !important;
+}
+
+body.ish-theme-modern #content-section ul.post-tags li,
+body.ish-theme-modern #content-section ul.post-tags li a,
+body.ish-theme-modern #content-section ul.post-tags li i,
+body.ish-theme-modern #content-section .share-post-box ul.post-tags li,
+body.ish-theme-modern #content-section .share-post-box ul.post-tags li a,
+body.ish-theme-modern #content-section .share-post-box ul.post-tags li i {
+  color: #e6ebf5 !important;
+}
+
+body.ish-theme-modern #category-loader,
+body.ish-theme-modern #category-loader span,
+body.ish-theme-modern #category-loader i,
+body.ish-theme-modern #content-section .entry-title {
+  color: #ffffff !important;
+}
+
+body.ish-theme-modern #content-section .sidebar h1 {
+  border-bottom-color: rgba(255, 255, 255, 0.75);
+}
+
+body.ish-theme-modern #content-section .title-section h1 {
+  border-bottom-color: rgba(255, 255, 255, 0.75);
+}
+
+body.ish-theme-modern #content-section .share-post-box {
+  border-bottom-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Search results */
+body.ish-theme-modern #content-section .search-results-box {
+  margin-bottom: 28px;
+}
+
+body.ish-theme-modern #content-section .search-results-banner {
+  margin-bottom: 18px;
+  padding: 24px 28px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+}
+
+body.ish-theme-modern #content-section .search-results-banner h1,
+body.ish-theme-modern #content-section .search-results-banner h3 {
+  color: #ffffff;
+}
+
+body.ish-theme-modern #content-section .search-results-banner h1 {
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+body.ish-theme-modern #content-section .search-results-banner h1 span {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+body.ish-theme-modern #content-section .search-results-banner h3,
+body.ish-theme-modern #content-section .search-results-banner h3 b {
+  font-size: 15px;
+  color: #f2f5fb !important;
+}
+
+body.ish-theme-modern #content-section div.search-box {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+body.ish-theme-modern #content-section .search-form {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+}
+
+body.ish-theme-modern #content-section .search-form .form-control {
+  min-height: 44px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+body.ish-theme-modern #content-section .search-form .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+body.ish-theme-modern #content-section .search-form .btn {
+  min-width: 48px;
+  border-color: transparent;
+  border-radius: 8px;
+  background: #2f5fa9;
+}
+
+body.ish-theme-modern #content-section .articles-box .article-post {
+  margin-bottom: 22px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+body.ish-theme-modern #content-section .articles-box .article-post .post-image {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+body.ish-theme-modern #content-section .article-post ul.tags-list li a {
+  color: #f2f5fb !important;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+
+body.ish-theme-modern #content-section .article-post ul.tags-list li a:hover {
+  color: #ffffff !important;
+  background: rgba(47, 95, 169, 0.75);
+  border-color: rgba(47, 95, 169, 0.95);
+}
+
+body.ish-theme-modern #content-section .alert-warning {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.ish-theme-modern #content-section .sidebar .widget h1,
+body.ish-theme-modern #content-section .sidebar .widget p {
+  color: #ffffff;
+}
+
+/* About page */
+body.ish-theme-modern #content-section .about-box,
+body.ish-theme-modern #content-section .compare-box,
+body.ish-theme-modern #content-section .team-box {
+  color: #ffffff;
+}
+
+body.ish-theme-modern #content-section .about-box {
+  margin-bottom: 34px;
+}
+
+body.ish-theme-modern #content-section .video-playlist {
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+body.ish-theme-modern #content-section .video-playlist__content {
+  overflow: hidden;
+  border-radius: 10px;
+  background: #11131b;
+}
+
+body.ish-theme-modern #content-section .video-playlist__list {
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+body.ish-theme-modern #content-section .video-playlist__list-item {
+  color: #ffffff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.ish-theme-modern #content-section .video-playlist__list-item:hover,
+body.ish-theme-modern #content-section .video-playlist__list-item--active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body.ish-theme-modern #content-section .video-playlist__list-item-title,
+body.ish-theme-modern #content-section .video-playlist__list-item:hover .video-playlist__list-item-title,
+body.ish-theme-modern #content-section .video-playlist__list-item--active .video-playlist__list-item-title {
+  color: #ffffff !important;
+}
+
+body.ish-theme-modern #content-section .compare-box .box-holder,
+body.ish-theme-modern #content-section .team-box .col-md-4,
+body.ish-theme-modern #content-section .single-post,
+body.ish-theme-modern #content-section .sidebar .widget {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+body.ish-theme-modern #content-section .compare-box .box-holder,
+body.ish-theme-modern #content-section .team-box .col-md-4 {
+  height: 100%;
+  padding: 18px;
+}
+
+body.ish-theme-modern #content-section .compare-box img,
+body.ish-theme-modern #content-section .team-box img,
+body.ish-theme-modern #content-section .single-post > img,
+body.ish-theme-modern #content-section .slider-widget img {
+  border-radius: 8px;
+}
+
+body.ish-theme-modern #content-section .compare-box h2,
+body.ish-theme-modern #content-section .team-box h2,
+body.ish-theme-modern #content-section .slider-widget h1,
+body.ish-theme-modern #content-section .slider-widget h3 {
+  color: #ffffff !important;
+}
+
+body.ish-theme-modern #content-section .compare-box p,
+body.ish-theme-modern #content-section .team-box span {
+  color: #f2f5fb !important;
+}
+
+body.ish-theme-modern #content-section .team-box .row {
+  row-gap: 18px;
+}
+
+body.ish-theme-modern #content-section .single-post {
+  padding: 18px;
+}
+
+body.ish-theme-modern #content-section .sidebar .widget {
+  padding: 16px;
+}
+
+body.ish-theme-modern #content-section .slider-widget .flexslider,
+body.ish-theme-modern #content-section .slider-widget .slides li {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Modern Light mode */
+body.ish-theme-modern.ish-modern-light {
+  background-color: #f3eadc;
+  color: #22242f;
+}
+
+body.ish-theme-modern.ish-modern-light #container,
+body.ish-theme-modern.ish-modern-light #content-section {
+  background: #f3eadc;
+}
+
+body.ish-theme-modern.ish-modern-light .top-line {
+  background: #fffaf0;
+  border-bottom-color: #e2d4bd;
+}
+
+body.ish-theme-modern.ish-modern-light .top-line ul.info-list li a,
+body.ish-theme-modern.ish-modern-light .top-line ul.social-icons li a,
+body.ish-theme-modern.ish-modern-light .ish-theme-toggle__text {
+  color: #22242f;
+}
+
+body.ish-theme-modern.ish-modern-light .ish-theme-toggle-separator {
+  background: rgba(34, 36, 47, 0.2);
+}
+
+body.ish-theme-modern.ish-modern-light .ish-theme-toggle__track {
+  background: #dfd2bf;
+  border-color: #d0bea3;
+}
+
+body.ish-theme-modern.ish-modern-light .ish-modern-scheme-toggle-wrap.ish-theme-toggle-wrap--legacy .ish-theme-toggle__track {
+  background: #f8b803;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section,
+body.ish-theme-modern.ish-modern-light #content-section .single-post,
+body.ish-theme-modern.ish-modern-light #content-section .posts-block,
+body.ish-theme-modern.ish-modern-light #content-section .news-post,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar {
+  color: #22242f;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .single-post > h1,
+body.ish-theme-modern.ish-modern-light #content-section .single-post h1,
+body.ish-theme-modern.ish-modern-light #content-section .single-post h2,
+body.ish-theme-modern.ish-modern-light #content-section .single-post h3,
+body.ish-theme-modern.ish-modern-light #content-section .title-section h1,
+body.ish-theme-modern.ish-modern-light #content-section .title-section h1 span,
+body.ish-theme-modern.ish-modern-light #content-section .posts-block h1,
+body.ish-theme-modern.ish-modern-light #content-section .posts-block h2,
+body.ish-theme-modern.ish-modern-light #content-section .posts-block h3,
+body.ish-theme-modern.ish-modern-light #content-section .standart-post h2,
+body.ish-theme-modern.ish-modern-light #content-section .standart-post h2 a,
+body.ish-theme-modern.ish-modern-light #content-section .article-post h2,
+body.ish-theme-modern.ish-modern-light #content-section .article-post h2 a,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar h1,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar h2,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar h3,
+body.ish-theme-modern.ish-modern-light #content-section .news-post h2 a,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar .news-post h2 a {
+  color: #1f2430 !important;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .single-post p,
+body.ish-theme-modern.ish-modern-light #content-section .single-post blockquote p,
+body.ish-theme-modern.ish-modern-light #content-section .single-post .text-boxes,
+body.ish-theme-modern.ish-modern-light #content-section .single-post .text-boxes p,
+body.ish-theme-modern.ish-modern-light #content-section .posts-block p,
+body.ish-theme-modern.ish-modern-light #content-section .news-post p,
+body.ish-theme-modern.ish-modern-light #content-section .filter-buttons p,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar p,
+body.ish-theme-modern.ish-modern-light #content-section .compare-box p,
+body.ish-theme-modern.ish-modern-light #content-section .team-box span {
+  color: #4a5262 !important;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .single-post a,
+body.ish-theme-modern.ish-modern-light #content-section .posts-block a:not(.category),
+body.ish-theme-modern.ish-modern-light #content-section .news-post a:not(.category),
+body.ish-theme-modern.ish-modern-light #content-section .sidebar a {
+  color: #1f2430 !important;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section ul.post-tags li,
+body.ish-theme-modern.ish-modern-light #content-section ul.post-tags li a,
+body.ish-theme-modern.ish-modern-light #content-section ul.post-tags li i,
+body.ish-theme-modern.ish-modern-light #content-section .share-post-box ul.post-tags li,
+body.ish-theme-modern.ish-modern-light #content-section .share-post-box ul.post-tags li a,
+body.ish-theme-modern.ish-modern-light #content-section .share-post-box ul.post-tags li i {
+  color: #667085 !important;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .title-section h1,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar h1,
+body.ish-theme-modern.ish-modern-light #content-section .share-post-box {
+  border-bottom-color: #d6c6ad;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .search-results-banner,
+body.ish-theme-modern.ish-modern-light #content-section .articles-box .article-post,
+body.ish-theme-modern.ish-modern-light #content-section .compare-box .box-holder,
+body.ish-theme-modern.ish-modern-light #content-section .team-box .col-md-4,
+body.ish-theme-modern.ish-modern-light #content-section .single-post,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar .widget,
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist {
+  background: #fffaf0;
+  border-color: #dfd2bf;
+  box-shadow: 0 12px 28px rgba(31, 36, 48, 0.07);
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__content {
+  background: #eadfcd;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__list {
+  background: #fbf4e9;
+  border-color: #dfd2bf;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__list-item {
+  color: #1f2430 !important;
+  border-bottom-color: #e2d4bd;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__list-item:hover,
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__list-item--active {
+  background: #eadfcd;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__list-item-title,
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__list-item:hover .video-playlist__list-item-title,
+body.ish-theme-modern.ish-modern-light #content-section .video-playlist__list-item--active .video-playlist__list-item-title,
+body.ish-theme-modern.ish-modern-light #content-section .compare-box h2,
+body.ish-theme-modern.ish-modern-light #content-section .team-box h2,
+body.ish-theme-modern.ish-modern-light #content-section .slider-widget h1,
+body.ish-theme-modern.ish-modern-light #content-section .slider-widget h3,
+body.ish-theme-modern.ish-modern-light #content-section .sidebar .widget h1 {
+  color: #1f2430 !important;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .search-results-banner h1,
+body.ish-theme-modern.ish-modern-light #content-section .search-results-banner h3,
+body.ish-theme-modern.ish-modern-light #content-section .search-results-banner h1 span,
+body.ish-theme-modern.ish-modern-light #content-section .search-results-banner h3 b {
+  color: #1f2430 !important;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .search-form .form-control {
+  color: #1f2430;
+  background: #fffaf0;
+  border-color: #d0bea3;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .search-form .form-control::placeholder {
+  color: #7a8496;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .article-post ul.tags-list li a {
+  color: #384154 !important;
+  background: #f3eadc;
+  border-color: #d6c6ad;
 }
