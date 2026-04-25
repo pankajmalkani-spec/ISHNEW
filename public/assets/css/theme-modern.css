@@ -652,3 +652,11 @@ body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section #js-vid
   opacity: 1 !important;
   text-shadow: none !important;
 }
+
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .single-post > h1.video-detail-title,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .single-post h1.video-detail-title {
+  color: #000000 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  background: transparent !important;
+}
