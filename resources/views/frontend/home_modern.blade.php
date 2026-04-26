@@ -53,7 +53,7 @@
         <div class="ish-hm-strip__track">
           @foreach($banner as $idx => $b)
             @if($idx === 0) @continue @endif
-            <a class="ish-hm-strip__cell" href="{{ url('/videos/'.($b->categorycode ?? '').'/'.($b->permalink ?? '')) }}">
+            <a class="ish-hm-strip__cell" href="{{ url('/videos/'.($b->categorycode ?? '').'/'.($b->permalink ?? '')) }}" data-youtube-url="{{ $b->youtube_url ?? '' }}" data-youtube-video="{{ $b->youtube_video ?? '' }}" data-youtube-check="{{ $b->youtube_url_check ?? 0 }}" data-title="{{ $b->title ?? '' }}" data-href="{{ url('/videos/'.($b->categorycode ?? '').'/'.($b->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($b->cover_img ?? null) }}" data-category="{{ $b->subcategoryname ?? $b->categoryname ?? '' }}">
               <img src="{{ \App\Support\FrontendMedia::coverImageUrl($b->cover_img ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-strip__cap">{{ \Illuminate\Support\Str::limit($b->title ?? '', 64) }}</span>
             </a>
@@ -83,7 +83,7 @@
       <div class="ish-hm-row__track">
         @foreach($bn['news_list'] as $slider)
           <article class="ish-hm-row-card">
-            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">
+            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-youtube-url="{{ $slider->youtube_url ?? '' }}" data-youtube-video="{{ $slider->youtube_video ?? '' }}" data-youtube-check="{{ $slider->youtube_url_check ?? 0 }}" data-title="{{ $slider->title ?? '' }}" data-href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null) }}" data-category="{{ $slider->subcategoryname ?? '' }}">
               <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
               <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($slider) }}">{{ $slider->subcategoryname ?? '' }}</span>
@@ -112,7 +112,7 @@
       <div class="ish-hm-row__track">
         @foreach($TCatData['news_list'] as $item)
           <article class="ish-hm-row-card">
-            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">
+            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" data-category="{{ $item->subcategoryname ?? '' }}">
               <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
               <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($item) }}">{{ $item->subcategoryname ?? '' }}</span>
@@ -140,3 +140,4 @@
     </div>
   </div>
 </section>
+

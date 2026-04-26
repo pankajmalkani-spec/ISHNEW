@@ -42,7 +42,7 @@
                         @foreach(collect($cat['latest'])->take(4) as $item)
                           <div class="col-6 col-md-3">
                             <article class="ish-nav-mega__card">
-                              <a class="ish-nav-mega__thumb" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">
+                              <a class="ish-nav-mega__thumb" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->content_title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" data-category="{{ $item->subcatname ?? '' }}">
                                 <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" alt="" loading="lazy">
                                 <a class="category category-{{ $item->categorycode ?? '' }}" href="{{ url('/category/'.($item->categorycode ?? '')) }}">{{ \Str::upper(str_replace('_', ' ', $item->categorycode ?? '')) }}</a>
                               </a>
@@ -166,6 +166,7 @@
     item.addEventListener('mouseleave', function () {
       if (!window.matchMedia('(min-width: 992px)').matches) return;
       closeTimer = setTimeout(function () {
+        if (document.body.classList.contains('netflix-popout-active')) return;
         closeMegaItem(item);
       }, 150);
     });
@@ -203,6 +204,280 @@ $(document).ready(function () {
     e.preventDefault();
     window.location.href = "{{ url('/search') }}" + '?sKeyword=' + encodeURIComponent(keyword);
     return false;
+  });
+});
+</script>
+<style>
+/* Reset previous scale on cards */
+.ish-hm-strip__cell, .ish-hm-row-card, .ish-nav-mega__thumb {
+  position: relative;
+  z-index: 1;
+}
+
+/* Netflix Popout Container */
+.netflix-popout-wrapper {
+  position: fixed;
+  z-index: 9999;
+  background: #141414;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none; /* until fully active */
+  display: flex;
+  flex-direction: column;
+}
+
+.netflix-popout-wrapper.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.netflix-popout-video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+}
+
+.netflix-popout-video-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: opacity 0.5s ease;
+}
+
+.netflix-popout-video-container iframe,
+.netflix-popout-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  border: none;
+  pointer-events: none;
+}
+
+.netflix-popout-info {
+  padding: 15px;
+  color: #fff;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.netflix-popout-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.netflix-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255,255,255,0.5);
+  background: rgba(42,42,42,0.6);
+  color: white;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.netflix-btn:hover {
+  border-color: white;
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.netflix-btn.play {
+  background: white;
+  color: black;
+  border-color: white;
+}
+
+.netflix-btn.play:hover {
+  background: rgba(255,255,255,0.8);
+}
+
+.netflix-popout-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.netflix-popout-meta {
+  font-size: 11px;
+  color: #a3a3a3;
+}
+.netflix-popout-meta span {
+  border: 1px solid #a3a3a3;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const hoverDelay = 500; 
+  let hoverTimer = null;
+  let activePopout = null;
+  let currentCard = null;
+
+  function getYoutubeId(url) {
+    if (!url) return null;
+    var m = url.match(/^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+    return (m && m[2] && m[2].length === 11) ? m[2] : null;
+  }
+
+  function createPopout(card) {
+    const title = card.getAttribute('data-title') || '';
+    const href = card.getAttribute('data-href') || '#';
+    const imgSrc = card.getAttribute('data-img') || '';
+    const category = card.getAttribute('data-category') || '';
+    const youtubeUrl = card.getAttribute('data-youtube-url');
+    const localVideo = card.getAttribute('data-youtube-video');
+    const ytCheck = card.getAttribute('data-youtube-check') === '1';
+
+    const rect = card.getBoundingClientRect();
+    const scaleMultiplier = 1.35; 
+    const popoutWidth = rect.width * scaleMultiplier;
+    
+    let top = rect.top - (rect.height * (scaleMultiplier - 1)) / 2;
+    let left = rect.left - (rect.width * (scaleMultiplier - 1)) / 2;
+    
+    if (left < 20) left = 20;
+    if (left + popoutWidth > window.innerWidth - 20) left = window.innerWidth - popoutWidth - 20;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'netflix-popout-wrapper';
+    wrapper.style.top = top + 'px';
+    wrapper.style.left = left + 'px';
+    wrapper.style.width = popoutWidth + 'px';
+    wrapper.style.transform = `scale(${1 / scaleMultiplier})`;
+    wrapper.style.transformOrigin = 'center center';
+
+    let videoHtml = '';
+    if (ytCheck && youtubeUrl) {
+      let ytId = getYoutubeId(youtubeUrl);
+      if (ytId) {
+        videoHtml = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&rel=0&showinfo=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      }
+    } else if (localVideo) {
+      let safeFile = localVideo.replace(/\\/g, '/').split('/').pop();
+      let src = '{{ url("videos") }}/' + safeFile;
+      videoHtml = `<video src="${src}" autoplay muted loop playsinline></video>`;
+    } else if (!ytCheck && youtubeUrl) {
+      let ytId = getYoutubeId(youtubeUrl);
+      if (ytId) {
+        videoHtml = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytId}&rel=0&showinfo=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      }
+    }
+
+    wrapper.innerHTML = `
+      <div class="netflix-popout-video-container" onclick="window.location.href='${href}'" style="cursor:pointer;">
+        <img src="${imgSrc}" alt="" />
+        ${videoHtml}
+      </div>
+      <div class="netflix-popout-info">
+        <div class="netflix-popout-buttons">
+          <a href="${href}" class="netflix-btn play" title="Play"><i class="fa fa-play"></i></a>
+          <a href="${href}" class="netflix-btn" title="More Info"><i class="fa fa-plus"></i></a>
+          <a href="${href}" class="netflix-btn" title="Like"><i class="fa fa-thumbs-o-up"></i></a>
+        </div>
+        <h4 class="netflix-popout-title">${title}</h4>
+        <div class="netflix-popout-meta">
+          <span>HD</span> ${category}
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(wrapper);
+    document.body.classList.add('netflix-popout-active');
+    
+    requestAnimationFrame(() => {
+      wrapper.style.transform = 'scale(1)';
+      wrapper.classList.add('active');
+    });
+
+    const iframe = wrapper.querySelector('iframe');
+    const video = wrapper.querySelector('video');
+    const img = wrapper.querySelector('img');
+    
+    if (iframe) {
+      iframe.onload = () => { setTimeout(() => { if(img) img.style.opacity = '0'; }, 500); };
+    } else if (video) {
+      video.onplaying = () => { if(img) img.style.opacity = '0'; };
+    }
+
+    wrapper.addEventListener('mouseleave', () => {
+      removePopout();
+    });
+
+    activePopout = wrapper;
+  }
+
+  function removePopout() {
+    if (activePopout) {
+      document.body.classList.remove('netflix-popout-active');
+      const el = activePopout;
+      el.classList.remove('active');
+      el.style.transform = 'scale(0.8)';
+      el.style.opacity = '0';
+      setTimeout(() => {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }, 300);
+      activePopout = null;
+      
+      if (currentCard) {
+        var megaItem = currentCard.closest('.ish-nav-modern__item--mega');
+        if (megaItem && !megaItem.matches(':hover')) {
+          megaItem.classList.remove('ish-nav-modern__item--mega-open');
+          var btn = megaItem.querySelector('.ish-nav-modern__link--mega-trigger');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      }
+      currentCard = null;
+    }
+  }
+
+  const cards = document.querySelectorAll('.ish-hm-row-card__media, .ish-hm-strip__cell, .ish-nav-mega__thumb');
+
+  cards.forEach(card => {
+    if (!card.getAttribute('data-youtube-url') && !card.getAttribute('data-youtube-video')) {
+        return;
+    }
+
+    card.addEventListener('mouseenter', (e) => {
+      if (hoverTimer) clearTimeout(hoverTimer);
+      if (currentCard === card) return;
+      
+      hoverTimer = setTimeout(() => {
+        if (activePopout) removePopout();
+        currentCard = card;
+        createPopout(card);
+      }, hoverDelay);
+    });
+
+    card.addEventListener('mouseleave', (e) => {
+      if (hoverTimer) clearTimeout(hoverTimer);
+      setTimeout(() => {
+        if (activePopout && !activePopout.matches(':hover')) {
+          removePopout();
+        }
+      }, 50);
+    });
   });
 });
 </script>

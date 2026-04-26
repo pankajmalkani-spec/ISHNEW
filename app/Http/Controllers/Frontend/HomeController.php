@@ -38,7 +38,7 @@ class HomeController extends Controller
                 ->leftJoin('subcategorymst as sc', 'a.subcategory_id', '=', 'sc.id')
                 ->leftJoin('newsource as ns', 'a.news_source', '=', 'ns.id')
                 ->selectRaw(
-                    'a.id, a.cover_img, a.title, a.seo_keyword, a.description, a.schedule_date, LOWER(a.permalink) as permalink, LOWER(c.code) as categorycode, c.title as categoryname, c.color as categorycolor, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, sc.color as subcategorycolor, ns.name as newsourcename'
+                    'a.id, a.cover_img, a.title, a.seo_keyword, a.description, a.schedule_date, LOWER(a.permalink) as permalink, LOWER(c.code) as categorycode, c.title as categoryname, c.color as categorycolor, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, sc.color as subcategorycolor, ns.name as newsourcename, a.youtube_url, a.youtube_video, a.youtube_url_check'
                 )
                 ->where('c.id', $catId)
                 ->where('a.final_releasestatus', 1)
@@ -68,7 +68,7 @@ class HomeController extends Controller
             $latest = DB::table('contenttrans as ct')
                 ->leftJoin('categorymst as c', 'c.id', '=', 'ct.category_id')
                 ->leftJoin('subcategorymst as sc', 'ct.subcategory_id', '=', 'sc.id')
-                ->selectRaw('ct.id, ct.subcategory_id, ct.cover_img, ct.title as content_title, ct.schedule_date, LOWER(ct.permalink) as permalink, LOWER(c.code) as categorycode, c.color as categorycolor, LOWER(sc.subcat_code) as subcatcode, sc.name as subcatname, sc.color as subcatcolor')
+                ->selectRaw('ct.id, ct.subcategory_id, ct.cover_img, ct.title as content_title, ct.schedule_date, LOWER(ct.permalink) as permalink, LOWER(c.code) as categorycode, c.color as categorycolor, LOWER(sc.subcat_code) as subcatcode, sc.name as subcatname, sc.color as subcatcolor, ct.youtube_url, ct.youtube_video, ct.youtube_url_check')
                 ->where('ct.category_id', $catId)
                 ->where('ct.final_releasestatus', 1)
                 ->whereDate('ct.schedule_date', '<=', $today)
@@ -114,7 +114,7 @@ class HomeController extends Controller
             ->leftJoin('categorymst as c', 'c.id', '=', 'a.category_id')
             ->leftJoin('subcategorymst as sc', 'a.subcategory_id', '=', 'sc.id')
             ->leftJoin('newsource as ns', 'a.news_source', '=', 'ns.id')
-            ->selectRaw('a.id, a.cover_img, a.title, a.seo_keyword, a.schedule_date, LOWER(a.permalink) as permalink, LOWER(c.code) as categorycode, c.title as categoryname, c.color as categorycolor, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, sc.color as subcategorycolor, ns.name as newsourcename')
+            ->selectRaw('a.id, a.cover_img, a.title, a.seo_keyword, a.schedule_date, LOWER(a.permalink) as permalink, LOWER(c.code) as categorycode, c.title as categoryname, c.color as categorycolor, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, sc.color as subcategorycolor, ns.name as newsourcename, a.youtube_url, a.youtube_video, a.youtube_url_check')
             ->where('a.final_releasestatus', 1)
             ->where('a.featured_content', 1)
             ->where('a.schedule_date', '<=', $now)
