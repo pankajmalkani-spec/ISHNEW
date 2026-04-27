@@ -217,7 +217,7 @@ $(document).ready(function () {
 /* Netflix Popout Container */
 .netflix-popout-wrapper {
   position: fixed;
-  z-index: 9999;
+  z-index: 10005;
   background: #141414;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -452,32 +452,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  const cards = document.querySelectorAll('.ish-hm-row-card__media, .ish-hm-strip__cell, .ish-nav-mega__thumb');
+  document.body.addEventListener('mouseover', (e) => {
+    const card = e.target.closest('.ish-hm-row-card__media, .ish-hm-strip__cell, .ish-nav-mega__thumb');
+    if (!card) return;
+    if (!card.getAttribute('data-youtube-url') && !card.getAttribute('data-youtube-video')) return;
 
-  cards.forEach(card => {
-    if (!card.getAttribute('data-youtube-url') && !card.getAttribute('data-youtube-video')) {
-        return;
-    }
+    if (e.relatedTarget && card.contains(e.relatedTarget)) return;
 
-    card.addEventListener('mouseenter', (e) => {
-      if (hoverTimer) clearTimeout(hoverTimer);
-      if (currentCard === card) return;
-      
-      hoverTimer = setTimeout(() => {
-        if (activePopout) removePopout();
-        currentCard = card;
-        createPopout(card);
-      }, hoverDelay);
-    });
+    if (hoverTimer) clearTimeout(hoverTimer);
+    if (currentCard === card) return;
+    
+    hoverTimer = setTimeout(() => {
+      if (activePopout) removePopout();
+      currentCard = card;
+      createPopout(card);
+    }, hoverDelay);
+  });
 
-    card.addEventListener('mouseleave', (e) => {
-      if (hoverTimer) clearTimeout(hoverTimer);
-      setTimeout(() => {
-        if (activePopout && !activePopout.matches(':hover')) {
-          removePopout();
-        }
-      }, 50);
-    });
+  document.body.addEventListener('mouseout', (e) => {
+    const card = e.target.closest('.ish-hm-row-card__media, .ish-hm-strip__cell, .ish-nav-mega__thumb');
+    if (!card) return;
+    if (!card.getAttribute('data-youtube-url') && !card.getAttribute('data-youtube-video')) return;
+
+    if (e.relatedTarget && card.contains(e.relatedTarget)) return;
+
+    if (hoverTimer) clearTimeout(hoverTimer);
+    setTimeout(() => {
+      if (activePopout && !activePopout.matches(':hover')) {
+        removePopout();
+      }
+    }, 50);
   });
 });
 </script>

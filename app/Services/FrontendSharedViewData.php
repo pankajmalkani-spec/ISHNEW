@@ -45,7 +45,7 @@ final class FrontendSharedViewData
             $latest = DB::table('contenttrans as ct')
                 ->leftJoin('categorymst as c', 'c.id', '=', 'ct.category_id')
                 ->leftJoin('subcategorymst as sc', 'ct.subcategory_id', '=', 'sc.id')
-                ->selectRaw('ct.id, ct.subcategory_id, ct.cover_img, ct.title as content_title, ct.schedule_date, LOWER(ct.permalink) as permalink, LOWER(c.code) as categorycode, LOWER(sc.subcat_code) as subcatcode, sc.name as subcatname')
+                ->selectRaw('ct.id, ct.subcategory_id, ct.cover_img, ct.title as content_title, ct.schedule_date, LOWER(ct.permalink) as permalink, LOWER(c.code) as categorycode, LOWER(sc.subcat_code) as subcatcode, sc.name as subcatname, ct.youtube_url, ct.youtube_video, ct.youtube_url_check')
                 ->where('ct.category_id', $catId)
                 ->where('ct.final_releasestatus', 1)
                 ->whereDate('ct.schedule_date', '<=', $today)

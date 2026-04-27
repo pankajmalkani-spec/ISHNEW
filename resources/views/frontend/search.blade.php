@@ -34,47 +34,109 @@
             </div>
           </div>
 
+@php
+  $isModern = ($frontendTheme ?? 'legacy') === 'modern';
+  $modernBadgeStyle = static function ($item): string {
+      $color = trim((string) (($item->subcategorycolor ?? null) ?: ($item->categorycolor ?? null) ?: '#232323'));
+      if (! preg_match('/^#(?:[0-9a-fA-F]{3}){1,2}$/', $color)) {
+          $color = '#232323';
+      }
+
+      $hex = ltrim($color, '#');
+      if (strlen($hex) === 3) {
+          $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
+      }
+
+      $brightness = ((hexdec(substr($hex, 0, 2)) * 299) + (hexdec(substr($hex, 2, 2)) * 587) + (hexdec(substr($hex, 4, 2)) * 114)) / 1000;
+      $textColor = $brightness > 170 ? '#111111' : '#ffffff';
+
+      return 'background-color: '.$color.' !important; color: '.$textColor.' !important;';
+  };
+@endphp
+
+@if($isModern)
+<style>
+  .ish-cat-modern-card.ish-hm-row-card {
+    flex: none;
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  
+  .search-results-banner h1, .search-results-banner h3 {
+    color: #fff;
+  }
+  
+  .search-box {
+    margin-bottom: 30px;
+  }
+  
+  .search-box form {
+    display: flex;
+    position: relative;
+    max-width: 100%;
+  }
+  
+  .search-box input.form-control {
+    background-color: #222;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 20px;
+    padding-right: 60px; /* space for button */
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+  }
+  
+  .search-box input.form-control:focus {
+    background-color: #333;
+    border-color: #666;
+    box-shadow: none;
+    color: #fff;
+  }
+  
+  .search-box button.btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    border-radius: 6px;
+    margin: 0 !important;
+    padding: 0 20px;
+    height: 40px;
+    background-color: #f88c00;
+    border: none;
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+  
+  .search-box button.btn:hover {
+    background-color: #e07e00;
+  }
+</style>
+@endif
+
           <div class="posts-block articles-box">
-            @forelse($results ?? [] as $video)
-              <div class="news-post article-post">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <div class="post-image">
-                      <a href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}">
-                        <img src="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null) }}" alt="{{ $video->title ?? '' }}" loading="lazy">
-                      </a>
-                      <a href="{{ url('/category/'.($video->categorycode ?? '').'/'.($video->subcategorycode ?? '')) }}" class="category category-{{ $video->categorycode ?? '' }}">{{ $video->subcategoryname ?? '' }}</a>
-                    </div>
-                  </div>
-                  <div class="col-sm-8">
-                    <h2><a href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}">{{ $video->title ?? '' }}</a></h2>
-                    <ul class="post-tags">
-                      <li><i class="fa fa-calendar"></i><a href="#">@if(! empty($video->schedule_date)){{ \Illuminate\Support\Carbon::parse($video->schedule_date)->format('M j, Y') }}@endif</a></li>
-                      <li><i class="fa fa-newspaper-o"></i><a href="#">{{ $video->newsourcename ?? '' }}</a></li>
-                    </ul>
-                    <p>{{ \Illuminate\Support\Str::limit(strip_tags((string) ($video->description ?? '')), 400) }}</p>
-                    @php
-                      $myTags = array_filter(array_map('trim', explode(',', (string) ($video->seo_keyword ?? ''))));
-                    @endphp
-                    @if(count($myTags) > 0)
-                      <ul class="tags-list">
-                        @foreach($myTags as $tag)
-                          @if($tag !== '')
-                            <li><a href="{{ url('/search?sKeyword='.urlencode($tag)) }}">{{ $tag }}</a></li>
-                          @endif
-                        @endforeach
-                      </ul>
-                    @endif
+            <div class="row" id="js-search-video-grid">
+              @if(count($results) > 0)
+                @include('frontend.partials.search_video_cards', ['videos' => $results])
+              @else
+                <div class="col-12">
+                  <div class="alert-warning" style="padding:20px; border-radius:8px;">
+                    <h3 class="entry-title text-center mb-0">No Data Found</h3>
                   </div>
                 </div>
+              @endif
+            </div>
+
+            @if(! empty($hasMore))
+              <div id="search-loader" class="text-center" style="display:none; margin-top: 1.5rem;">
+                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> <span>Loading…</span>
               </div>
-            @empty
-              <div class="alert-warning">
-                <h3 class="entry-title">
-                  <p style="text-align:center; margin-top:50px;">No Data Found</p>
-                </h3>
-              </div>
-            @endforelse
+              <div id="search-load-sentinel" style="height:1px; margin-top: 1rem;" aria-hidden="true"></div>
+            @endif
           </div>
         </div>
         <div class="col-lg-3 sidebar-sticky">
@@ -98,6 +160,55 @@ $(document).ready(function () {
     submitHandler: function (form) { form.submit(); }
   });
 });
+
+@if(! empty($hasMore))
+(function () {
+  var grid = document.getElementById('js-search-video-grid');
+  var sentinel = document.getElementById('search-load-sentinel');
+  var loader = document.getElementById('search-loader');
+  if (!grid || !sentinel) return;
+
+  var nextPage = {{ (int) ($nextPage ?? 2) }};
+  var loading = false;
+  var keyword = @json($keyword ?? '');
+
+  function appendHtml(html) {
+    var wrap = document.createElement('div');
+    wrap.innerHTML = html;
+    while (wrap.firstChild) {
+      grid.appendChild(wrap.firstChild);
+    }
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    if (!entries[0].isIntersecting || loading || !nextPage) return;
+    loading = true;
+    if (loader) loader.style.display = 'block';
+
+    var url = new URL(window.location.origin + '/search');
+    url.searchParams.set('page', String(nextPage));
+    if (keyword) url.searchParams.set('sKeyword', keyword);
+
+    fetch(url.toString(), {
+      headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
+      credentials: 'same-origin'
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.html) appendHtml(data.html);
+        nextPage = data.has_more ? data.next_page : null;
+        if (!data.has_more) obs.disconnect();
+      })
+      .catch(function () { obs.disconnect(); })
+      .finally(function () {
+        loading = false;
+        if (loader) loader.style.display = 'none';
+      });
+  }, { rootMargin: '240px' });
+
+  obs.observe(sentinel);
+})();
+@endif
 </script>
 </body>
 </html>

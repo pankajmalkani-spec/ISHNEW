@@ -147,7 +147,7 @@ class CategoryController extends Controller
             ->leftJoin('subcategorymst as sc', 'ct.subcategory_id', '=', 'sc.id')
             ->leftJoin('newsource as ns', 'ct.news_source', '=', 'ns.id')
             ->selectRaw(
-                'ct.id, ct.cover_img, ct.title, ct.description, ct.schedule_date, ct.seo_keyword, LOWER(ct.permalink) as permalink, LOWER(c.code) as categorycode, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, ns.name as newsourcename'
+                'ct.id, ct.cover_img, ct.title, ct.description, ct.schedule_date, ct.seo_keyword, LOWER(ct.permalink) as permalink, LOWER(c.code) as categorycode, c.color as categorycolor, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, sc.color as subcategorycolor, ns.name as newsourcename, ct.youtube_url, ct.youtube_video, ct.youtube_url_check'
             )
             ->where('c.id', $categoryId)
             ->where('ct.final_releasestatus', 1)

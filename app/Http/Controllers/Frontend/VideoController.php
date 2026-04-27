@@ -91,7 +91,7 @@ class VideoController extends Controller
             ->where('a.schedule_date', '<=', $now)
             ->selectRaw(
                 'a.id, a.cover_img, a.title, a.seo_keyword, a.schedule_date, LOWER(a.permalink) as permalink, '.
-                'LOWER(c.code) as categorycode, c.title as categoryname, c.color as categorycolor, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, sc.color as subcategorycolor, ns.name as newsourcename'
+                'LOWER(c.code) as categorycode, c.title as categoryname, c.color as categorycolor, LOWER(sc.subcat_code) as subcategorycode, sc.name as subcategoryname, sc.color as subcategorycolor, ns.name as newsourcename, a.youtube_url, a.youtube_video, a.youtube_url_check'
             )
             ->orderByDesc('a.schedule_date')
             ->limit(5);
