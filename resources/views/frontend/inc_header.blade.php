@@ -1,17 +1,26 @@
 <?php $Base_url = url('/').'/'; ?>
-<style>
-    .news-post.image-post img,
-    .news-post.large-image-post img,
-    .news-post.standart-post .post-image img,
-    .news-post.article-post .post-image img,
-    .small-posts li img,
-    .news-post.video-post img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16/9;
-        object-fit: cover;
-    }
-</style>
+    <style>
+        .news-post.image-post a,
+        .news-post.large-image-post a,
+        .news-post.standart-post .post-image a,
+        .news-post.article-post .post-image a,
+        .small-posts li a,
+        .news-post.video-post a {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .news-post.image-post img,
+        .news-post.large-image-post img,
+        .news-post.standart-post .post-image img,
+        .news-post.article-post .post-image img,
+        .small-posts li img,
+        .news-post.video-post img {
+            width: 100% !important;
+            aspect-ratio: 16/9 !important;
+            object-fit: cover !important;
+        }
+    </style>
 @php
   $ft = $frontendTheme ?? 'legacy';
   $modernScheme = $frontendModernScheme ?? 'dark';

@@ -25,7 +25,7 @@ class FrontendMedia
         if ($name === self::COVER_FALLBACK && !empty($youtubeUrl)) {
             // Extract YouTube ID
             if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $youtubeUrl, $matches)) {
-                return 'https://img.youtube.com/vi/' . $matches[1] . '/hqdefault.jpg';
+                return 'https://img.youtube.com/vi/' . $matches[1] . '/mqdefault.jpg';
             }
         }
 
