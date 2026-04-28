@@ -42,8 +42,8 @@
                         @foreach(collect($cat['latest'])->take(4) as $item)
                           <div class="col-6 col-md-3">
                             <article class="ish-nav-mega__card">
-                              <a class="ish-nav-mega__thumb" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->content_title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" data-category="{{ $item->subcatname ?? '' }}">
-                                <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" alt="" loading="lazy">
+                              <a class="ish-nav-mega__thumb" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->content_title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" data-category="{{ $item->subcatname ?? '' }}">
+                                <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" alt="" loading="lazy">
                                 <a class="category category-{{ $item->categorycode ?? '' }}" href="{{ url('/category/'.($item->categorycode ?? '')) }}">{{ \Str::upper(str_replace('_', ' ', $item->categorycode ?? '')) }}</a>
                               </a>
                               <a class="ish-nav-mega__card-title" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">{{ $item->content_title ?? '' }}</a>

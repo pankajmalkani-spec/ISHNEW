@@ -17,7 +17,7 @@
                   <div class="news-post standart-post">
                     <div class="post-image">
                       <a href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">
-                        <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null) }}" alt="{{ $slider->title ?? '' }}">
+                        <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" alt="{{ $slider->title ?? '' }}">
                       </a>
                       <a href="{{ url('/category/'.($slider->categorycode ?? '').'/'.($slider->subcategorycode ?? '')) }}" class="category category-{{ $slider->categorycode ?? '' }}">{{ $slider->subcategoryname ?? '' }}</a>
                     </div>

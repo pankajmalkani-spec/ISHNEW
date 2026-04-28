@@ -14,7 +14,7 @@
         <div class="news-post standart-post">
           <div class="post-image">
             <a href="{{ url('/videos/'.($first->categorycode ?? '').'/'.($first->permalink ?? '')) }}">
-              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($first->cover_img ?? null) }}" alt="{{ $first->title ?? '' }}" loading="lazy">
+              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($first->cover_img ?? null, $first->youtube_url ?? null) }}" alt="{{ $first->title ?? '' }}" loading="lazy">
             </a>
             <a href="{{ url('/category/'.($first->categorycode ?? '').'/'.($first->subcategorycode ?? '')) }}" class="category category-{{ $first->categorycode ?? '' }}">{{ $first->subcategoryname ?? '' }}</a>
           </div>
@@ -30,7 +30,7 @@
             @foreach($rest as $slider)
               <li>
                 <a href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">
-                  <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null) }}" alt="{{ $slider->title ?? '' }}" loading="lazy">
+                  <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" alt="{{ $slider->title ?? '' }}" loading="lazy">
                 </a>
                 <div class="post-cont">
                   <h2><a href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">{{ $slider->title ?? '' }}</a></h2>

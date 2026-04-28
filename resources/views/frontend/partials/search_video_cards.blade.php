@@ -34,8 +34,8 @@
   <div class="col-lg-3 col-md-4 col-sm-6">
     @if($isModern)
       <article class="ish-hm-row-card ish-cat-modern-card">
-        <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-youtube-url="{{ $video->youtube_url ?? '' }}" data-youtube-video="{{ $video->youtube_video ?? '' }}" data-youtube-check="{{ $video->youtube_url_check ?? 0 }}" data-title="{{ $video->title ?? '' }}" data-href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null) }}" data-category="{{ $video->subcategoryname ?? '' }}">
-          <img src="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null) }}" alt="" loading="lazy">
+        <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-youtube-url="{{ $video->youtube_url ?? '' }}" data-youtube-video="{{ $video->youtube_video ?? '' }}" data-youtube-check="{{ $video->youtube_url_check ?? 0 }}" data-title="{{ $video->title ?? '' }}" data-href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null, $video->youtube_url ?? null) }}" data-category="{{ $video->subcategoryname ?? '' }}">
+          <img src="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null, $video->youtube_url ?? null) }}" alt="" loading="lazy">
           <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
           <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($video) }}">{{ $video->subcategoryname ?? '' }}</span>
         </a>
@@ -49,7 +49,7 @@
           <div class="col-sm-4">
             <div class="post-image">
               <a href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}">
-                <img src="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null) }}" alt="{{ $video->title ?? '' }}" loading="lazy">
+                <img src="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null, $video->youtube_url ?? null) }}" alt="{{ $video->title ?? '' }}" loading="lazy">
               </a>
               <a href="{{ url('/category/'.($video->categorycode ?? '').'/'.($video->subcategorycode ?? '')) }}" class="category category-{{ $video->categorycode ?? '' }}">{{ $video->subcategoryname ?? '' }}</a>
             </div>

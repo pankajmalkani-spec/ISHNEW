@@ -150,7 +150,7 @@
     <div class="carousel-inner">
       @foreach($banner as $idx => $b)
         @php
-          $heroImageUrl = \App\Support\FrontendMedia::coverImageUrl($b->cover_img ?? null);
+          $heroImageUrl = \App\Support\FrontendMedia::coverImageUrl($b->cover_img ?? null, $b->youtube_url ?? null);
           $heroMissingImage = \Illuminate\Support\Str::endsWith(parse_url($heroImageUrl, PHP_URL_PATH) ?: '', '/no_img.png');
           $videoUrl = url('/videos/'.($b->categorycode ?? '').'/'.($b->permalink ?? ''));
         @endphp
@@ -209,8 +209,8 @@
       <div class="ish-hm-row__track">
         @foreach($bn['news_list'] as $slider)
           <article class="ish-hm-row-card">
-            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-youtube-url="{{ $slider->youtube_url ?? '' }}" data-youtube-video="{{ $slider->youtube_video ?? '' }}" data-youtube-check="{{ $slider->youtube_url_check ?? 0 }}" data-title="{{ $slider->title ?? '' }}" data-href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null) }}" data-category="{{ $slider->subcategoryname ?? '' }}">
-              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null) }}" alt="" loading="lazy">
+            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-youtube-url="{{ $slider->youtube_url ?? '' }}" data-youtube-video="{{ $slider->youtube_video ?? '' }}" data-youtube-check="{{ $slider->youtube_url_check ?? 0 }}" data-title="{{ $slider->title ?? '' }}" data-href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" data-category="{{ $slider->subcategoryname ?? '' }}">
+              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
               <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($slider) }}">{{ $slider->subcategoryname ?? '' }}</span>
             </a>
@@ -238,8 +238,8 @@
       <div class="ish-hm-row__track">
         @foreach($TCatData['news_list'] as $item)
           <article class="ish-hm-row-card">
-            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" data-category="{{ $item->subcategoryname ?? '' }}">
-              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null) }}" alt="" loading="lazy">
+            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" data-category="{{ $item->subcategoryname ?? '' }}">
+              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
               <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($item) }}">{{ $item->subcategoryname ?? '' }}</span>
             </a>

@@ -18,9 +18,16 @@ class FrontendMedia
     /** @var non-empty-string */
     private const SPONSOR_DIR = 'images/sponsorLogo';
 
-    public static function coverImageUrl(?string $storedFilename): string
+    public static function coverImageUrl(?string $storedFilename, ?string $youtubeUrl = null): string
     {
         $name = self::resolveExistingBasename((string) ($storedFilename ?? ''), public_path(self::COVER_DIR), self::COVER_FALLBACK);
+
+        if ($name === self::COVER_FALLBACK && !empty($youtubeUrl)) {
+            // Extract YouTube ID
+            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $youtubeUrl, $matches)) {
+                return 'https://img.youtube.com/vi/' . $matches[1] . '/maxresdefault.jpg';
+            }
+        }
 
         return url(self::COVER_DIR.'/'.$name);
     }

@@ -6,8 +6,8 @@
 <div class="top-line">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-md-5 col-12 mb-2 mb-md-0 text-center text-md-left">
-        <ul class="info-list d-flex justify-content-center justify-content-md-start flex-wrap">
+      <div class="col-md-5 col-sm-12 mb-2 mb-md-0">
+        <ul class="info-list">
           <li><a href="{{ url('/about') }}" title="About Us">About</a></li>
           <li><a href="{{ url('/contact') }}" title="Contact Us">Contact</a></li>
           <li><a href="{{ url('/sitemap') }}" title="Sitemap"><i class="fa fa-sitemap" aria-hidden="true"></i></a></li>
@@ -15,14 +15,14 @@
         </ul>
       </div>
       @if(config('ish.theme_toggle_enabled'))
-      <div class="col-md-4 col-12 mb-2 mb-md-0 text-center">
+      <div class="col-md-4 col-sm-12 mb-2 mb-md-0 text-md-center">
         @php
           $toggleToModern = route('theme.set', ['theme' => 'modern']);
           $toggleToLegacy = route('theme.set', ['theme' => 'legacy']);
           $toggleHref = $ft === 'modern' ? $toggleToLegacy : $toggleToModern;
         @endphp
-        <div class="ish-theme-toggle-bar d-flex justify-content-center flex-wrap">
-          <div class="ish-theme-toggle-wrap {{ $ft === 'modern' ? 'ish-theme-toggle-wrap--modern' : 'ish-theme-toggle-wrap--legacy' }} mb-2 mb-sm-0">
+        <div class="ish-theme-toggle-bar">
+          <div class="ish-theme-toggle-wrap {{ $ft === 'modern' ? 'ish-theme-toggle-wrap--modern' : 'ish-theme-toggle-wrap--legacy' }}">
             <span class="ish-theme-toggle__text ish-theme-toggle__text--legacy">Legacy</span>
             <button type="button"
               class="ish-theme-toggle"
@@ -61,8 +61,8 @@
         </div>
       </div>
       @endif
-      <div class="col-md-{{ config('ish.theme_toggle_enabled') ? '3' : '7' }} col-12 text-center text-md-right mt-2 mt-md-0">
-        <ul class="social-icons d-flex justify-content-center justify-content-md-end mb-0">
+      <div class="col-md-{{ config('ish.theme_toggle_enabled') ? '3' : '7' }} col-sm-12 text-md-right">
+        <ul class="social-icons">
           <li><a class="youtube" href="https://www.youtube.com/ishnews" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
           <li><a class="facebook" href="https://www.facebook.com/ISHNews/" target="_blank"><i class="fa fa-facebook"></i></a></li>
           <li><a class="instagram" href="https://www.instagram.com/ishnews/" target="_blank"><i class="fa fa-instagram"></i></a></li>

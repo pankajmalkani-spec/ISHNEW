@@ -9,11 +9,11 @@
   <meta name="twitter:url" content="{{ url('/videos/'.($news->categorycode ?? '').'/'.($news->permalink ?? '')) }}">
   <meta name="twitter:title" content="{{ $pageTitle ?? 'Video' }} | ISH News">
   <meta name="twitter:description" content="{{ \Illuminate\Support\Str::limit(strip_tags((string) ($news->description ?? '')), 200) }}">
-  <meta name="twitter:image" content="{{ \App\Support\FrontendMedia::coverImageUrl($news->cover_img ?? null) }}">
+  <meta name="twitter:image" content="{{ \App\Support\FrontendMedia::coverImageUrl($news->cover_img ?? null, $news->youtube_url ?? null) }}">
   <meta property="og:title" content="{{ $pageTitle ?? 'Video' }} | ISH News">
   <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags((string) ($news->description ?? '')), 200) }}">
   <meta property="og:url" content="{{ url('/videos/'.($news->categorycode ?? '').'/'.($news->permalink ?? '')) }}">
-  <meta property="og:image" content="{{ \App\Support\FrontendMedia::coverImageUrl($news->cover_img ?? null) }}">
+  <meta property="og:image" content="{{ \App\Support\FrontendMedia::coverImageUrl($news->cover_img ?? null, $news->youtube_url ?? null) }}">
   <title>{{ $pageTitle ?? 'Video' }} | ISH News</title>
   @include('frontend.inc_htmlhead')
 </head>
