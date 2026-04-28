@@ -10,7 +10,7 @@
               <img src="{{ \App\Support\FrontendMedia::coverImageUrl($banner[$i]->cover_img ?? null, $banner[$i]->youtube_url ?? null) }}" alt="{{ $banner[$i]->title ?? '' }}">
               <div class="hover-box">
                 <a href="{{ url('/category/'.($banner[$i]->categorycode ?? '').'/'.($banner[$i]->subcategorycode ?? '')) }}" class="category category-{{ $banner[$i]->categorycode ?? '' }}">{{ $banner[$i]->categoryname ?? '' }}</a>
-                <h2><a href="{{ url('/videos/'.($banner[$i]->categorycode ?? '').'/'.($banner[$i]->permalink ?? '')) }}">{{ $banner[$i]->title ?? '' }}</a></h2>
+                <h2><a href="{{ url('/videos/'.($banner[$i]->categorycode ?? '').'/'.($banner[$i]->permalink ?? '')) }}" style="color: #ffffff !important;">{{ $banner[$i]->title ?? '' }}</a></h2>
               </div>
             </div>
           </li>

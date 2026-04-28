@@ -1,4 +1,17 @@
 <?php $Base_url = url('/').'/'; ?>
+<style>
+    .news-post.image-post img,
+    .news-post.large-image-post img,
+    .news-post.standart-post .post-image img,
+    .news-post.article-post .post-image img,
+    .small-posts li img,
+    .news-post.video-post img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+</style>
 @php
   $ft = $frontendTheme ?? 'legacy';
   $modernScheme = $frontendModernScheme ?? 'dark';

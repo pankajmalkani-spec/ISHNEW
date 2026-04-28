@@ -23,8 +23,9 @@
   .netflix-hero-slider {
     width: 100%;
     position: relative;
-    background-color: #141414;
+    background-color: #000;
     margin-bottom: 2rem;
+    overflow: hidden;
   }
   .netflix-hero-image-wrapper {
     position: relative;
@@ -33,12 +34,13 @@
     min-height: 500px;
     max-height: 800px;
     overflow: hidden;
+    background-color: #000;
   }
   .netflix-hero-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: top center;
+    object-fit: contain;
+    object-position: center;
   }
   .netflix-hero-vignette-bottom {
     position: absolute;
@@ -75,11 +77,12 @@
     margin-bottom: 15px;
     display: inline-block;
   }
+  #content-section h1.netflix-hero-title,
   .netflix-hero-title {
     font-size: 3.5rem;
     font-weight: 800;
     line-height: 1.1;
-    color: #fff;
+    color: #ffffff !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     margin-bottom: 20px;
   }
@@ -164,7 +167,7 @@
             <a class="netflix-hero-category" style="{{ $modernBadgeStyle($b) }}" href="{{ url('/category/'.($b->categorycode ?? '').'/'.($b->subcategorycode ?? '')) }}">
               {{ $b->subcategoryname ?? $b->categoryname ?? '' }}
             </a>
-            <h1 class="netflix-hero-title">
+            <h1 class="netflix-hero-title" style="color: #ffffff !important;">
               {{ $b->title ?? '' }}
             </h1>
             <div class="netflix-hero-buttons mt-2 d-flex flex-wrap">
