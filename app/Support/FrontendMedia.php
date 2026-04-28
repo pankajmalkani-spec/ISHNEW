@@ -23,13 +23,34 @@ class FrontendMedia
         $name = self::resolveExistingBasename((string) ($storedFilename ?? ''), public_path(self::COVER_DIR), self::COVER_FALLBACK);
 
         if ($name === self::COVER_FALLBACK && !empty($youtubeUrl)) {
-            // Extract YouTube ID
-            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $youtubeUrl, $matches)) {
-                return 'https://img.youtube.com/vi/' . $matches[1] . '/mqdefault.jpg';
+            if ($id = self::youtubeId($youtubeUrl)) {
+                return self::youtubeThumbnailUrl($id, 'mqdefault');
             }
         }
 
         return url(self::COVER_DIR.'/'.$name);
+    }
+
+    public static function heroImageUrl(?string $storedFilename, ?string $youtubeUrl = null): string
+    {
+        $name = self::resolveExistingBasename((string) ($storedFilename ?? ''), public_path(self::COVER_DIR), self::COVER_FALLBACK);
+
+        if ($name === self::COVER_FALLBACK && !empty($youtubeUrl)) {
+            if ($id = self::youtubeId($youtubeUrl)) {
+                return self::youtubeThumbnailUrl($id, 'maxresdefault');
+            }
+        }
+
+        return url(self::COVER_DIR.'/'.$name);
+    }
+
+    public static function heroImageFallbackUrl(?string $youtubeUrl = null): string
+    {
+        if (!empty($youtubeUrl) && ($id = self::youtubeId($youtubeUrl))) {
+            return self::youtubeThumbnailUrl($id, 'hqdefault');
+        }
+
+        return url(self::COVER_DIR.'/'.self::COVER_FALLBACK);
     }
 
     public static function sponsorLogoUrl(?string $storedFilename): string
@@ -105,5 +126,19 @@ class FrontendMedia
         $path = $absoluteDir.'/'.$trimmed;
 
         return is_file($path) ? $trimmed : $fallbackBasename;
+    }
+
+    private static function youtubeId(string $youtubeUrl): ?string
+    {
+        if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $youtubeUrl, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
+    }
+
+    private static function youtubeThumbnailUrl(string $youtubeId, string $quality): string
+    {
+        return 'https://img.youtube.com/vi/'.$youtubeId.'/'.$quality.'.jpg';
     }
 }

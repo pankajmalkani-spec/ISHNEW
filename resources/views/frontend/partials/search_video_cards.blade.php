@@ -31,7 +31,7 @@
 @endif
 
 @foreach($videos as $video)
-  <div class="col-lg-3 col-md-4 col-sm-6">
+  <div class="{{ $isModern ? 'col-lg-3 col-md-4 col-sm-6' : 'col-12' }}">
     @if($isModern)
       <article class="ish-hm-row-card ish-cat-modern-card">
         <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-youtube-url="{{ $video->youtube_url ?? '' }}" data-youtube-video="{{ $video->youtube_video ?? '' }}" data-youtube-check="{{ $video->youtube_url_check ?? 0 }}" data-title="{{ $video->title ?? '' }}" data-href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null, $video->youtube_url ?? null) }}" data-category="{{ $video->subcategoryname ?? '' }}">

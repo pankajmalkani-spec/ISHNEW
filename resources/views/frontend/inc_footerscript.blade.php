@@ -9,7 +9,7 @@
     function applyFallback(img) {
       if (!img || img.getAttribute('data-fallback-applied') === '1') return;
       img.setAttribute('data-fallback-applied', '1');
-      img.src = fallback;
+      img.src = img.getAttribute('data-fallback-src') || fallback;
     }
     document.querySelectorAll('img').forEach(function(img) {
       img.addEventListener('error', function() { applyFallback(img); });

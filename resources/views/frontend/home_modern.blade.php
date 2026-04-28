@@ -21,24 +21,31 @@
 
 <style>
   .netflix-hero-slider {
-    width: 100%;
+    width: min(100%, 1180px);
     position: relative;
     background-color: #000;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
     overflow: hidden;
+    border-radius: 0 0 10px 10px;
   }
   .netflix-hero-image-wrapper {
     position: relative;
     width: 100%;
-    height: 75vh;
-    min-height: 500px;
-    max-height: 800px;
+    height: clamp(340px, 44vw, 500px);
+    min-height: 0;
+    max-height: 560px;
     overflow: hidden;
     background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
   .netflix-hero-image {
-    width: 100%;
-    height: 100%;
+    width: auto !important;
+    max-width: 62%;
+    height: auto;
+    max-height: 78%;
+    margin-right: 7%;
     object-fit: contain;
     object-position: center;
   }
@@ -79,7 +86,7 @@
   }
   #content-section h1.netflix-hero-title,
   .netflix-hero-title {
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800;
     line-height: 1.1;
     color: #ffffff !important;
@@ -136,7 +143,8 @@
   @media (max-width: 768px) {
     .netflix-hero-caption { right: 5%; bottom: 40px; left: 5%; }
     .netflix-hero-title { font-size: 1.8rem; }
-    .netflix-hero-image-wrapper { height: 60vh; min-height: 450px; }
+    .netflix-hero-image-wrapper { height: clamp(260px, 58vw, 380px); min-height: 0; }
+    .netflix-hero-image { max-width: 92%; max-height: 62%; margin: 0 auto; }
     .netflix-hero-vignette-left { width: 100%; background: linear-gradient(to top, rgba(20,20,20,0.95) 0%, transparent 100%); }
     .netflix-hero-vignette-bottom { height: 70%; }
     .netflix-btn-play, .netflix-btn-more { padding: 8px 20px; font-size: 1rem; }
@@ -199,13 +207,14 @@
     <div class="carousel-inner">
       @foreach($banner as $idx => $b)
         @php
-          $heroImageUrl = \App\Support\FrontendMedia::coverImageUrl($b->cover_img ?? null, $b->youtube_url ?? null);
+          $heroImageUrl = \App\Support\FrontendMedia::heroImageUrl($b->cover_img ?? null, $b->youtube_url ?? null);
+          $heroFallbackUrl = \App\Support\FrontendMedia::heroImageFallbackUrl($b->youtube_url ?? null);
           $heroMissingImage = \Illuminate\Support\Str::endsWith(parse_url($heroImageUrl, PHP_URL_PATH) ?: '', '/no_img.png');
           $videoUrl = url('/videos/'.($b->categorycode ?? '').'/'.($b->permalink ?? ''));
         @endphp
         <div class="carousel-item {{ $idx === 0 ? 'active' : '' }}">
           <div class="netflix-hero-image-wrapper">
-            <img src="{{ $heroImageUrl }}" alt="{{ $b->title ?? '' }}" class="d-block w-100 netflix-hero-image">
+            <img src="{{ $heroImageUrl }}" data-fallback-src="{{ $heroFallbackUrl }}" alt="{{ $b->title ?? '' }}" class="d-block w-100 netflix-hero-image">
             <div class="netflix-hero-vignette-bottom"></div>
             <div class="netflix-hero-vignette-left"></div>
           </div>
@@ -346,4 +355,3 @@
     });
   });
 </script>
-

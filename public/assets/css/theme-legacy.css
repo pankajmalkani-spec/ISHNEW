@@ -130,6 +130,41 @@ body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__row > [class*="
   padding-right: 8px;
 }
 
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__feature .post-image,
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__thumbs .post-image {
+  overflow: hidden;
+  background: #eceff1;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__feature .post-image > a:first-child,
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__thumbs .post-image > a:first-child {
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__feature .post-image img,
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__thumbs .post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__thumbs {
+  margin-left: -6px;
+  margin-right: -6px;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__thumbs > [class*="col-"] {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+body.ish-theme-legacy .posts-block--sort-2 .posts-block--sort-2__thumbs .news-post {
+  margin-bottom: 12px;
+}
+
 body.ish-theme-legacy .posts-block--sort-2 .standart-post p {
   font-size: 12px;
   line-height: 1.42;
@@ -185,6 +220,26 @@ body.ish-theme-legacy .large-image-post .hover-box {
 
 body.ish-theme-legacy .large-image-post .hover-box a.category {
   margin-bottom: 8px;
+}
+
+body.ish-theme-legacy #ish-featured .image-post,
+body.ish-theme-legacy #ish-featured .large-image-post {
+  background: #111827;
+}
+
+body.ish-theme-legacy #ish-featured .image-post > a:first-child {
+  display: block;
+}
+
+body.ish-theme-legacy #ish-featured .image-post img,
+body.ish-theme-legacy #ish-featured .large-image-post img,
+body.ish-theme-legacy #ish-featured .ish-featured-fallback-cover img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 /* Meta lines under cards */
@@ -253,4 +308,191 @@ body.ish-theme-legacy #content-section .sidebar h1 {
   font-size: 14px;
   margin-bottom: 8px;
   padding-bottom: 8px;
+}
+
+/* Legacy search page */
+body.ish-theme-legacy.ish-search-page #content-section {
+  padding-top: 26px;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .search-results-box {
+  margin-bottom: 22px;
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #eceff3;
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(18, 25, 38, 0.06);
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .search-results-banner {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .search-results-banner h1 {
+  margin: 0 0 8px;
+  color: #1f2933;
+  font-size: 27px;
+  line-height: 1.25;
+  font-weight: 700;
+  text-transform: none;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .search-results-banner h1 span {
+  color: #e66f00;
+  font-weight: 800;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .search-results-banner h3 {
+  margin: 0;
+  color: #697386;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .search-results-banner h3 b {
+  color: #f88c00;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section div.search-box {
+  margin: 0;
+  background: transparent;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section form.search-form {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section form.search-form input.form-control,
+body.ish-theme-legacy.ish-search-page #content-section form.search-form input[type="search"] {
+  min-height: 46px;
+  margin: 0 !important;
+  padding: 11px 14px;
+  border: 1px solid #d8dee8;
+  border-radius: 6px;
+  color: #1f2933;
+  font-size: 14px;
+  line-height: 1.35;
+  box-shadow: none;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section form.search-form .btn {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 46px;
+  margin: 0 !important;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #f88c00;
+  color: #ffffff;
+  line-height: 1;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section form.search-form .btn:hover,
+body.ish-theme-legacy.ish-search-page #content-section form.search-form .btn:focus {
+  background: #df7d00;
+  color: #ffffff;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box {
+  margin-bottom: 18px;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box > .row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box > .row > [class*="col-"] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post {
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid #eef1f5;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post > .row {
+  align-items: flex-start;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post .post-image {
+  margin-bottom: 0;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post .post-image img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 20px;
+  line-height: 1.28;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post ul.post-tags {
+  margin-bottom: 8px;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post p {
+  color: #565f6f;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .alert-warning {
+  padding: 28px;
+  border-radius: 8px;
+  background: #fff7e6;
+  border: 1px solid #ffe0a3;
+}
+
+body.ish-theme-legacy.ish-search-page #content-section .alert-warning .entry-title {
+  margin: 0;
+  color: #7a4b00;
+  font-size: 18px;
+}
+
+@media (max-width: 575px) {
+  body.ish-theme-legacy.ish-search-page #content-section .search-results-box {
+    padding: 18px;
+  }
+
+  body.ish-theme-legacy.ish-search-page #content-section .search-results-banner h1 {
+    font-size: 23px;
+  }
+
+  body.ish-theme-legacy.ish-search-page #content-section form.search-form {
+    gap: 8px;
+  }
+
+  body.ish-theme-legacy.ish-search-page #content-section form.search-form .btn {
+    min-width: 46px;
+    padding: 0 14px;
+  }
+
+  body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post {
+    padding: 14px;
+  }
+
+  body.ish-theme-legacy.ish-search-page #content-section .articles-box .article-post .post-image {
+    margin-bottom: 14px;
+  }
 }

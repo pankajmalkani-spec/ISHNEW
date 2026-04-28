@@ -8,6 +8,7 @@
 <body @class([
   'ish-theme',
   'ish-theme-'.($frontendTheme ?? 'legacy'),
+  'ish-search-page',
   'ish-home-modern' => ($frontendTheme ?? 'legacy') === 'modern',
   'ish-modern-'.($frontendModernScheme ?? 'dark') => ($frontendTheme ?? 'legacy') === 'modern',
 ])>
@@ -24,7 +25,7 @@
           <div class="search-results-box">
             <div class="search-results-banner">
               <h1>Search results for <span>'{{ $keyword }}'</span></h1>
-              <h3>Found <b style="color:#f88c00;">{{ count($results ?? []) }}</b> results for your search..</h3>
+              <h3>Found <b>{{ count($results ?? []) }}</b> results for your search.</h3>
             </div>
             <div class="search-box">
               <form name="frmSearch" id="frmSearch" role="search" class="search-form" method="get" action="{{ url('/search') }}">

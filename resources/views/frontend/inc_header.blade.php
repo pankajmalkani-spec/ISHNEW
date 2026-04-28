@@ -1,15 +1,5 @@
 <?php $Base_url = url('/').'/'; ?>
     <style>
-        .news-post.image-post a,
-        .news-post.large-image-post a,
-        .news-post.standart-post .post-image a,
-        .news-post.article-post .post-image a,
-        .small-posts li a,
-        .news-post.video-post a {
-            display: block !important;
-            width: 100% !important;
-        }
-
         .news-post.image-post img,
         .news-post.large-image-post img,
         .news-post.standart-post .post-image img,
