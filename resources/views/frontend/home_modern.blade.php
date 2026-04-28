@@ -141,6 +141,52 @@
     .netflix-hero-vignette-bottom { height: 70%; }
     .netflix-btn-play, .netflix-btn-more { padding: 8px 20px; font-size: 1rem; }
   }
+
+  /* Netflix Row Carousel Styles */
+  .netflix-row-container {
+    position: relative;
+  }
+  .netflix-row-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    border: none;
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  .netflix-row-container:hover .netflix-row-btn {
+    opacity: 1;
+  }
+  .netflix-row-btn:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .netflix-row-prev {
+    left: 10px;
+  }
+  .netflix-row-next {
+    right: 10px;
+  }
+  .ish-hm-row__track {
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .ish-hm-row__track::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 </style>
 
 @if(!empty($banner) && count($banner) > 0)
@@ -209,19 +255,23 @@
         <h2 class="ish-hm-row__title">{{ $bn['title'] ?? 'Top stories' }}</h2>
         <a class="ish-hm-row__more" href="{{ url('/category/'.($bn['code'] ?? '')) }}">View all</a>
       </div>
-      <div class="ish-hm-row__track">
-        @foreach($bn['news_list'] as $slider)
-          <article class="ish-hm-row-card">
-            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-youtube-url="{{ $slider->youtube_url ?? '' }}" data-youtube-video="{{ $slider->youtube_video ?? '' }}" data-youtube-check="{{ $slider->youtube_url_check ?? 0 }}" data-title="{{ $slider->title ?? '' }}" data-href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" data-category="{{ $slider->subcategoryname ?? '' }}">
-              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" alt="" loading="lazy">
-              <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
-              <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($slider) }}">{{ $slider->subcategoryname ?? '' }}</span>
-            </a>
-            <div class="ish-hm-row-card__body">
-              <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">{{ $slider->title ?? '' }}</a></h3>
-            </div>
-          </article>
-        @endforeach
+      <div class="netflix-row-container">
+        <button class="netflix-row-btn netflix-row-prev"><i class="fa fa-chevron-left"></i></button>
+        <button class="netflix-row-btn netflix-row-next"><i class="fa fa-chevron-right"></i></button>
+        <div class="ish-hm-row__track">
+          @foreach($bn['news_list'] as $slider)
+            <article class="ish-hm-row-card">
+              <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-youtube-url="{{ $slider->youtube_url ?? '' }}" data-youtube-video="{{ $slider->youtube_video ?? '' }}" data-youtube-check="{{ $slider->youtube_url_check ?? 0 }}" data-title="{{ $slider->title ?? '' }}" data-href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" data-category="{{ $slider->subcategoryname ?? '' }}">
+                <img src="{{ \App\Support\FrontendMedia::coverImageUrl($slider->cover_img ?? null, $slider->youtube_url ?? null) }}" alt="" loading="lazy">
+                <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
+                <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($slider) }}">{{ $slider->subcategoryname ?? '' }}</span>
+              </a>
+              <div class="ish-hm-row-card__body">
+                <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($slider->categorycode ?? '').'/'.($slider->permalink ?? '')) }}">{{ $slider->title ?? '' }}</a></h3>
+              </div>
+            </article>
+          @endforeach
+        </div>
       </div>
     </div>
   </section>
@@ -238,19 +288,23 @@
         <h2 class="ish-hm-row__title">{{ $TCatData['title'] ?? '' }}</h2>
         <a class="ish-hm-row__more" href="{{ url('/category/'.($TCatData['code'] ?? '')) }}">View all</a>
       </div>
-      <div class="ish-hm-row__track">
-        @foreach($TCatData['news_list'] as $item)
-          <article class="ish-hm-row-card">
-            <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" data-category="{{ $item->subcategoryname ?? '' }}">
-              <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" alt="" loading="lazy">
-              <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
-              <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($item) }}">{{ $item->subcategoryname ?? '' }}</span>
-            </a>
-            <div class="ish-hm-row-card__body">
-              <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">{{ $item->title ?? '' }}</a></h3>
-            </div>
-          </article>
-        @endforeach
+      <div class="netflix-row-container">
+        <button class="netflix-row-btn netflix-row-prev"><i class="fa fa-chevron-left"></i></button>
+        <button class="netflix-row-btn netflix-row-next"><i class="fa fa-chevron-right"></i></button>
+        <div class="ish-hm-row__track">
+          @foreach($TCatData['news_list'] as $item)
+            <article class="ish-hm-row-card">
+              <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-youtube-url="{{ $item->youtube_url ?? '' }}" data-youtube-video="{{ $item->youtube_video ?? '' }}" data-youtube-check="{{ $item->youtube_url_check ?? 0 }}" data-title="{{ $item->title ?? '' }}" data-href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" data-category="{{ $item->subcategoryname ?? '' }}">
+                <img src="{{ \App\Support\FrontendMedia::coverImageUrl($item->cover_img ?? null, $item->youtube_url ?? null) }}" alt="" loading="lazy">
+                <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
+                <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($item) }}">{{ $item->subcategoryname ?? '' }}</span>
+              </a>
+              <div class="ish-hm-row-card__body">
+                <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">{{ $item->title ?? '' }}</a></h3>
+              </div>
+            </article>
+          @endforeach
+        </div>
       </div>
     </div>
   </section>
@@ -269,4 +323,27 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const containers = document.querySelectorAll('.netflix-row-container');
+    containers.forEach(container => {
+      const track = container.querySelector('.ish-hm-row__track');
+      const btnPrev = container.querySelector('.netflix-row-prev');
+      const btnNext = container.querySelector('.netflix-row-next');
+
+      if (btnPrev && btnNext && track) {
+        btnPrev.addEventListener('click', () => {
+          // scroll left by 80% of track's visible width
+          track.scrollBy({ left: -(track.clientWidth * 0.8), behavior: 'smooth' });
+        });
+        
+        btnNext.addEventListener('click', () => {
+          // scroll right by 80% of track's visible width
+          track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' });
+        });
+      }
+    });
+  });
+</script>
 
