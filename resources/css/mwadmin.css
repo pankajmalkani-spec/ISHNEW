@@ -1935,3 +1935,34 @@ html.mwadmin-ui-dark,
 html.mwadmin-ui-dark body {
     background-color: #01040b;
 }
+
+/* Ensure AG Grid horizontal scrollbar is visible */
+.mwadmin-ag-grid .ag-body-horizontal-scroll {
+    opacity: 1 !important;
+    height: 14px !important;
+    min-height: 14px !important;
+    z-index: 10;
+}
+.mwadmin-ag-grid .ag-body-horizontal-scroll-viewport {
+    height: 14px !important;
+    overflow-x: scroll !important;
+}
+
+/* Ensure horizontal scrollbar is visible in Schedule grid */
+.mwadmin-schedule-scroll-wrap::-webkit-scrollbar {
+    height: 14px;
+    width: 14px;
+}
+.mwadmin-schedule-scroll-wrap::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.45);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-schedule-scroll-wrap::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.35);
+}
+.mwadmin-schedule-scroll-wrap {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+}
