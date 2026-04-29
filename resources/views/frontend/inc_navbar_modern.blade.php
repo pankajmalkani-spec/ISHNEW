@@ -116,6 +116,13 @@
     });
   });
 
+  // Ensure menu resets correctly when resizing from mobile-open to desktop
+  window.addEventListener('resize', function () {
+    if (window.innerWidth >= 992 && nav.classList.contains('ish-nav-modern--open')) {
+      setOpen(false);
+    }
+  });
+
   // Desktop (lg+): category label is a <button> — toggles mega (no navigation from label; use “All” / pills / cards).
   function closeMegaItem(item) {
     if (!item) return;

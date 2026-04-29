@@ -71,7 +71,29 @@ body.ish-home-modern main#content {
   max-width: 1300px;
   margin: 10px auto 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.3s ease;
+}
+
+.ish-nav-modern--open {
+  width: 100% !important;
+  max-width: none !important;
+  top: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  background: #141416 !important;
+  box-shadow: none !important;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-modern--open {
+  background: rgba(255, 250, 240, 0.98) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 
 body.ish-nav-modern--lock .ish-nav-modern {
@@ -580,33 +602,97 @@ button.ish-nav-modern__link--mega-trigger:active {
 
   .ish-nav-modern__panel {
     position: fixed;
-    top: 15px;
-    right: 15px;
-    width: calc(100% - 30px);
-    height: auto;
-    max-height: calc(100vh - 30px);
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
     margin: 0;
-    padding: 24px;
+    padding: 100px 24px 40px;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    background: rgba(28, 28, 30, 0.94);
-    backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 28px;
-    transform: translateY(-20px);
+    background: transparent;
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: none;
+    border-radius: 0;
+    transform: translateY(-10px);
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 10002;
     overflow-y: auto;
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    box-shadow: none;
+  }
+
+  .ish-nav-modern__start,
+  .ish-nav-modern__actions {
+    position: relative;
+    z-index: 10005;
   }
 
   .ish-nav-modern--open .ish-nav-modern__panel {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+    background: #141416 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  body.ish-home-modern.ish-modern-light .ish-nav-modern--open .ish-nav-modern__panel {
+    background: rgba(255, 250, 240, 0.98) !important;
+  }
+
+  /* Beautify Mega Content on Mobile (Remove Bootstrap Clutter) */
+  .ish-nav-mega__inner.container {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  .ish-nav-mega__grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Reset bootstrap columns in mega menu */
+  .ish-nav-mega__grid > [class*="col-"] {
+    width: 100% !important;
+    max-width: none !important;
+    flex: none !important;
+    padding: 0 !important;
+  }
+
+  .ish-nav-mega__card {
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+  }
+
+  body.ish-modern-light .ish-nav-mega__card {
+    background: rgba(0, 0, 0, 0.03) !important;
+  }
+
+  .ish-nav-mega__card-title {
+    font-size: 13px !important;
+    padding: 10px 12px 14px !important;
+    font-weight: 500 !important;
+  }
+
+  .ish-nav-mega__filters {
+    gap: 6px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .ish-nav-mega__pill {
+    padding: 5px 10px !important;
+    font-size: 10px !important;
+    border-radius: 6px !important;
   }
 
   .ish-nav-modern__list {
@@ -634,7 +720,7 @@ button.ish-nav-modern__link--mega-trigger:active {
   }
 
   .ish-nav-modern__item--mega {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 0 !important;
   }
 
   .ish-nav-mega {
