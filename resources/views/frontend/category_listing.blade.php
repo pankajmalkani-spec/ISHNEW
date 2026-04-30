@@ -9,6 +9,7 @@
 <body @class([
   'ish-theme',
   'ish-theme-'.($frontendTheme ?? 'legacy'),
+  'ish-category-page',
   'ish-home-modern' => ($frontendTheme ?? 'legacy') === 'modern',
   'ish-modern-'.($frontendModernScheme ?? 'dark') => ($frontendTheme ?? 'legacy') === 'modern',
 ])>
