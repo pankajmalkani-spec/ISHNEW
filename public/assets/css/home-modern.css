@@ -6,19 +6,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 body.ish-home-modern {
-  /* Modern dark streaming UI with better typography. */
-  --ish-canvas: #22242f;
-  --ish-canvas-deep: #1a1c26;
-  --ish-canvas-raised: #2a2d3a;
-  --ish-canvas-muted: #262936;
-  --ish-rgb: 34, 36, 47;
-  --ish-shadow: 15, 18, 32;
+  /* Modern dark streaming UI with Apple Glass aesthetic. */
+  --ish-canvas: #0e0e10;
+  --ish-canvas-deep: #08080a;
+  --ish-canvas-raised: #1c1c1e;
+  --ish-canvas-muted: #161618;
+  --ish-rgb: 14, 14, 16;
+  --ish-glass-bg: rgba(28, 28, 32, 0.65);
+  --ish-glass-border: rgba(255, 255, 255, 0.12);
+  --ish-glass-blur: blur(40px) saturate(210%);
+  --ish-accent: #e50914;
+  --ish-accent-glow: rgba(229, 9, 20, 0.4);
+  
   background: var(--ish-canvas);
-  color: rgba(255, 255, 255, 0.92);
-  font-family: "Helvetica Neue", Arial, "Segoe UI", sans-serif;
+  color: rgba(255, 255, 255, 0.94);
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.45;
-  letter-spacing: 0.008em;
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+}
+
+/* Subtle Mesh Gradient Background */
+body.ish-home-modern::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(229, 9, 20, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(47, 95, 169, 0.08) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 body.ish-home-modern #container {
@@ -27,10 +44,26 @@ body.ish-home-modern #container {
 
 /* Slim top bar: match shell (toggle stays readable) */
 body.ish-home-modern .top-line {
-  background: var(--ish-canvas-deep) !important;
-  border-bottom: none !important;
-  padding-top: 6px;
-  padding-bottom: 5px;
+  background: rgba(8, 8, 10, 0.4) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  position: relative;
+  z-index: 10001;
+}
+
+body.ish-home-modern .info-list li a,
+body.ish-home-modern .social-icons li a {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+
+body.ish-home-modern .info-list li a:hover,
+body.ish-home-modern .social-icons li a:hover {
+  color: #fff !important;
 }
 
 body.ish-home-modern #header-banner {
@@ -61,21 +94,16 @@ body.ish-home-modern main#content {
   overflow: visible;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: rgba(28, 28, 30, 0.75);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--ish-glass-bg);
+  backdrop-filter: var(--ish-glass-blur);
+  -webkit-backdrop-filter: var(--ish-glass-blur);
+  border: 1px solid var(--ish-glass-border);
   border-radius: 24px;
   width: calc(100% - 32px);
   max-width: 1300px;
   margin: 10px auto 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              margin 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              background 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .ish-nav-modern--open {
@@ -87,7 +115,9 @@ body.ish-home-modern main#content {
   border-left: none !important;
   border-right: none !important;
   border-top: none !important;
-  background: #141416 !important;
+  background: rgba(14, 14, 16, 0.8) !important;
+  backdrop-filter: blur(50px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(220%) !important;
   box-shadow: none !important;
 }
 
@@ -423,19 +453,25 @@ button.ish-nav-modern__link--mega-trigger:active {
     position: absolute;
     left: 50%;
     top: calc(100% - 8px);
-    width: min(1100px, 96vw);
-    padding: 32px 24px 36px;
-    background: rgba(28, 28, 30, 0.94);
-    backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 28px;
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+    width: min(1180px, 96vw);
+    padding: 40px 32px 48px;
+    background: rgba(28, 28, 32, 0.82);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 32px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
     opacity: 0;
     visibility: hidden;
-    transform: translate(-50%, 15px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translate(-50%, 15px) scale(0.98);
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
     pointer-events: none;
     z-index: 6000;
+  }
+
+  /* Boost z-index for the open one to prevent overlap artifacts */
+  .ish-nav-modern__item--mega.ish-nav-modern__item--mega-open .ish-nav-mega {
+    z-index: 6005;
   }
 
   .ish-nav-modern__item--mega:hover .ish-nav-mega,
@@ -638,9 +674,9 @@ button.ish-nav-modern__link--mega-trigger:active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
-    background: #141416 !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background: rgba(14, 14, 16, 0.72) !important;
+    backdrop-filter: blur(60px) saturate(210%) !important;
+    -webkit-backdrop-filter: blur(60px) saturate(210%) !important;
   }
 
   body.ish-home-modern.ish-modern-light .ish-nav-modern--open .ish-nav-modern__panel {
@@ -725,14 +761,25 @@ button.ish-nav-modern__link--mega-trigger:active {
 
   .ish-nav-mega {
     position: static;
-    opacity: 1 !important;
-    visibility: visible !important;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
     transform: none !important;
-    pointer-events: auto !important;
+    pointer-events: none !important;
     box-shadow: none;
     border: 0;
-    padding: 12px 0 20px;
+    padding: 0;
     background: transparent;
+    transition: all 0.3s ease;
+  }
+
+  .ish-nav-modern__item--mega-open .ish-nav-mega {
+    opacity: 1 !important;
+    visibility: visible !important;
+    height: auto;
+    pointer-events: auto !important;
+    padding: 12px 0 20px;
   }
 
   .ish-nav-mega__grid {
@@ -947,39 +994,66 @@ button.ish-nav-modern__link--mega-trigger:active {
 }
 
 .ish-hm-search {
-  padding: 28px 0 8px;
+  padding: 80px 0 20px;
+  text-align: center;
 }
 
 .ish-hm-search__form {
   display: flex;
-  max-width: 560px;
+  max-width: 760px;
   margin: 0 auto;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.03);
+  border-radius: 22px;
+  padding: 8px;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.ish-hm-search__form:focus-within {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+  transform: translateY(-4px) scale(1.02);
 }
 
 .ish-hm-search__form input {
   flex: 1;
-  border: 0;
   background: transparent;
+  border: none;
   color: #fff;
-  padding: 14px 18px;
-  font-size: 15px;
+  padding: 16px 28px;
+  font-size: 18px;
+  font-weight: 500;
+  outline: none;
+  font-family: "Inter", sans-serif;
+}
+
+.ish-hm-search__form input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .ish-hm-search__form button {
-  border: 0;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  padding: 0 22px;
+  background: #fff;
+  color: #000;
+  border: none;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  font-size: 18px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ish-hm-search__form button:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: #eee;
+  transform: scale(0.94);
 }
 
 .ish-hm-section {
@@ -1942,4 +2016,679 @@ body.ish-home-modern.ish-modern-light footer a {
   body.ish-home-modern.ish-modern-light .ish-nav-modern__burger span {
     background: #1f2430;
   }
+}
+/* ——— Apple Glass Theme Toggle ——— */
+body.ish-home-modern .ish-theme-toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 6px 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.ish-home-modern .ish-theme-toggle__text {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.2s ease;
+}
+
+body.ish-home-modern .ish-theme-toggle-wrap--modern .ish-theme-toggle__text--modern,
+body.ish-home-modern .ish-theme-toggle-wrap--legacy .ish-theme-toggle__text--legacy {
+  color: #fff;
+}
+
+body.ish-home-modern .ish-theme-toggle__track {
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  position: relative;
+}
+
+body.ish-home-modern .ish-theme-toggle__thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff !important;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+body.ish-home-modern .ish-theme-toggle[aria-checked="true"] .ish-theme-toggle__thumb {
+  transform: translateX(20px);
+}
+
+body.ish-home-modern .ish-theme-toggle[aria-checked="true"] .ish-theme-toggle__track {
+  background: var(--ish-accent) !important;
+  border-color: var(--ish-accent) !important;
+  box-shadow: 0 0 15px var(--ish-accent-glow);
+}
+
+body.ish-home-modern .ish-theme-toggle-separator {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ——— Video Show Page (Modern) ——— */
+body.ish-video-modern #content-section {
+  padding: 42px 0 56px;
+  background: var(--ish-canvas);
+}
+
+body.ish-video-modern .single-post {
+  background: var(--ish-glass-bg);
+  backdrop-filter: var(--ish-glass-blur);
+  -webkit-backdrop-filter: var(--ish-glass-blur);
+  border: 1px solid var(--ish-glass-border);
+  border-radius: 32px;
+  padding: 40px;
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+body.ish-video-modern .video-detail-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+body.ish-video-modern .format-post-video {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.42);
+}
+
+body.ish-video-modern .share-post-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 0;
+  height: auto;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 30px;
+  overflow: visible;
+}
+
+body.ish-video-modern .share-post-box .post-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  margin: 0;
+  min-width: 0;
+}
+
+body.ish-video-modern .share-post-box .post-tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+}
+
+body.ish-video-modern .share-post-box ul.share-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  gap: 10px;
+  float: none !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.ish-video-modern .share-post-box ul.share-box li {
+  display: block;
+  line-height: 1;
+  list-style: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.ish-video-modern .share-post-box ul.share-box li a {
+  width: 44px;
+  height: 44px;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(28, 28, 32, 0.62) !important;
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff !important;
+  font-size: 18px;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+body.ish-video-modern .share-post-box ul.share-box li a i {
+  font-size: 18px;
+  line-height: 1;
+}
+
+body.ish-video-modern .share-post-box ul.share-box li a:hover {
+  transform: translateY(-4px) scale(1.1);
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.34);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.38),
+    0 0 24px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+body.ish-video-modern .blockquote-light {
+  border-left: 4px solid var(--ish-accent);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 24px 30px;
+  border-radius: 0 16px 16px 0;
+  margin: 30px 0;
+}
+
+body.ish-video-modern .blockquote-light p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+body.ish-video-modern .text-boxes p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Sidebar Modern Video Page */
+body.ish-video-modern #js-video-sidebar > .sidebar {
+  background: var(--ish-glass-bg);
+  backdrop-filter: var(--ish-glass-blur);
+  -webkit-backdrop-filter: var(--ish-glass-blur);
+  border: 1px solid var(--ish-glass-border);
+  border-radius: 28px;
+  padding: 22px;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+body.ish-video-modern .sidebar-sticky .widget {
+  background: var(--ish-glass-bg);
+  backdrop-filter: var(--ish-glass-blur);
+  -webkit-backdrop-filter: var(--ish-glass-blur);
+  border: 1px solid var(--ish-glass-border);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+body.ish-video-modern .sidebar-sticky .title-section {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 18px !important;
+  color: #fff;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+body.ish-video-modern .sidebar-sticky .title-section h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+body.ish-video-modern #js-video-sidebar .row {
+  row-gap: 20px !important;
+}
+
+body.ish-video-modern #js-video-sidebar .row > [class*="col-"] {
+  margin-bottom: 20px !important;
+}
+
+body.ish-video-modern #js-video-sidebar .row > [class*="col-"]:last-child {
+  margin-bottom: 0 !important;
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card {
+  width: 100% !important;
+  margin-bottom: 0 !important;
+  background: rgba(255, 255, 255, 0.075);
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card__media img {
+  opacity: 1 !important;
+  filter: brightness(1.04) contrast(1.04) saturate(1.04) !important;
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card__overlay {
+  background: linear-gradient(180deg, transparent 56%, rgba(0, 0, 0, 0.18) 100%);
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card:last-child {
+  margin-bottom: 0 !important;
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card__body {
+  padding: 14px 14px 16px;
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card__title {
+  font-size: 0.98rem;
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card__title a {
+  color: rgba(255, 255, 255, 0.96) !important;
+  opacity: 1 !important;
+}
+
+body.ish-video-modern #js-video-sidebar .ish-hm-row-card__cat {
+  opacity: 1 !important;
+}
+
+body.ish-video-modern .sidebar-sticky .list-posts li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.ish-video-modern .sidebar-sticky .list-posts li:last-child {
+  border-bottom: none;
+}
+
+body.ish-video-modern .sidebar-sticky .post-content h2 a {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.ish-video-modern .sidebar-sticky .post-content h2 a:hover {
+  color: #fff !important;
+}
+
+body.ish-home-modern.ish-modern-light.ish-video-modern #content-section {
+  background: var(--ish-canvas);
+}
+
+body.ish-home-modern.ish-modern-light.ish-video-modern .single-post,
+body.ish-home-modern.ish-modern-light.ish-video-modern #js-video-sidebar > .sidebar {
+  background: rgba(255, 250, 240, 0.72);
+  border-color: rgba(31, 36, 48, 0.11);
+  box-shadow:
+    0 28px 70px rgba(31, 36, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+body.ish-home-modern.ish-modern-light.ish-video-modern #js-video-sidebar .ish-hm-row-card {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(31, 36, 48, 0.1);
+  box-shadow: 0 18px 46px rgba(31, 36, 48, 0.1);
+}
+
+body.ish-home-modern.ish-modern-light.ish-video-modern #js-video-sidebar .ish-hm-row-card__title a {
+  color: #1f2430 !important;
+}
+
+@media (max-width: 991px) {
+  body.ish-video-modern #content-section {
+    padding: 28px 0 44px;
+  }
+
+  body.ish-video-modern .single-post {
+    padding: 24px;
+    border-radius: 24px;
+  }
+
+  body.ish-video-modern .video-detail-title {
+    font-size: 1.8rem;
+  }
+
+  body.ish-video-modern .share-post-box {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  body.ish-video-modern .share-post-box ul.share-box {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  body.ish-video-modern #js-video-sidebar > .sidebar {
+    margin-top: 24px;
+  }
+
+  body.ish-home-modern .search-results-box {
+    padding: 30px;
+    border-radius: 26px;
+  }
+
+  body.ish-home-modern .search-results-banner {
+    padding: 26px 24px !important;
+    border-radius: 18px !important;
+  }
+
+  body.ish-home-modern .search-results-banner h1 {
+    font-size: 2rem;
+  }
+
+  body.ish-home-modern .ish-search-page .search-box input.form-control {
+    font-size: 16px;
+    height: 52px;
+  }
+}
+
+/* ——— Global Search & Category Pages (Modern) ——— */
+body.ish-home-modern .search-results-box {
+  background: var(--ish-glass-bg);
+  backdrop-filter: var(--ish-glass-blur);
+  -webkit-backdrop-filter: var(--ish-glass-blur);
+  border: 1px solid var(--ish-glass-border);
+  border-radius: 34px;
+  padding: 56px;
+  margin-bottom: 46px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+}
+
+body.ish-home-modern .search-results-banner {
+  margin-bottom: 28px !important;
+  padding: 38px 42px !important;
+  border-radius: 22px !important;
+}
+
+body.ish-home-modern .search-results-banner h1 {
+  font-size: 2.65rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: #fff;
+  line-height: 1.12;
+}
+
+body.ish-home-modern .search-results-banner h3 {
+  font-size: 1.22rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+body.ish-home-modern .ish-search-page .search-box form {
+  display: flex;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.ish-home-modern .ish-search-page .search-box input.form-control {
+  background: transparent !important;
+  border: none !important;
+  color: #fff !important;
+  font-size: 18px;
+  padding: 16px 24px;
+  height: 58px;
+  box-shadow: none !important;
+}
+
+body.ish-home-modern .ish-search-page .search-box button.btn {
+  background: #fff !important;
+  color: #000 !important;
+  border-radius: 16px !important;
+  min-width: 64px;
+  padding: 0 28px;
+  font-weight: 700;
+  border: none !important;
+}
+
+@media (max-width: 991px) {
+  body.ish-home-modern .search-results-box {
+    padding: 30px;
+    border-radius: 26px;
+  }
+
+  body.ish-home-modern .search-results-banner {
+    padding: 26px 24px !important;
+    border-radius: 18px !important;
+  }
+
+  body.ish-home-modern .search-results-banner h1 {
+    font-size: 2rem;
+  }
+
+  body.ish-home-modern .ish-search-page .search-box input.form-control {
+    font-size: 16px;
+    height: 52px;
+  }
+}
+
+/* Category Blocks & Listing */
+body.ish-home-modern .posts-block {
+  background: var(--ish-glass-bg);
+  backdrop-filter: var(--ish-glass-blur);
+  -webkit-backdrop-filter: var(--ish-glass-blur);
+  border: 1px solid var(--ish-glass-border);
+  border-radius: 32px;
+  padding: 32px;
+  margin-bottom: 40px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+}
+
+body.ish-home-modern .title-section {
+  border-bottom: none !important;
+  margin-bottom: 24px;
+}
+
+body.ish-home-modern .title-section h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+body.ish-home-modern .title-section h1 .btn-more {
+  font-size: 0.8rem;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+body.ish-home-modern .title-section h1 .btn-more:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Ensure sidebar on all modern pages uses glass */
+body.ish-home-modern .ish-hm-sidebar .sidebar-widget,
+body.ish-home-modern .sidebar-sticky .widget {
+  background: var(--ish-glass-bg);
+  backdrop-filter: var(--ish-glass-blur);
+  -webkit-backdrop-filter: var(--ish-glass-blur);
+  border: 1px solid var(--ish-glass-border);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+body.ish-home-modern .ish-hm-row-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.ish-home-modern .sidebar .social-widget p {
+  color: rgba(255, 255, 255, 0.78) !important;
+  line-height: 1.55;
+}
+
+body.ish-home-modern.ish-search-page .sidebar-sticky {
+  margin-top: 28px;
+}
+
+body.ish-home-modern .sidebar .social-widget .socials {
+  display: block;
+  overflow: visible;
+}
+
+body.ish-home-modern .sidebar .social-widget .socials .row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+body.ish-home-modern .sidebar .social-widget .socials .row > [class*="col-"] {
+  display: contents;
+  padding: 0;
+}
+
+body.ish-home-modern .sidebar .social-widget .social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100% !important;
+  height: 48px !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  color: #fff !important;
+  background: rgba(28, 28, 32, 0.62) !important;
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+body.ish-home-modern .sidebar .social-widget .social i {
+  font-size: 17px;
+  line-height: 1;
+}
+
+body.ish-home-modern .sidebar .social-widget .social__text {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+body.ish-home-modern .sidebar .social-widget .social:hover,
+body.ish-home-modern .sidebar .social-widget .social:focus {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.13) !important;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.34),
+    0 0 24px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+body.ish-home-modern.ish-modern-light .sidebar .social-widget p {
+  color: #4a5262 !important;
+}
+
+body.ish-home-modern.ish-modern-light .sidebar .social-widget .social {
+  color: #1f2430 !important;
+  background: rgba(255, 250, 240, 0.78) !important;
+  border-color: rgba(31, 36, 48, 0.12);
+  box-shadow:
+    0 12px 30px rgba(31, 36, 48, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+body.ish-home-modern.ish-modern-light .sidebar .social-widget .social:hover,
+body.ish-home-modern.ish-modern-light .sidebar .social-widget .social:focus {
+  color: #1f2430 !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(31, 36, 48, 0.18);
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-results-box,
+body.ish-home-modern.ish-modern-light.ish-search-page .posts-block.articles-box {
+  background: rgba(255, 250, 240, 0.82);
+  border-color: rgba(185, 167, 137, 0.44);
+  box-shadow:
+    0 28px 70px rgba(31, 36, 48, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-results-banner {
+  background: #f8f0e3;
+  border-color: #d6c6ad;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-results-banner h1,
+body.ish-home-modern.ish-modern-light.ish-search-page .search-results-banner h1 span,
+body.ish-home-modern.ish-modern-light.ish-search-page .search-results-banner h3,
+body.ish-home-modern.ish-modern-light.ish-search-page .search-results-banner h3 b {
+  color: #1f2430 !important;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-results-banner h3 {
+  color: #5d6678 !important;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box form {
+  background: #fffaf0;
+  border-color: #d0bea3;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box input.form-control {
+  color: #1f2430 !important;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box input.form-control::placeholder {
+  color: #7a8496;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box button.btn {
+  background: #eadfcd !important;
+  color: #1f2430 !important;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page #js-search-video-grid .ish-hm-row-card {
+  background: #fffaf0;
+  border-color: #dfd2bf;
+  box-shadow: 0 18px 44px rgba(31, 36, 48, 0.08);
 }

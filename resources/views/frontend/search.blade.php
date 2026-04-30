@@ -20,20 +20,18 @@
 
   <section id="content-section">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="search-results-box">
-            <div class="search-results-banner">
-              <h1>Search results for <span>'{{ $keyword }}'</span></h1>
-              <h3>Found <b>{{ count($results ?? []) }}</b> results for your search.</h3>
-            </div>
-            <div class="search-box">
-              <form name="frmSearch" id="frmSearch" role="search" class="search-form" method="get" action="{{ url('/search') }}">
-                <input id="sKeyword" name="sKeyword" class="form-control mr-sm-2" type="search" placeholder="Search here" aria-label="Search" value="{{ $keyword }}">
-                <button id="search" name="search" class="btn btn-primary my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
-              </form>
-            </div>
-          </div>
+      <div class="search-results-box">
+        <div class="search-results-banner">
+          <h1>Search results for <span>'{{ $keyword }}'</span></h1>
+          <h3>Found <b>{{ count($results ?? []) }}</b> results for your search.</h3>
+        </div>
+        <div class="search-box">
+          <form name="frmSearch" id="frmSearch" role="search" class="search-form" method="get" action="{{ url('/search') }}">
+            <input id="sKeyword" name="sKeyword" class="form-control mr-sm-2" type="search" placeholder="Search here" aria-label="Search" value="{{ $keyword }}">
+            <button id="search" name="search" class="btn btn-primary my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+      </div>
 
 @php
   $isModern = ($frontendTheme ?? 'legacy') === 'modern';
@@ -55,70 +53,8 @@
   };
 @endphp
 
-@if($isModern)
-<style>
-  .ish-cat-modern-card.ish-hm-row-card {
-    flex: none;
-    min-width: 0;
-    max-width: none;
-    width: 100%;
-    margin-bottom: 24px;
-  }
-  
-  .search-results-banner h1, .search-results-banner h3 {
-    color: #fff;
-  }
-  
-  .search-box {
-    margin-bottom: 30px;
-  }
-  
-  .search-box form {
-    display: flex;
-    position: relative;
-    max-width: 100%;
-  }
-  
-  .search-box input.form-control {
-    background-color: #222;
-    border: 1px solid #444;
-    color: #fff;
-    border-radius: 8px;
-    padding: 12px 20px;
-    padding-right: 60px; /* space for button */
-    width: 100%;
-    height: 50px;
-    font-size: 16px;
-  }
-  
-  .search-box input.form-control:focus {
-    background-color: #333;
-    border-color: #666;
-    box-shadow: none;
-    color: #fff;
-  }
-  
-  .search-box button.btn {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    bottom: 5px;
-    border-radius: 6px;
-    margin: 0 !important;
-    padding: 0 20px;
-    height: 40px;
-    background-color: #f88c00;
-    border: none;
-    color: #fff;
-    transition: background-color 0.2s ease;
-  }
-  
-  .search-box button.btn:hover {
-    background-color: #e07e00;
-  }
-</style>
-@endif
-
+      <div class="row">
+        <div class="{{ $isModern ? 'col-12' : 'col-lg-9' }}">
           <div class="posts-block articles-box">
             <div class="row" id="js-search-video-grid">
               @if(count($results) > 0)
@@ -140,7 +76,7 @@
             @endif
           </div>
         </div>
-        <div class="col-lg-3 sidebar-sticky">
+        <div class="{{ $isModern ? 'col-12 sidebar-sticky' : 'col-lg-3 sidebar-sticky' }}">
           <div class="sidebar theiaStickySidebar">
             @include('frontend.sidebar_sm')
           </div>

@@ -144,19 +144,33 @@
   }
 
   nav.querySelectorAll('.ish-nav-modern__link--mega-trigger').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      if (!window.matchMedia('(min-width: 992px)').matches) return;
+    btn.addEventListener('click', function (e) {
       var li = btn.closest('.ish-nav-modern__item--mega');
       if (!li || !li.querySelector('.ish-nav-mega')) return;
+
+      var isMobile = !window.matchMedia('(min-width: 992px)').matches;
       var opening = !li.classList.contains('ish-nav-modern__item--mega-open');
+
+      // Close all others
       nav.querySelectorAll('.ish-nav-modern__item--mega-open').forEach(function (el) {
-        el.classList.remove('ish-nav-modern__item--mega-open');
-        var b = el.querySelector('.ish-nav-modern__link--mega-trigger');
-        if (b) b.setAttribute('aria-expanded', 'false');
+        if (el !== li) {
+          el.classList.remove('ish-nav-modern__item--mega-open');
+          var b = el.querySelector('.ish-nav-modern__link--mega-trigger');
+          if (b) b.setAttribute('aria-expanded', 'false');
+        }
       });
+
       if (opening) {
         li.classList.add('ish-nav-modern__item--mega-open');
         btn.setAttribute('aria-expanded', 'true');
+      } else {
+        li.classList.remove('ish-nav-modern__item--mega-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      // On mobile, we want to prevent default if it's a toggle
+      if (isMobile) {
+        e.preventDefault();
       }
     });
   });
