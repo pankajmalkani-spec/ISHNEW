@@ -2708,3 +2708,122 @@ body.ish-home-modern.ish-modern-light.ish-search-page #js-search-video-grid .ish
   border-color: #dfd2bf;
   box-shadow: 0 18px 44px rgba(31, 36, 48, 0.08);
 }
+
+body.ish-home-modern .ish-modern-loader {
+  display: inline-flex;
+  position: fixed;
+  right: auto;
+  bottom: 28px;
+  left: 50%;
+  z-index: 10020;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: fit-content;
+  min-height: 58px;
+  margin: 0;
+  padding: 10px 20px 10px 12px;
+  color: rgba(255, 255, 255, 0.94);
+  background: rgba(18, 18, 22, 0.94);
+  backdrop-filter: blur(26px) saturate(180%);
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  box-shadow:
+    0 20px 54px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateX(-50%);
+}
+
+body.ish-home-modern .ish-modern-loader__orb {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95) 0 10%, transparent 11%),
+    conic-gradient(from 0deg, #e50914, rgba(229, 9, 20, 0.1), #ffffff, #e50914);
+  animation: ishLoaderSpin 1.1s linear infinite;
+  box-shadow: 0 0 22px rgba(229, 9, 20, 0.24);
+}
+
+body.ish-home-modern .ish-modern-loader__orb::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: inherit;
+  background: rgba(18, 18, 22, 0.96);
+}
+
+body.ish-home-modern .ish-modern-loader__content {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  min-width: 0;
+}
+
+body.ish-home-modern .ish-modern-loader__label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+body.ish-home-modern .ish-modern-loader__dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+body.ish-home-modern .ish-modern-loader__dots i {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  animation: ishLoaderPulse 1s ease-in-out infinite;
+}
+
+body.ish-home-modern .ish-modern-loader__dots i:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+body.ish-home-modern .ish-modern-loader__dots i:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+body.ish-home-modern.ish-modern-light .ish-modern-loader {
+  color: #1f2430;
+  background: rgba(255, 250, 240, 0.94);
+  border-color: rgba(185, 167, 137, 0.44);
+  box-shadow:
+    0 18px 44px rgba(31, 36, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+body.ish-home-modern.ish-modern-light .ish-modern-loader__orb::after {
+  background: #fffaf0;
+}
+
+body.ish-home-modern.ish-modern-light .ish-modern-loader__dots i {
+  background: rgba(31, 36, 48, 0.68);
+}
+
+@keyframes ishLoaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ishLoaderPulse {
+  0%, 100% {
+    opacity: 0.38;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}

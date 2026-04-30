@@ -49,9 +49,19 @@
               </div>
 
               @if(! empty($hasMore))
-                <div id="category-loader" class="text-center" style="display:none; margin-top: 1.5rem;">
-                  <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> <span>Loading…</span>
-                </div>
+                @if(($frontendTheme ?? 'legacy') === 'modern')
+                  <div id="category-loader" class="ish-modern-loader" style="display:none;" role="status" aria-live="polite">
+                    <span class="ish-modern-loader__orb" aria-hidden="true"></span>
+                    <span class="ish-modern-loader__content">
+                      <span class="ish-modern-loader__label">Loading more stories</span>
+                      <span class="ish-modern-loader__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                    </span>
+                  </div>
+                @else
+                  <div id="category-loader" class="text-center" style="display:none; margin-top: 1.5rem;">
+                    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> <span>Loading…</span>
+                  </div>
+                @endif
                 <div id="category-load-sentinel" style="height:1px; margin-top: 1rem;" aria-hidden="true"></div>
               @endif
             </div>
@@ -86,10 +96,19 @@
     }
   }
 
+  function showLoader() {
+    if (!loader) return;
+    loader.style.display = loader.classList.contains('ish-modern-loader') ? 'inline-flex' : 'block';
+  }
+
+  function hideLoader() {
+    if (loader) loader.style.display = 'none';
+  }
+
   var obs = new IntersectionObserver(function (entries) {
     if (!entries[0].isIntersecting || loading || !nextPage) return;
     loading = true;
-    if (loader) loader.style.display = 'block';
+    showLoader();
 
     var url = new URL(loadUrl, window.location.origin);
     url.searchParams.set('page', String(nextPage));
@@ -108,7 +127,7 @@
       .catch(function () { /* stop retry storm */ obs.disconnect(); })
       .finally(function () {
         loading = false;
-        if (loader) loader.style.display = 'none';
+        hideLoader();
       });
   }, { rootMargin: '240px' });
 
