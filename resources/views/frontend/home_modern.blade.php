@@ -137,6 +137,16 @@
     bottom: 10px;
     z-index: 15;
   }
+  body.ish-home-modern.ish-modern-light .netflix-hero-slider,
+  body.ish-home-modern.ish-modern-light .netflix-hero-image-wrapper {
+    background-color: #3a3023;
+  }
+  body.ish-home-modern.ish-modern-light .netflix-hero-vignette-bottom {
+    background: linear-gradient(to top, #3a3023 0%, rgba(58, 48, 35, 0) 100%);
+  }
+  body.ish-home-modern.ish-modern-light .netflix-hero-vignette-left {
+    background: linear-gradient(to right, rgba(58, 48, 35, 0.92) 0%, rgba(58, 48, 35, 0) 100%);
+  }
   @media (max-width: 992px) {
     .netflix-hero-title { font-size: 2.5rem; }
     .netflix-hero-caption { right: 15%; bottom: 8%; }
@@ -147,6 +157,7 @@
     .netflix-hero-image-wrapper { height: clamp(260px, 58vw, 380px); min-height: 0; }
     .netflix-hero-image { max-width: 92%; max-height: 62%; margin: 0 auto; }
     .netflix-hero-vignette-left { width: 100%; background: linear-gradient(to top, rgba(20,20,20,0.95) 0%, transparent 100%); }
+    body.ish-home-modern.ish-modern-light .netflix-hero-vignette-left { background: linear-gradient(to top, rgba(58, 48, 35, 0.95) 0%, rgba(58, 48, 35, 0) 100%); }
     .netflix-hero-vignette-bottom { height: 70%; }
     .netflix-btn-play, .netflix-btn-more { padding: 8px 20px; font-size: 1rem; }
   }

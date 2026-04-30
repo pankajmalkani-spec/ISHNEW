@@ -1016,6 +1016,7 @@ button.ish-nav-modern__link--mega-trigger:active {
 
 .ish-hm-search__form {
   display: flex;
+  flex-wrap: wrap;
   max-width: 760px;
   margin: 0 auto;
   position: relative;
@@ -1070,6 +1071,52 @@ button.ish-nav-modern__link--mega-trigger:active {
 .ish-hm-search__form button:hover {
   background: #eee;
   transform: scale(0.94);
+}
+
+.ish-hm-search__form label.error,
+.ish-hm-search__form #sKeywordHomeModern-error,
+.ish-hm-search__form #sKeyword-error {
+  order: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  max-width: calc(100% - 32px);
+  margin: 14px auto 4px;
+  padding: 9px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  transform-origin: top center;
+  animation: ishSearchValidationIn 0.28s ease both;
+}
+
+.ish-hm-search__form label.error::before,
+.ish-hm-search__form #sKeywordHomeModern-error::before,
+.ish-hm-search__form #sKeyword-error::before {
+  content: "!";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  color: #fff;
+  background: rgba(229, 9, 20, 0.86);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .ish-hm-section {
@@ -1911,6 +1958,17 @@ body.ish-home-modern.ish-modern-light .ish-hm-search__form input::placeholder {
 body.ish-home-modern.ish-modern-light .ish-hm-search__form button {
   color: #1f2430;
   background: #eadfcd;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-search__form label.error,
+body.ish-home-modern.ish-modern-light .ish-hm-search__form #sKeywordHomeModern-error,
+body.ish-home-modern.ish-modern-light .ish-hm-search__form #sKeyword-error {
+  color: #5a2b2f;
+  background: rgba(255, 250, 240, 0.92);
+  border-color: rgba(185, 167, 137, 0.4);
+  box-shadow:
+    0 14px 34px rgba(31, 36, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 body.ish-home-modern.ish-modern-light footer {
@@ -2899,5 +2957,17 @@ body.ish-home-modern.ish-modern-light .ish-modern-loader__dots i {
   50% {
     opacity: 1;
     transform: translateY(-3px);
+  }
+}
+
+@keyframes ishSearchValidationIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
