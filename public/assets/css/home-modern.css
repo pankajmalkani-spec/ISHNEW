@@ -2103,6 +2103,16 @@ body.ish-video-modern #content-section {
   background: var(--ish-canvas);
 }
 
+body.ish-video-modern #content-section > .container,
+body.ish-video-modern #Sponsor-section > .container {
+  width: calc(100% - (var(--ish-shell-gutter) * 2));
+  max-width: var(--ish-shell-width);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 0;
+  padding-left: 0;
+}
+
 body.ish-video-modern .single-post {
   background: var(--ish-glass-bg);
   backdrop-filter: var(--ish-glass-blur);
@@ -2573,6 +2583,25 @@ body.ish-home-modern .sidebar .social-widget p {
 
 body.ish-home-modern.ish-search-page .sidebar-sticky {
   margin-top: 28px;
+}
+
+body.ish-home-modern.ish-search-page #content-section > .container,
+body.ish-home-modern.ish-search-page #Sponsor-section > .container {
+  width: calc(100% - (var(--ish-shell-gutter) * 2));
+  max-width: var(--ish-shell-width);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+body.ish-home-modern.ish-category-page #content-section > .container {
+  width: calc(100% - (var(--ish-shell-gutter) * 2));
+  max-width: var(--ish-shell-width);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 body.ish-home-modern .sidebar .social-widget .socials {
