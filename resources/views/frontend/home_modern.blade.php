@@ -50,6 +50,14 @@
     object-fit: contain;
     object-position: center;
   }
+  .netflix-hero-image--missing-artwork {
+    width: min(52%, 640px) !important;
+    max-width: 52%;
+    height: auto;
+    max-height: 72%;
+    margin-right: 8%;
+    object-fit: contain;
+  }
   .netflix-hero-vignette-bottom {
     position: absolute;
     bottom: 0;
@@ -156,6 +164,7 @@
     .netflix-hero-title { font-size: 1.8rem; }
     .netflix-hero-image-wrapper { height: clamp(260px, 58vw, 380px); min-height: 0; }
     .netflix-hero-image { max-width: 92%; max-height: 62%; margin: 0 auto; }
+    .netflix-hero-image--missing-artwork { width: min(78%, 460px) !important; max-width: 78%; max-height: 58%; margin: 0 auto; }
     .netflix-hero-vignette-left { width: 100%; background: linear-gradient(to top, rgba(20,20,20,0.95) 0%, transparent 100%); }
     body.ish-home-modern.ish-modern-light .netflix-hero-vignette-left { background: linear-gradient(to top, rgba(156, 137, 108, 0.46) 0%, rgba(231, 220, 201, 0) 100%); }
     .netflix-hero-vignette-bottom { height: 70%; }
@@ -226,7 +235,7 @@
         @endphp
         <div class="carousel-item {{ $idx === 0 ? 'active' : '' }}">
           <div class="netflix-hero-image-wrapper">
-            <img src="{{ $heroImageUrl }}" data-fallback-src="{{ $heroFallbackUrl }}" alt="{{ $b->title ?? '' }}" class="d-block w-100 netflix-hero-image">
+            <img src="{{ $heroImageUrl }}" data-fallback-src="{{ $heroFallbackUrl }}" alt="{{ $b->title ?? '' }}" class="d-block w-100 netflix-hero-image {{ $heroMissingImage ? 'netflix-hero-image--missing-artwork' : '' }}">
             <div class="netflix-hero-vignette-bottom"></div>
             <div class="netflix-hero-vignette-left"></div>
           </div>
@@ -268,6 +277,25 @@
     </form>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.netflix-hero-image').forEach(function (img) {
+      function markSmallFallback() {
+        if (!img.naturalWidth || !img.naturalHeight) return;
+        if (img.naturalWidth <= 320 || img.naturalHeight <= 220) {
+          img.classList.add('netflix-hero-image--missing-artwork');
+        }
+      }
+
+      if (img.complete) {
+        markSmallFallback();
+      } else {
+        img.addEventListener('load', markSmallFallback, { once: true });
+      }
+    });
+  });
+</script>
 
 @if($bn && ! empty($bn['news_list']) && count($bn['news_list']) > 0)
   <section class="ish-hm-row" aria-label="{{ $bn['title'] ?? 'Top stories' }}">
