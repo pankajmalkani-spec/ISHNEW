@@ -2841,6 +2841,69 @@ body.ish-home-modern.ish-modern-light.ish-category-page #js-category-video-grid 
   color: #1f2430 !important;
 }
 
+/* True black video detail mode */
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) {
+  --ish-canvas: #000000;
+  --ish-canvas-deep: #000000;
+  --ish-canvas-raised: #000000;
+  --ish-canvas-muted: #050505;
+  --ish-rgb: 0, 0, 0;
+  --ish-shadow: 0, 0, 0;
+  --ish-glass-bg: #000000;
+  --ish-glass-border: rgba(255, 255, 255, 0.14);
+  background: #000000 !important;
+}
+
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light)::before {
+  display: none;
+}
+
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #container,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) header,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .top-line,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #content-section,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #Sponsor-section,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #Sponsor-section,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .top-line,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .down-footer {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .single-post,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #js-video-sidebar > .sidebar,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #js-video-sidebar .ish-hm-row-card,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #Sponsor-section .posts-block,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #Sponsor-section .news-post,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .footer-widget,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer .featured-widget .news-post {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: none !important;
+}
+
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .blockquote-light,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .share-post-box ul.share-box li a,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer .tags-widget ul.tags-list li a,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer .footer-widget ul.social-icons li a,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .down-footer a.go-top {
+  background: #050505 !important;
+  background-color: #050505 !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .format-post-video {
+  background: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
 body.ish-home-modern .ish-modern-loader {
   display: inline-flex;
   position: fixed;
