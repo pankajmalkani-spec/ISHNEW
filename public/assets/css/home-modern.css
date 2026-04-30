@@ -2593,6 +2593,65 @@ body.ish-home-modern .ish-search-page .search-box button.btn {
   border: none !important;
 }
 
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-box button.btn,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form button.btn,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form button.btn-primary {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  background: #141414 !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-box button.btn i,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form button.btn i {
+  color: #ffffff !important;
+}
+
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-box button.btn:hover,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-box button.btn:focus,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form button.btn:hover,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form button.btn:focus {
+  color: #ffffff !important;
+  background: #e50914 !important;
+  border-color: #e50914 !important;
+  transform: translateY(-1px);
+}
+
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-box form,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-box input.form-control,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form input.form-control {
+  flex: 1 1 auto;
+  width: auto !important;
+  min-width: 0;
+  margin: 0 !important;
+}
+
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-box button.btn,
+body.ish-home-modern.ish-search-page:not(.ish-modern-light) .search-form button.btn {
+  flex: 0 0 48px;
+}
+
 @media (max-width: 991px) {
   body.ish-home-modern .search-results-box {
     padding: 30px;
@@ -2824,8 +2883,42 @@ body.ish-home-modern.ish-modern-light.ish-search-page .search-box input.form-con
 }
 
 body.ish-home-modern.ish-modern-light.ish-search-page .search-box button.btn {
-  background: #eadfcd !important;
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 48px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
+  margin: 0 !important;
+  padding: 0 !important;
   color: #1f2430 !important;
+  background: #eadfcd !important;
+  border: 1px solid rgba(31, 36, 48, 0.14) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box button.btn i {
+  color: #1f2430 !important;
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box button.btn:hover,
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box button.btn:focus {
+  color: #ffffff !important;
+  background: #e50914 !important;
+  border-color: #e50914 !important;
+  transform: translateY(-1px);
+}
+
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box button.btn:hover i,
+body.ish-home-modern.ish-modern-light.ish-search-page .search-box button.btn:focus i {
+  color: #ffffff !important;
 }
 
 body.ish-home-modern.ish-modern-light.ish-search-page #js-search-video-grid .ish-hm-row-card {
