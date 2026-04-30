@@ -18,5 +18,6 @@
 @endif
 <script src="{{ url('/assets/js/lazysizes.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<link rel="shortcut icon" href="{{ url('/images/favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url('/images/favicon.ico') }}" type="image/x-icon">
+	<link rel="icon" type="image/png" sizes="100x100" href="{{ url('/images/ish-news-logo.png') }}?v={{ $assetVersion('/images/ish-news-logo.png') }}">
+	<link rel="shortcut icon" type="image/png" href="{{ url('/images/ish-news-logo.png') }}?v={{ $assetVersion('/images/ish-news-logo.png') }}">
+	<link rel="apple-touch-icon" href="{{ url('/images/ish-news-logo.png') }}?v={{ $assetVersion('/images/ish-news-logo.png') }}">

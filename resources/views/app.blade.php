@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
+        <link rel="icon" type="image/png" sizes="100x100" href="/images/ish-news-logo.png?v={{ file_exists(public_path('images/ish-news-logo.png')) ? filemtime(public_path('images/ish-news-logo.png')) : '1' }}">
+        <link rel="shortcut icon" type="image/png" href="/images/ish-news-logo.png?v={{ file_exists(public_path('images/ish-news-logo.png')) ? filemtime(public_path('images/ish-news-logo.png')) : '1' }}">
+        <link rel="apple-touch-icon" href="/images/ish-news-logo.png?v={{ file_exists(public_path('images/ish-news-logo.png')) ? filemtime(public_path('images/ish-news-logo.png')) : '1' }}">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
