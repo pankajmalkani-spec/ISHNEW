@@ -21,7 +21,8 @@
 
 <style>
   .netflix-hero-slider {
-    width: min(100%, 1180px);
+    width: calc(100% - 32px);
+    max-width: 1300px;
     position: relative;
     background-color: #000;
     margin: 0 auto 2rem;

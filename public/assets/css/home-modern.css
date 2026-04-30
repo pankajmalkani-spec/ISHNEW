@@ -42,6 +42,22 @@ body.ish-home-modern #container {
   background: var(--ish-canvas);
 }
 
+body.ish-home-modern {
+  --ish-shell-width: 1300px;
+  --ish-shell-gutter: 16px;
+}
+
+body.ish-home-modern .ish-hm-search > .container,
+body.ish-home-modern .ish-hm-row > .container-fluid,
+body.ish-home-modern .ish-hm-aside-wrap > .container {
+  width: calc(100% - (var(--ish-shell-gutter) * 2));
+  max-width: var(--ish-shell-width);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 0;
+  padding-left: 0;
+}
+
 /* Slim top bar: match shell (toggle stays readable) */
 body.ish-home-modern .top-line {
   background: rgba(8, 8, 10, 0.4) !important;
@@ -94,10 +110,10 @@ body.ish-home-modern main#content {
   overflow: visible;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
-  background: var(--ish-glass-bg);
-  backdrop-filter: var(--ish-glass-blur);
-  -webkit-backdrop-filter: var(--ish-glass-blur);
-  border: 1px solid var(--ish-glass-border);
+  background: rgba(18, 18, 22, 0.96);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 24px;
   width: calc(100% - 32px);
   max-width: 1300px;
@@ -115,15 +131,15 @@ body.ish-home-modern main#content {
   border-left: none !important;
   border-right: none !important;
   border-top: none !important;
-  background: rgba(14, 14, 16, 0.8) !important;
-  backdrop-filter: blur(50px) saturate(220%) !important;
-  -webkit-backdrop-filter: blur(50px) saturate(220%) !important;
-  box-shadow: none !important;
+  background: rgba(12, 12, 15, 0.98) !important;
+  backdrop-filter: blur(34px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(34px) saturate(180%) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42) !important;
 }
 
 body.ish-home-modern.ish-modern-light .ish-nav-modern--open {
-  background: rgba(255, 250, 240, 0.98) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  background: #fffaf0 !important;
+  border-bottom: 1px solid #d6c6ad !important;
 }
 
 body.ish-nav-modern--lock .ish-nav-modern {
@@ -455,10 +471,10 @@ button.ish-nav-modern__link--mega-trigger:active {
     top: calc(100% - 8px);
     width: min(1180px, 96vw);
     padding: 40px 32px 48px;
-    background: rgba(28, 28, 32, 0.82);
-    backdrop-filter: blur(40px) saturate(200%);
-    -webkit-backdrop-filter: blur(40px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(18, 18, 22, 0.97);
+    backdrop-filter: blur(30px) saturate(170%);
+    -webkit-backdrop-filter: blur(30px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 32px;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.05);
     opacity: 0;
@@ -674,13 +690,13 @@ button.ish-nav-modern__link--mega-trigger:active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
-    background: rgba(14, 14, 16, 0.72) !important;
-    backdrop-filter: blur(60px) saturate(210%) !important;
-    -webkit-backdrop-filter: blur(60px) saturate(210%) !important;
+    background: rgba(12, 12, 15, 0.98) !important;
+    backdrop-filter: blur(34px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(34px) saturate(180%) !important;
   }
 
   body.ish-home-modern.ish-modern-light .ish-nav-modern--open .ish-nav-modern__panel {
-    background: rgba(255, 250, 240, 0.98) !important;
+    background: #fffaf0 !important;
   }
 
   /* Beautify Mega Content on Mobile (Remove Bootstrap Clutter) */
@@ -1672,9 +1688,9 @@ body.ish-home-modern.ish-modern-light .top-line {
 }
 
 body.ish-home-modern.ish-modern-light .ish-nav-modern {
-  background: rgba(255, 250, 240, 0.94);
-  border-bottom-color: #e2d4bd;
-  box-shadow: 0 8px 28px rgba(31, 36, 48, 0.08);
+  background: #fffaf0;
+  border-color: #d6c6ad;
+  box-shadow: 0 12px 34px rgba(31, 36, 48, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 body.ish-home-modern.ish-modern-light .ish-nav-modern__link {
@@ -1719,9 +1735,9 @@ body.ish-home-modern.ish-modern-light .ish-nav-modern__search button {
 }
 
 body.ish-home-modern.ish-modern-light .ish-nav-mega {
-  background: rgba(255, 250, 240, 0.98);
-  border-color: #dfd2bf;
-  box-shadow: 0 24px 60px rgba(31, 36, 48, 0.14);
+  background: #fffaf0;
+  border-color: #d6c6ad;
+  box-shadow: 0 24px 60px rgba(31, 36, 48, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
 body.ish-home-modern.ish-modern-light .ish-nav-mega__pill,
