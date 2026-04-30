@@ -28,9 +28,9 @@
             <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($recent->categorycode ?? '').'/'.($recent->permalink ?? '')) }}" data-youtube-url="{{ $recent->youtube_url ?? '' }}" data-youtube-video="{{ $recent->youtube_video ?? '' }}" data-youtube-check="{{ $recent->youtube_url_check ?? 0 }}" data-title="{{ $recent->title ?? '' }}" data-href="{{ url('/videos/'.($recent->categorycode ?? '').'/'.($recent->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($recent->cover_img ?? null, $recent->youtube_url ?? null) }}" data-category="{{ $recent->subcategoryname ?? '' }}">
               <img src="{{ \App\Support\FrontendMedia::coverImageUrl($recent->cover_img ?? null, $recent->youtube_url ?? null) }}" alt="" loading="lazy">
               <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
-              <span class="ish-hm-row-card__cat" style="{{ $recentBadgeStyle($recent) }}">{{ $recent->subcategoryname ?? '' }}</span>
             </a>
             <div class="ish-hm-row-card__body">
+              <span class="ish-hm-row-card__cat" style="{{ $recentBadgeStyle($recent) }}">{{ $recent->subcategoryname ?? '' }}</span>
               <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($recent->categorycode ?? '').'/'.($recent->permalink ?? '')) }}">{{ $recent->title ?? '' }}</a></h3>
             </div>
           </article>

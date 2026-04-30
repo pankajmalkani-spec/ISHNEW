@@ -37,9 +37,9 @@
         <a class="ish-hm-row-card__media" href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-youtube-url="{{ $video->youtube_url ?? '' }}" data-youtube-video="{{ $video->youtube_video ?? '' }}" data-youtube-check="{{ $video->youtube_url_check ?? 0 }}" data-title="{{ $video->title ?? '' }}" data-href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}" data-img="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null, $video->youtube_url ?? null) }}" data-category="{{ $video->subcategoryname ?? '' }}">
           <img src="{{ \App\Support\FrontendMedia::coverImageUrl($video->cover_img ?? null, $video->youtube_url ?? null) }}" alt="" loading="lazy">
           <span class="ish-hm-row-card__overlay" aria-hidden="true"></span>
-          <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($video) }}">{{ $video->subcategoryname ?? '' }}</span>
         </a>
         <div class="ish-hm-row-card__body">
+          <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($video) }}">{{ $video->subcategoryname ?? '' }}</span>
           <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}">{{ $video->title ?? '' }}</a></h3>
         </div>
       </article>
