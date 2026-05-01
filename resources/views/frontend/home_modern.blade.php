@@ -29,12 +29,37 @@
     overflow: hidden;
     border-radius: 0 0 10px 10px;
   }
+  .netflix-hero-track {
+    position: relative;
+    height: clamp(340px, 44vw, 500px);
+    max-height: 560px;
+    overflow: hidden;
+  }
+  .netflix-hero-slider .carousel-inner {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+  .netflix-hero-slider .carousel-item {
+    position: absolute;
+    inset: 0;
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(28px) scale(1.01);
+    transition: opacity 520ms ease, transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .netflix-hero-slider .carousel-item.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) scale(1);
+    z-index: 2;
+  }
   .netflix-hero-image-wrapper {
     position: relative;
     width: 100%;
-    height: clamp(340px, 44vw, 500px);
+    height: 100%;
     min-height: 0;
-    max-height: 560px;
     overflow: hidden;
     background-color: #000;
     display: flex;
@@ -49,6 +74,29 @@
     margin-right: 7%;
     object-fit: contain;
     object-position: center;
+  }
+  .netflix-hero-video-preview {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    z-index: 3;
+    width: min(58%, 720px);
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 10px;
+    background: #000;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.94);
+    transition: opacity 220ms ease, transform 260ms ease;
+  }
+  .netflix-hero-image-wrapper.is-video-previewing .netflix-hero-video-preview {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  .netflix-hero-image-wrapper.is-video-previewing .netflix-hero-image {
+    opacity: 0.18;
   }
   .netflix-hero-image--missing-artwork {
     width: min(52%, 640px) !important;
@@ -135,6 +183,9 @@
     width: 5%;
     z-index: 10;
     opacity: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
     transition: opacity 0.3s ease;
   }
   .netflix-hero-slider:hover .carousel-control-prev,
@@ -144,6 +195,18 @@
   .netflix-hero-slider .carousel-indicators {
     bottom: 10px;
     z-index: 15;
+  }
+  .netflix-hero-slider .carousel-indicators button {
+    width: 32px;
+    height: 4px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.38);
+    cursor: pointer;
+  }
+  .netflix-hero-slider .carousel-indicators button.active {
+    background: #ffffff;
   }
   body.ish-home-modern.ish-modern-light .netflix-hero-slider,
   body.ish-home-modern.ish-modern-light .netflix-hero-image-wrapper {
@@ -162,13 +225,24 @@
   @media (max-width: 768px) {
     .netflix-hero-caption { right: 5%; bottom: 40px; left: 5%; }
     .netflix-hero-title { font-size: 1.8rem; }
-    .netflix-hero-image-wrapper { height: clamp(260px, 58vw, 380px); min-height: 0; }
+    .netflix-hero-track { height: clamp(260px, 58vw, 380px); }
+    .netflix-hero-image-wrapper { min-height: 0; }
     .netflix-hero-image { max-width: 92%; max-height: 62%; margin: 0 auto; }
+    .netflix-hero-video-preview {
+      right: 5%;
+      width: 90%;
+    }
     .netflix-hero-image--missing-artwork { width: min(78%, 460px) !important; max-width: 78%; max-height: 58%; margin: 0 auto; }
     .netflix-hero-vignette-left { width: 100%; background: linear-gradient(to top, rgba(20,20,20,0.95) 0%, transparent 100%); }
     body.ish-home-modern.ish-modern-light .netflix-hero-vignette-left { background: linear-gradient(to top, rgba(156, 137, 108, 0.46) 0%, rgba(231, 220, 201, 0) 100%); }
     .netflix-hero-vignette-bottom { height: 70%; }
     .netflix-btn-play, .netflix-btn-more { padding: 8px 20px; font-size: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .netflix-hero-slider .carousel-item {
+      transition: none;
+      transform: none;
+    }
   }
 
   /* Netflix Row Carousel Styles */
@@ -216,16 +290,67 @@
   .ish-hm-row__track::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
   }
+  @media (max-width: 767px) {
+    .ish-hm-row {
+      padding: 26px 0 8px;
+    }
+    .ish-hm-row__head {
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .ish-hm-row__title {
+      font-size: 1.12rem;
+      line-height: 1.25;
+    }
+    .ish-hm-row__more {
+      flex-shrink: 0;
+      font-size: 0.72rem;
+    }
+    .netflix-row-btn {
+      display: none !important;
+    }
+    .ish-hm-row__track {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      overflow: visible !important;
+      padding-bottom: 0;
+      scroll-snap-type: none;
+    }
+    .ish-hm-row-card {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      scroll-snap-align: none;
+    }
+    .ish-hm-row-card:hover {
+      transform: none;
+    }
+    .ish-hm-row-card__media {
+      aspect-ratio: 16 / 9;
+    }
+    .ish-hm-row-card__body {
+      padding: 11px 14px 16px;
+    }
+    .ish-hm-row-card__cat {
+      margin-left: -14px;
+      padding-left: 14px;
+    }
+    .ish-hm-row-card__title {
+      font-size: 0.98rem;
+    }
+  }
 </style>
 
 @if(!empty($banner) && count($banner) > 0)
-  <div id="netflixHeroCarousel" class="carousel slide netflix-hero-slider" data-ride="carousel" data-interval="5000">
-    <ol class="carousel-indicators">
+  <div id="netflixHeroCarousel" class="carousel netflix-hero-slider" data-modern-hero-slider role="region" aria-label="Featured stories">
+    <div class="carousel-indicators">
       @foreach($banner as $idx => $b)
-        <li data-target="#netflixHeroCarousel" data-slide-to="{{ $idx }}" class="{{ $idx === 0 ? 'active' : '' }}"></li>
+        <button type="button" data-modern-hero-dot="{{ $idx }}" class="{{ $idx === 0 ? 'active' : '' }}" aria-label="Show featured story {{ $idx + 1 }}"></button>
       @endforeach
-    </ol>
-    <div class="carousel-inner">
+    </div>
+    <div class="netflix-hero-track">
+    <div class="carousel-inner" data-modern-hero-track>
       @foreach($banner as $idx => $b)
         @php
           $heroImageUrl = \App\Support\FrontendMedia::heroImageUrl($b->cover_img ?? null, $b->youtube_url ?? null);
@@ -233,8 +358,8 @@
           $heroMissingImage = \Illuminate\Support\Str::endsWith(parse_url($heroImageUrl, PHP_URL_PATH) ?: '', '/no_img.png');
           $videoUrl = url('/videos/'.($b->categorycode ?? '').'/'.($b->permalink ?? ''));
         @endphp
-        <div class="carousel-item {{ $idx === 0 ? 'active' : '' }}">
-          <div class="netflix-hero-image-wrapper">
+        <div class="carousel-item {{ $idx === 0 ? 'active' : '' }}" data-modern-hero-slide="{{ $idx }}" aria-hidden="{{ $idx === 0 ? 'false' : 'true' }}">
+          <div class="netflix-hero-image-wrapper" data-hero-youtube-url="{{ $b->youtube_url ?? '' }}" data-hero-youtube-video="{{ $b->youtube_video ?? '' }}">
             <img src="{{ $heroImageUrl }}" data-fallback-src="{{ $heroFallbackUrl }}" alt="{{ $b->title ?? '' }}" class="d-block w-100 netflix-hero-image {{ $heroMissingImage ? 'netflix-hero-image--missing-artwork' : '' }}">
             <div class="netflix-hero-vignette-bottom"></div>
             <div class="netflix-hero-vignette-left"></div>
@@ -258,14 +383,13 @@
         </div>
       @endforeach
     </div>
-    <a class="carousel-control-prev" href="#netflixHeroCarousel" role="button" data-slide="prev">
+    </div>
+    <button class="carousel-control-prev" type="button" data-modern-hero-prev aria-label="Previous featured story">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#netflixHeroCarousel" role="button" data-slide="next">
+    </button>
+    <button class="carousel-control-next" type="button" data-modern-hero-next aria-label="Next featured story">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+    </button>
   </div>
 @endif
 
@@ -280,6 +404,186 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    var hero = document.querySelector('[data-modern-hero-slider]');
+    if (hero) {
+      var slides = Array.prototype.slice.call(hero.querySelectorAll('[data-modern-hero-slide]'));
+      var dots = Array.prototype.slice.call(hero.querySelectorAll('[data-modern-hero-dot]'));
+      var prev = hero.querySelector('[data-modern-hero-prev]');
+      var next = hero.querySelector('[data-modern-hero-next]');
+      var current = 0;
+      var timer = null;
+      var startX = 0;
+      var dragging = false;
+      var previewTimer = null;
+      var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function youtubeIdFrom(value) {
+        value = String(value || '').trim();
+        if (!value) return '';
+
+        var directId = value.match(/^[a-zA-Z0-9_-]{11}$/);
+        if (directId) return value;
+
+        var patterns = [
+          /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+          /youtube\.com\/watch\?[^#]*v=([a-zA-Z0-9_-]{11})/,
+          /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+          /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
+        ];
+
+        for (var i = 0; i < patterns.length; i++) {
+          var match = value.match(patterns[i]);
+          if (match) return match[1];
+        }
+
+        return '';
+      }
+
+      function clearHeroPreview() {
+        if (previewTimer) {
+          window.clearTimeout(previewTimer);
+          previewTimer = null;
+        }
+
+        hero.querySelectorAll('.netflix-hero-image-wrapper.is-video-previewing').forEach(function (wrapper) {
+          wrapper.classList.remove('is-video-previewing');
+        });
+
+        hero.querySelectorAll('.netflix-hero-video-preview').forEach(function (iframe) {
+          iframe.remove();
+        });
+      }
+
+      function showHeroPreview(wrapper) {
+        if (!wrapper || prefersReducedMotion) return;
+
+        var videoId = youtubeIdFrom(wrapper.getAttribute('data-hero-youtube-url')) ||
+          youtubeIdFrom(wrapper.getAttribute('data-hero-youtube-video'));
+        if (!videoId) return;
+
+        clearHeroPreview();
+        var iframe = document.createElement('iframe');
+        iframe.className = 'netflix-hero-video-preview';
+        iframe.title = 'YouTube video preview';
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) +
+          '?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=' + encodeURIComponent(videoId);
+
+        wrapper.appendChild(iframe);
+        window.requestAnimationFrame(function () {
+          wrapper.classList.add('is-video-previewing');
+        });
+      }
+
+      function showSlide(index) {
+        if (!slides.length) return;
+        clearHeroPreview();
+        current = (index + slides.length) % slides.length;
+
+        slides.forEach(function (slide, slideIndex) {
+          var active = slideIndex === current;
+          slide.classList.toggle('active', active);
+          slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+        });
+
+        dots.forEach(function (dot, dotIndex) {
+          dot.classList.toggle('active', dotIndex === current);
+        });
+      }
+
+      function stopAutoplay() {
+        if (timer) {
+          window.clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      function startAutoplay() {
+        if (prefersReducedMotion || slides.length < 2 || timer) return;
+        timer = window.setInterval(function () {
+          showSlide(current + 1);
+        }, 5500);
+      }
+
+      function restartAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          showSlide(parseInt(dot.getAttribute('data-modern-hero-dot'), 10) || 0);
+          restartAutoplay();
+        });
+      });
+
+      if (prev) {
+        prev.addEventListener('click', function () {
+          showSlide(current - 1);
+          restartAutoplay();
+        });
+      }
+
+      if (next) {
+        next.addEventListener('click', function () {
+          showSlide(current + 1);
+          restartAutoplay();
+        });
+      }
+
+      hero.addEventListener('mouseenter', stopAutoplay);
+      hero.addEventListener('mouseleave', startAutoplay);
+      hero.addEventListener('focusin', stopAutoplay);
+      hero.addEventListener('focusout', startAutoplay);
+      hero.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowLeft') {
+          showSlide(current - 1);
+          restartAutoplay();
+        }
+        if (event.key === 'ArrowRight') {
+          showSlide(current + 1);
+          restartAutoplay();
+        }
+      });
+      hero.addEventListener('pointerdown', function (event) {
+        dragging = true;
+        startX = event.clientX;
+      });
+      hero.addEventListener('pointerup', function (event) {
+        if (!dragging) return;
+        dragging = false;
+        var delta = event.clientX - startX;
+        if (Math.abs(delta) > 45) {
+          showSlide(delta > 0 ? current - 1 : current + 1);
+          restartAutoplay();
+        }
+      });
+      hero.addEventListener('pointercancel', function () {
+        dragging = false;
+      });
+
+      hero.querySelectorAll('.netflix-hero-image-wrapper').forEach(function (wrapper) {
+        wrapper.addEventListener('mouseenter', function () {
+          if (!wrapper.closest('.carousel-item.active')) return;
+          previewTimer = window.setTimeout(function () {
+            showHeroPreview(wrapper);
+          }, 280);
+        });
+        wrapper.addEventListener('mouseleave', clearHeroPreview);
+        wrapper.addEventListener('focusin', function () {
+          if (wrapper.closest('.carousel-item.active')) {
+            showHeroPreview(wrapper);
+          }
+        });
+        wrapper.addEventListener('focusout', clearHeroPreview);
+      });
+
+      hero.setAttribute('tabindex', '0');
+      showSlide(0);
+      startAutoplay();
+    }
+
     document.querySelectorAll('.netflix-hero-image').forEach(function (img) {
       function markSmallFallback() {
         if (!img.naturalWidth || !img.naturalHeight) return;
