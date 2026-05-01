@@ -41,6 +41,14 @@
         <div class="ish-hm-row-card__body">
           <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($video) }}">{{ $video->subcategoryname ?? '' }}</span>
           <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}">{{ $video->title ?? '' }}</a></h3>
+          <div class="ish-hm-row-card__meta">
+            @if(! empty($video->schedule_date))
+              <span><i class="fa fa-calendar"></i>{{ \Illuminate\Support\Carbon::parse($video->schedule_date)->format('M j, Y') }}</span>
+            @endif
+            @if(! empty($video->newsourcename))
+              <span><i class="fa fa-newspaper-o"></i>{{ $video->newsourcename }}</span>
+            @endif
+          </div>
         </div>
       </article>
     @else

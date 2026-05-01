@@ -47,6 +47,11 @@
                                 <a class="category category-{{ $item->categorycode ?? '' }}" href="{{ url('/category/'.($item->categorycode ?? '')) }}">{{ \Str::upper(str_replace('_', ' ', $item->categorycode ?? '')) }}</a>
                               </a>
                               <a class="ish-nav-mega__card-title" href="{{ url('/videos/'.($item->categorycode ?? '').'/'.($item->permalink ?? '')) }}">{{ $item->content_title ?? '' }}</a>
+                              @if(! empty($item->schedule_date))
+                                <div class="ish-nav-mega__card-meta">
+                                  <span><i class="fa fa-calendar"></i>{{ \Illuminate\Support\Carbon::parse($item->schedule_date)->format('M j, Y') }}</span>
+                                </div>
+                              @endif
                             </article>
                           </div>
                         @endforeach

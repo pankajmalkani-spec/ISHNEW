@@ -32,6 +32,14 @@
             <div class="ish-hm-row-card__body">
               <span class="ish-hm-row-card__cat" style="{{ $recentBadgeStyle($recent) }}">{{ $recent->subcategoryname ?? '' }}</span>
               <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($recent->categorycode ?? '').'/'.($recent->permalink ?? '')) }}">{{ $recent->title ?? '' }}</a></h3>
+              <div class="ish-hm-row-card__meta">
+                @if(! empty($recent->schedule_date))
+                  <span><i class="fa fa-calendar"></i>{{ \Illuminate\Support\Carbon::parse($recent->schedule_date)->format('M j, Y') }}</span>
+                @endif
+                @if(! empty($recent->newsourcename))
+                  <span><i class="fa fa-newspaper-o"></i>{{ $recent->newsourcename }}</span>
+                @endif
+              </div>
             </div>
           </article>
         @else

@@ -607,7 +607,7 @@ button.ish-nav-modern__link--mega-trigger:active {
 
 .ish-nav-mega__card-title {
   display: block;
-  padding: 14px 14px 18px;
+  padding: 14px 14px 6px;
   font-size: 14px;
   font-weight: 600;
   line-height: 1.4;
@@ -619,6 +619,28 @@ button.ish-nav-modern__link--mega-trigger:active {
 
 .ish-nav-mega__card:hover .ish-nav-mega__card-title {
   color: #fff;
+}
+
+.ish-nav-mega__card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 0 14px 16px;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.ish-nav-mega__card-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.ish-nav-mega__card-meta i {
+  margin-right: 5px;
+  color: rgba(255, 255, 255, 0.42);
 }
 
 .ish-nav-mega__empty {
@@ -1708,6 +1730,28 @@ body.ish-home-modern footer .down-footer a.go-top:hover {
   color: #fff;
 }
 
+.ish-hm-row-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.ish-hm-row-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.ish-hm-row-card__meta i {
+  margin-right: 5px;
+  color: rgba(255, 255, 255, 0.42);
+}
+
 .ish-hm-aside-wrap--modern-hidden {
   display: none;
 }
@@ -1798,6 +1842,14 @@ body.ish-home-modern.ish-modern-light .ish-nav-mega__empty a {
   color: #1f2430;
 }
 
+body.ish-home-modern.ish-modern-light .ish-nav-mega__card-meta {
+  color: #5d6678;
+}
+
+body.ish-home-modern.ish-modern-light .ish-nav-mega__card-meta i {
+  color: #8a7d69;
+}
+
 body.ish-home-modern.ish-modern-light .ish-nav-mega__pill {
   --ish-subcat-color: #b9a789;
   background: #fffaf0;
@@ -1859,8 +1911,13 @@ body.ish-home-modern.ish-modern-light .ish-hm-row-card__title a {
 }
 
 body.ish-home-modern.ish-modern-light .ish-hm-row__more,
-body.ish-home-modern.ish-modern-light .ish-hm-row-card__cat {
+body.ish-home-modern.ish-modern-light .ish-hm-row-card__cat,
+body.ish-home-modern.ish-modern-light .ish-hm-row-card__meta {
   color: #5d6678;
+}
+
+body.ish-home-modern.ish-modern-light .ish-hm-row-card__meta i {
+  color: #8a7d69;
 }
 
 body.ish-home-modern.ish-modern-light .ish-hm-row-card__title a:hover,
