@@ -48,6 +48,19 @@
         </div>
       </div>
 
+      <div class="container mobile-view">
+        @foreach(($CategorySet1 ?? []) as $TCatData)
+          @if(
+              empty($TCatData)
+              || empty($TCatData['news_list'])
+              || count($TCatData['news_list']) === 0
+          )
+            @continue
+          @endif
+          @include('frontend.category_carousel_section', ['TCatData' => $TCatData])
+        @endforeach
+      </div>
+
       <div class="desktop-view">
         <div class="container">
           @include('frontend.breaking_news_section')
