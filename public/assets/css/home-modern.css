@@ -1571,6 +1571,60 @@ body.ish-home-modern footer .down-footer a.go-top:hover {
   background: rgba(255, 255, 255, 0.18);
 }
 
+body.ish-home-modern:not(.ish-modern-light) footer {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer,
+body.ish-home-modern:not(.ish-modern-light) footer .down-footer {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-radius: 14px;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+body.ish-home-modern:not(.ish-modern-light) footer > .container,
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer .row,
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer .row > [class*="col-"],
+body.ish-home-modern:not(.ish-modern-light) footer .footer-widget ul.small-posts,
+body.ish-home-modern:not(.ish-modern-light) footer .footer-widget ul.small-posts > li,
+body.ish-home-modern:not(.ish-modern-light) footer .footer-widget ul.small-posts > li .post-cont,
+body.ish-home-modern:not(.ish-modern-light) footer .footer-widget ul.post-tags,
+body.ish-home-modern:not(.ish-modern-light) footer .footer-widget ul.social-icons,
+body.ish-home-modern:not(.ish-modern-light) footer .tags-widget ul.tags-list,
+body.ish-home-modern:not(.ish-modern-light) footer .down-footer ul.list-footer,
+body.ish-home-modern:not(.ish-modern-light) footer .down-footer p {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
+body.ish-home-modern:not(.ish-modern-light) footer .footer-widget,
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer .featured-widget .news-post {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer .tags-widget ul.tags-list li a,
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer .footer-widget ul.social-icons li a,
+body.ish-home-modern:not(.ish-modern-light) footer .down-footer a.go-top {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer .tags-widget ul.tags-list li a:hover,
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer .footer-widget ul.social-icons li a:hover,
+body.ish-home-modern:not(.ish-modern-light) footer .down-footer a.go-top:hover {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
 @media (max-width: 767px) {
   body.ish-home-modern footer {
     padding-top: 18px;
@@ -3155,6 +3209,36 @@ body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .down-footer
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .format-post-video {
   background: #000000 !important;
   border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+body.ish-home-modern:not(.ish-modern-light) footer,
+body.ish-home-modern:not(.ish-modern-light) footer *,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer * {
+  background-color: #000000 !important;
+}
+
+body.ish-home-modern:not(.ish-modern-light) footer,
+body.ish-home-modern:not(.ish-modern-light) footer .up-footer,
+body.ish-home-modern:not(.ish-modern-light) footer .down-footer,
+body.ish-home-modern:not(.ish-modern-light) footer .footer-widget,
+body.ish-home-modern:not(.ish-modern-light) footer .news-post,
+body.ish-home-modern:not(.ish-modern-light) footer .post-cont,
+body.ish-home-modern:not(.ish-modern-light) footer .tags-list,
+body.ish-home-modern:not(.ish-modern-light) footer .small-posts,
+body.ish-home-modern:not(.ish-modern-light) footer .list-footer,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .down-footer,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .footer-widget,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .news-post,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .post-cont,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .tags-list,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .small-posts,
+body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .list-footer {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  box-shadow: none !important;
 }
 
 body.ish-home-modern .ish-modern-loader {
