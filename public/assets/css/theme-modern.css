@@ -367,6 +367,45 @@ body.ish-theme-modern #content-section .sidebar .widget p {
   color: #ffffff;
 }
 
+/* Contact page */
+body.ish-theme-modern #content-section .contact-form-box {
+  color: #ffffff;
+}
+
+body.ish-theme-modern #content-section #contact-form label,
+body.ish-theme-modern #content-section #contact-form p {
+  color: #f2f5fb !important;
+}
+
+body.ish-theme-modern #content-section #contact-form input[type="text"],
+body.ish-theme-modern #content-section #contact-form input[type="email"],
+body.ish-theme-modern #content-section #contact-form textarea {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+body.ish-theme-modern #content-section #contact-form input::placeholder,
+body.ish-theme-modern #content-section #contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+body.ish-theme-modern #content-section #contact-form button {
+  color: #ffffff !important;
+  background: #2f5fa9;
+  border: 1px solid #2f5fa9;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(15, 18, 32, 0.22);
+}
+
+body.ish-theme-modern #content-section #contact-form button:hover,
+body.ish-theme-modern #content-section #contact-form button:focus {
+  color: #ffffff !important;
+  background: #3a6fbd;
+  border-color: #3a6fbd;
+  opacity: 1;
+}
+
 /* About page */
 body.ish-theme-modern #content-section .about-box,
 body.ish-theme-modern #content-section .compare-box,
@@ -629,6 +668,42 @@ body.ish-theme-modern.ish-modern-light #content-section .article-post ul.tags-li
   color: #384154 !important;
   background: #f3eadc;
   border-color: #d6c6ad;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section .contact-form-box {
+  color: #1f2430;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section #contact-form label,
+body.ish-theme-modern.ish-modern-light #content-section #contact-form p {
+  color: #4a5262 !important;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section #contact-form input[type="text"],
+body.ish-theme-modern.ish-modern-light #content-section #contact-form input[type="email"],
+body.ish-theme-modern.ish-modern-light #content-section #contact-form textarea {
+  color: #1f2430;
+  background: #fffaf0;
+  border-color: #d0bea3;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section #contact-form input::placeholder,
+body.ish-theme-modern.ish-modern-light #content-section #contact-form textarea::placeholder {
+  color: #7a8496;
+}
+
+body.ish-theme-modern.ish-modern-light #content-section #contact-form button {
+  color: #ffffff !important;
+  background: #2458a4;
+  border-color: #2458a4;
+  box-shadow: 0 10px 20px rgba(31, 36, 48, 0.16);
+}
+
+body.ish-theme-modern.ish-modern-light #content-section #contact-form button:hover,
+body.ish-theme-modern.ish-modern-light #content-section #contact-form button:focus {
+  color: #ffffff !important;
+  background: #1d4d91;
+  border-color: #1d4d91;
 }
 
 body.ish-theme-modern.ish-modern-light.ish-video-modern,
