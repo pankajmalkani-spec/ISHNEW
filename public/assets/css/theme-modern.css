@@ -735,3 +735,16 @@ body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .single
   text-shadow: none !important;
   background: transparent !important;
 }
+
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .single-post .text-boxes ul.tags-list li a {
+  color: #384154 !important;
+  background: #f3eadc;
+  border-color: #d6c6ad;
+}
+
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .single-post .text-boxes ul.tags-list li a:hover,
+body.ish-theme-modern.ish-modern-light.ish-video-modern #content-section .single-post .text-boxes ul.tags-list li a:focus {
+  color: #ffffff !important;
+  background: #2458a4;
+  border-color: #2458a4;
+}
