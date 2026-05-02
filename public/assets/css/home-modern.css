@@ -3098,12 +3098,12 @@ body.ish-home-modern.ish-search-page:not(.ish-modern-light) footer .down-footer 
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) {
   --ish-canvas: #000000;
   --ish-canvas-deep: #000000;
-  --ish-canvas-raised: #000000;
-  --ish-canvas-muted: #050505;
+  --ish-canvas-raised: #141414;
+  --ish-canvas-muted: #1b1b1b;
   --ish-rgb: 0, 0, 0;
   --ish-shadow: 0, 0, 0;
-  --ish-glass-bg: #000000;
-  --ish-glass-border: rgba(255, 255, 255, 0.14);
+  --ish-glass-bg: #141414;
+  --ish-glass-border: rgba(255, 255, 255, 0.12);
   background: #000000 !important;
 }
 
@@ -3136,10 +3136,10 @@ body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #Sponsor-section .p
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) #Sponsor-section .news-post,
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .footer-widget,
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer .featured-widget .news-post {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  border-color: rgba(255, 255, 255, 0.14) !important;
-  box-shadow: none !important;
+  background: #141414 !important;
+  background-color: #141414 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28) !important;
 }
 
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .blockquote-light,
@@ -3147,9 +3147,9 @@ body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .share-post-box ul.
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer .tags-widget ul.tags-list li a,
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .up-footer .footer-widget ul.social-icons li a,
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) footer .down-footer a.go-top {
-  background: #050505 !important;
-  background-color: #050505 !important;
-  border-color: rgba(255, 255, 255, 0.16) !important;
+  background: #1b1b1b !important;
+  background-color: #1b1b1b !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
 }
 
 body.ish-home-modern.ish-video-modern:not(.ish-modern-light) .format-post-video {
