@@ -406,6 +406,44 @@ body.ish-theme-modern #content-section #contact-form button:focus {
   opacity: 1;
 }
 
+/* Sitemap */
+body.ish-theme-modern.ish-sitemap-page #content-section .ish-sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 42px 34px;
+}
+
+body.ish-theme-modern.ish-sitemap-page #content-section .ish-sitemap-grid::before,
+body.ish-theme-modern.ish-sitemap-page #content-section .ish-sitemap-grid::after {
+  display: none;
+}
+
+body.ish-theme-modern.ish-sitemap-page #content-section .ish-sitemap-grid > [class*="col-"] {
+  flex: none;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+body.ish-theme-modern.ish-sitemap-page #content-section .title-section h1 {
+  font-size: clamp(28px, 2.1vw, 36px);
+  line-height: 1.15;
+  overflow-wrap: normal;
+}
+
+body.ish-theme-modern.ish-sitemap-page #content-section ul.small-posts {
+  margin-bottom: 0;
+}
+
+@media (max-width: 575px) {
+  body.ish-theme-modern.ish-sitemap-page #content-section .ish-sitemap-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
+
 /* About page */
 body.ish-theme-modern #content-section .about-box,
 body.ish-theme-modern #content-section .compare-box,

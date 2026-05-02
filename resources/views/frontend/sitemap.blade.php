@@ -12,6 +12,7 @@
   'ish-theme',
   'ish-theme-'.($frontendTheme ?? 'legacy'),
   'ish-home-modern' => ($frontendTheme ?? 'legacy') === 'modern',
+  'ish-sitemap-page',
   'ish-modern-'.($frontendModernScheme ?? 'dark') => ($frontendTheme ?? 'legacy') === 'modern',
 ])>
 <div id="container">
@@ -24,7 +25,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="row">
+          <div class="row ish-sitemap-grid">
             @foreach($sitemapCategories ?? [] as $cat)
               <div class="col-lg-3 col-md-4 col-xl-2">
                 <div class="title-section">
@@ -43,7 +44,7 @@
               </div>
             @endforeach
           </div>
-          <div class="row">
+          <div class="row ish-sitemap-grid ish-sitemap-grid--secondary">
             <div class="col-lg-4 col-md-6 col-xl-2">
               <div class="title-section">
                 <h1>Other Navigation</h1>
