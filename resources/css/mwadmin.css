@@ -227,10 +227,6 @@
     border-color: #64748b;
 }
 
-.mwadmin-shell.mwadmin-theme-dark .mwadmin-add-btn {
-    background: linear-gradient(180deg, #c97a1a 0%, #a86514 100%);
-    color: #fff;
-}
 
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-export-btn {
     display: inline-flex;
@@ -349,7 +345,16 @@
 }
 
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-form-actions a {
-    color: #94a3b8;
+    background: #1e293b;
+    border-color: #334155;
+    color: #cbd5e1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.mwadmin-shell.mwadmin-theme-dark .mwadmin-form-actions a:hover {
+    background: #334155;
+    border-color: #475569;
+    color: #f1f5f9;
 }
 
 .mwadmin-shell.mwadmin-theme-dark .mwadmin-field-error {
@@ -778,14 +783,25 @@
 }
 
 .mwadmin-add-btn {
-    display: inline-block;
-    background: #f7931e;
-    color: #fff;
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 2px;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: linear-gradient(180deg, #3fd5c0 0%, #2eb8a8 100%);
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px;
     font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 118, 110, 0.22);
+    transition: all 0.2s ease;
+}
+
+.mwadmin-add-btn:hover {
+    filter: brightness(1.04);
+    box-shadow: 0 2px 4px rgba(15, 118, 110, 0.3);
 }
 
 .mwadmin-thumb {
@@ -961,17 +977,52 @@
 }
 
 .mwadmin-form-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: 0;
-    background: #2fd0bd;
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 2px;
+    background: linear-gradient(180deg, #3fd5c0 0%, #2eb8a8 100%);
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 1px 2px rgba(15, 118, 110, 0.22);
+    transition: all 0.2s ease;
+}
+
+.mwadmin-form-actions button:hover:not(:disabled) {
+    filter: brightness(1.04);
+    box-shadow: 0 2px 4px rgba(15, 118, 110, 0.3);
+}
+
+.mwadmin-form-actions button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
 }
 
 .mwadmin-form-actions a {
-    color: #666;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
     text-decoration: none;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    transition: all 0.2s ease;
+}
+
+.mwadmin-form-actions a:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #0f172a;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08);
 }
 
 .mwadmin-error {
@@ -1341,18 +1392,7 @@
     align-items: center;
 }
 
-.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-add-btn {
-    background: linear-gradient(180deg, #5c4332 0%, #4a3628 100%);
-    color: #fffdf7;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    box-shadow: 0 2px 4px rgba(45, 32, 22, 0.15);
-}
 
-.mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-add-btn:hover {
-    filter: brightness(1.06);
-}
 
 /* Toolbar: export (e.g. newsletter Excel) — green sheet affordance, matches cream panel */
 .mwadmin-shell:not(.mwadmin-theme-dark) .mwadmin-export-btn {
