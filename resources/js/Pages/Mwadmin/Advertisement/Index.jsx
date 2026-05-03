@@ -2,6 +2,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import { createPortal } from 'react-dom';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import MwadminActionsDropdown from '../../../Components/Mwadmin/MwadminActionsDropdown';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
@@ -30,9 +31,76 @@ const adThumbWrap = {
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    padding: '4px 0',
 };
 
-const adThumbImg = { maxWidth: '80px', maxHeight: '28px', objectFit: 'cover' };
+const adThumbImg = {
+    width: '60px',
+    height: '36px',
+    objectFit: 'cover',
+    borderRadius: '6px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+};
+
+const adPopupStyle = {
+    position: 'fixed',
+    zIndex: 9999,
+    width: '220px',
+    height: '132px',
+    padding: '8px',
+    borderRadius: '10px',
+    background: 'rgba(15, 23, 42, 0.96)',
+    border: '1px solid rgba(148, 163, 184, 0.35)',
+    boxShadow: '0 18px 45px rgba(0,0,0,0.35)',
+    pointerEvents: 'none',
+};
+
+const adPopupImg = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: '6px',
+    display: 'block',
+};
+
+function AdvertisementImageThumb({ src }) {
+    const [previewPos, setPreviewPos] = useState(null);
+    const updatePreviewPos = (event) => {
+        const gap = 18;
+        const width = 236;
+        const height = 148;
+        const left =
+            event.clientX + gap + width > window.innerWidth
+                ? Math.max(12, event.clientX - width - gap)
+                : event.clientX + gap;
+        const top =
+            event.clientY + gap + height > window.innerHeight
+                ? Math.max(12, event.clientY - height - gap)
+                : event.clientY + gap;
+        setPreviewPos({ left, top });
+    };
+
+    return (
+        <div style={adThumbWrap}>
+            <img
+                src={src}
+                alt=""
+                style={adThumbImg}
+                onMouseEnter={updatePreviewPos}
+                onMouseMove={updatePreviewPos}
+                onMouseLeave={() => setPreviewPos(null)}
+            />
+            {previewPos
+                ? createPortal(
+                      <div style={{ ...adPopupStyle, left: previewPos.left, top: previewPos.top }}>
+                          <img src={src} style={adPopupImg} alt="" />
+                      </div>,
+                      document.body
+                  )
+                : null}
+        </div>
+    );
+}
 
 /**
  * Preload so AG Grid remounts do not fire spurious img onError (see Sponsor listing).
@@ -63,11 +131,7 @@ function AdvertisementListingImageCell({ src, publicRoot }) {
     }, [resolved]);
 
     if (phase === 'empty' || phase === 'bad') {
-        return (
-            <div style={adThumbWrap}>
-                <img src={placeholderSrc} alt="" style={adThumbImg} />
-            </div>
-        );
+        return <AdvertisementImageThumb src={placeholderSrc} />;
     }
     if (phase === 'check') {
         return (
@@ -76,11 +140,7 @@ function AdvertisementListingImageCell({ src, publicRoot }) {
             </span>
         );
     }
-    return (
-        <div style={adThumbWrap}>
-            <img src={resolved} alt="" style={adThumbImg} />
-        </div>
-    );
+    return <AdvertisementImageThumb src={resolved} />;
 }
 
 export default function AdvertisementIndex({ authUser = {} }) {
@@ -203,7 +263,7 @@ export default function AdvertisementIndex({ authUser = {} }) {
             {
                 field: 'image_url',
                 headerName: 'Image',
-                width: 100,
+                minWidth: 110,
                 cellClass: 'mwadmin-ag-cell-vcenter',
                 cellRenderer: (p) => (
                     <AdvertisementListingImageCell src={p.value || ''} publicRoot={mwadminPublicRoot} />

@@ -2,6 +2,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import MwadminActionsDropdown from '../../../Components/Mwadmin/MwadminActionsDropdown';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
@@ -94,9 +95,76 @@ const logoThumbWrap = {
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    padding: '4px 0',
 };
 
-const logoThumbImg = { maxWidth: '88px', maxHeight: '32px', objectFit: 'contain' };
+const logoThumbImg = {
+    width: '60px',
+    height: '36px',
+    objectFit: 'cover',
+    borderRadius: '6px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+};
+
+const logoPopupStyle = {
+    position: 'fixed',
+    zIndex: 9999,
+    width: '220px',
+    height: '132px',
+    padding: '8px',
+    borderRadius: '10px',
+    background: 'rgba(15, 23, 42, 0.96)',
+    border: '1px solid rgba(148, 163, 184, 0.35)',
+    boxShadow: '0 18px 45px rgba(0,0,0,0.35)',
+    pointerEvents: 'none',
+};
+
+const logoPopupImg = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: '6px',
+    display: 'block',
+};
+
+function SponsorLogoThumb({ src }) {
+    const [previewPos, setPreviewPos] = useState(null);
+    const updatePreviewPos = (event) => {
+        const gap = 18;
+        const width = 236;
+        const height = 148;
+        const left =
+            event.clientX + gap + width > window.innerWidth
+                ? Math.max(12, event.clientX - width - gap)
+                : event.clientX + gap;
+        const top =
+            event.clientY + gap + height > window.innerHeight
+                ? Math.max(12, event.clientY - height - gap)
+                : event.clientY + gap;
+        setPreviewPos({ left, top });
+    };
+
+    return (
+        <div style={logoThumbWrap}>
+            <img
+                src={src}
+                alt=""
+                style={logoThumbImg}
+                onMouseEnter={updatePreviewPos}
+                onMouseMove={updatePreviewPos}
+                onMouseLeave={() => setPreviewPos(null)}
+            />
+            {previewPos
+                ? createPortal(
+                      <div style={{ ...logoPopupStyle, left: previewPos.left, top: previewPos.top }}>
+                          <img src={src} style={logoPopupImg} alt="" />
+                      </div>,
+                      document.body
+                  )
+                : null}
+        </div>
+    );
+}
 
 /**
  * Preload in an effect so React Strict Mode / AG Grid remounts do not fire spurious img onError
@@ -127,11 +195,7 @@ function SponsorListingLogoCell({ src, publicRoot }) {
     }, [src]);
 
     if (phase === 'empty' || phase === 'bad') {
-        return (
-            <div style={logoThumbWrap}>
-                <img src={placeholderSrc} alt="" style={logoThumbImg} />
-            </div>
-        );
+        return <SponsorLogoThumb src={placeholderSrc} />;
     }
     if (phase === 'check') {
         return (
@@ -140,11 +204,7 @@ function SponsorListingLogoCell({ src, publicRoot }) {
             </span>
         );
     }
-    return (
-        <div style={logoThumbWrap}>
-            <img src={src} alt="" style={logoThumbImg} />
-        </div>
-    );
+    return <SponsorLogoThumb src={src} />;
 }
 
 export default function SponsorIndex({ authUser = {} }) {
@@ -298,7 +358,7 @@ export default function SponsorIndex({ authUser = {} }) {
             {
                 colId: 'logo',
                 headerName: 'Logo',
-                width: 104,
+                minWidth: 110,
                 sortable: false,
                 valueGetter: (p) => sponsorListingLogoSrc(p.data, mwadminPublicRoot),
                 cellClass: 'mwadmin-ag-cell-vcenter',

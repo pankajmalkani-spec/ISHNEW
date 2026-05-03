@@ -2,12 +2,88 @@ import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import { createPortal } from 'react-dom';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
 import MwadminActionsDropdown from '../../../Components/Mwadmin/MwadminActionsDropdown';
 import MwadminStatusBadge from '../../../Components/Mwadmin/MwadminStatusBadge';
 import MwadminThemedAgGrid from '../../../Components/Mwadmin/MwadminThemedAgGrid';
 import { useClassicDialog } from '../../../Components/Mwadmin/ClassicDialog';
 import { canAdd, canDelete, canEdit, canViewDetail } from '../../../lib/mwadminPermissions';
+
+const profileThumbWrapStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%',
+    padding: '4px 0',
+};
+
+const profileThumbImgStyle = {
+    width: '60px',
+    height: '36px',
+    objectFit: 'cover',
+    borderRadius: '6px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+};
+
+const profilePopupStyle = {
+    position: 'fixed',
+    zIndex: 9999,
+    width: '220px',
+    height: '132px',
+    padding: '8px',
+    borderRadius: '10px',
+    background: 'rgba(15, 23, 42, 0.96)',
+    border: '1px solid rgba(148, 163, 184, 0.35)',
+    boxShadow: '0 18px 45px rgba(0,0,0,0.35)',
+    pointerEvents: 'none',
+};
+
+const profilePopupImgStyle = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: '6px',
+    display: 'block',
+};
+
+function ProfilePhotoCell({ src }) {
+    const [previewPos, setPreviewPos] = useState(null);
+    const updatePreviewPos = (event) => {
+        const gap = 18;
+        const width = 236;
+        const height = 148;
+        const left =
+            event.clientX + gap + width > window.innerWidth
+                ? Math.max(12, event.clientX - width - gap)
+                : event.clientX + gap;
+        const top =
+            event.clientY + gap + height > window.innerHeight
+                ? Math.max(12, event.clientY - height - gap)
+                : event.clientY + gap;
+        setPreviewPos({ left, top });
+    };
+
+    return (
+        <div style={profileThumbWrapStyle}>
+            <img
+                src={src}
+                style={profileThumbImgStyle}
+                alt="Profile"
+                onMouseEnter={updatePreviewPos}
+                onMouseMove={updatePreviewPos}
+                onMouseLeave={() => setPreviewPos(null)}
+            />
+            {previewPos
+                ? createPortal(
+                      <div style={{ ...profilePopupStyle, left: previewPos.left, top: previewPos.top }}>
+                          <img src={src} style={profilePopupImgStyle} alt="" />
+                      </div>,
+                      document.body
+                  )
+                : null}
+        </div>
+    );
+}
 
 function formatApiErrors(err) {
     const d = err?.response?.data;
@@ -154,21 +230,7 @@ export default function UsersIndex({ authUser = {} }) {
                 minWidth: 110,
                 cellRenderer: (params) => {
                     const src = params.value || '/images/categoryImages/boxImages/no_img.gif';
-                    return (
-                        <div style={{ display: 'flex', alignItems: 'center', height: '100%', padding: '4px 0' }}>
-                            <img 
-                                src={src} 
-                                style={{ 
-                                    width: '60px', 
-                                    height: '36px', 
-                                    objectFit: 'cover', 
-                                    borderRadius: '6px',
-                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                                }} 
-                                alt="Profile" 
-                            />
-                        </div>
-                    );
+                    return <ProfilePhotoCell src={src} />;
                 },
             },
             {

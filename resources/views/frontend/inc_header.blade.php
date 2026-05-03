@@ -10,6 +10,25 @@
             aspect-ratio: 16/9 !important;
             object-fit: cover !important;
         }
+        body.ish-theme-legacy footer .up-footer .footer-widget ul.small-posts > li > a img {
+            width: 70px !important;
+            height: 70px !important;
+            aspect-ratio: 1/1 !important;
+            object-fit: cover !important;
+        }
+        body.ish-home-modern footer .up-footer .footer-widget ul.small-posts > li > a img {
+            width: 40px !important;
+            height: 40px !important;
+            aspect-ratio: 1/1 !important;
+            object-fit: cover !important;
+            border-radius: 8px !important;
+        }
+        body.ish-theme-legacy footer .up-footer .featured-widget .news-post.standart-post .post-image img {
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 3/2 !important;
+            object-fit: cover !important;
+        }
     </style>
 @php
   $ft = $frontendTheme ?? 'legacy';
