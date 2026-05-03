@@ -154,7 +154,21 @@ export default function UsersIndex({ authUser = {} }) {
                 minWidth: 110,
                 cellRenderer: (params) => {
                     const src = params.value || '/images/categoryImages/boxImages/no_img.gif';
-                    return <img src={src} style={{ width: '60px', height: '36px', objectFit: 'cover' }} alt="" />;
+                    return (
+                        <div style={{ display: 'flex', alignItems: 'center', height: '100%', padding: '4px 0' }}>
+                            <img 
+                                src={src} 
+                                style={{ 
+                                    width: '60px', 
+                                    height: '36px', 
+                                    objectFit: 'cover', 
+                                    borderRadius: '6px',
+                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                }} 
+                                alt="Profile" 
+                            />
+                        </div>
+                    );
                 },
             },
             {
@@ -222,8 +236,8 @@ export default function UsersIndex({ authUser = {} }) {
                                     columnDefs={columns}
                                     defaultColDef={{ resizable: true, sortable: true, filter: false }}
                                     suppressCellFocus
-                                    rowHeight={36}
-                                    headerHeight={38}
+                                    rowHeight={48}
+                                    headerHeight={42}
                                     overlayNoRowsTemplate={loading ? 'Loading...' : 'No data available in table'}
                                 />
                             </MwadminThemedAgGrid>

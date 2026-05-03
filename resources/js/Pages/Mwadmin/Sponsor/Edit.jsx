@@ -131,12 +131,12 @@ export default function SponsorEdit({ authUser = {}, sponsorId }) {
             dialog.toast('Organization name is required.', 'error');
             return;
         }
-        if (!form.contact_name.trim()) {
-            dialog.toast('Contact name is required.', 'error');
-            return;
-        }
         if (!form.website.trim()) {
             dialog.toast('Website is required.', 'error');
+            return;
+        }
+        if (!form.contact_name.trim()) {
+            dialog.toast('Contact name is required.', 'error');
             return;
         }
         const startIso = dmyToIsoDate(form.start_date);

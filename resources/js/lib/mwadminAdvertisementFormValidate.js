@@ -12,12 +12,6 @@ export function validateMwadminAdvertisementForm(form) {
     if (!form.company_name?.trim()) {
         return 'Company name is required.';
     }
-    if (!form.contactperson_name?.trim()) {
-        return 'Contact person is required.';
-    }
-    if (!CONTACT_PERSON_RE.test(form.contactperson_name.trim())) {
-        return 'Contact person may only contain letters, spaces, and periods.';
-    }
     const adUrl = form.ad_url?.trim() ?? '';
     if (!adUrl) {
         return 'Ad URL is required.';
@@ -28,9 +22,18 @@ export function validateMwadminAdvertisementForm(form) {
     } catch {
         return 'Ad URL must be a valid URL (include http:// or https://).';
     }
-    const rates = form.annual_rates;
-    if (rates === '' || rates === null || Number.isNaN(Number(rates))) {
-        return 'Annual rates is required and must be a number.';
+    if (String(form.ad_type) === '1' && !form.category_id) {
+        return 'Select a category when ad type is Specific Category.';
+    }
+    if (!form.contactperson_name?.trim()) {
+        return 'Contact person is required.';
+    }
+    if (!CONTACT_PERSON_RE.test(form.contactperson_name.trim())) {
+        return 'Contact person may only contain letters, spaces, and periods.';
+    }
+    const emailRaw = form.email?.trim() ?? '';
+    if (emailRaw && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
+        return 'Enter a valid email address.';
     }
     const mobileRaw = form.mobile?.trim() ?? '';
     if (mobileRaw) {
@@ -39,12 +42,9 @@ export function validateMwadminAdvertisementForm(form) {
             return 'Mobile must be 10–12 digits when provided.';
         }
     }
-    const emailRaw = form.email?.trim() ?? '';
-    if (emailRaw && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
-        return 'Enter a valid email address.';
-    }
-    if (String(form.ad_type) === '1' && !form.category_id) {
-        return 'Select a category when ad type is Specific Category.';
+    const rates = form.annual_rates;
+    if (rates === '' || rates === null || Number.isNaN(Number(rates))) {
+        return 'Annual rates is required and must be a number.';
     }
     return null;
 }

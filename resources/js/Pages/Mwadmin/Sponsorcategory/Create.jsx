@@ -38,13 +38,13 @@ export default function SponsorCategoryCreate({ authUser = {} }) {
             notify(`Name must be at most ${NAME_MAX} characters.`);
             return false;
         }
+        if (form.status !== '0' && form.status !== '1') {
+            notify('Please choose Active or In-Active for status.');
+            return false;
+        }
         const note = form.note ?? '';
         if (note.length > NOTE_MAX) {
             notify(`Note(s) must be at most ${NOTE_MAX} characters.`);
-            return false;
-        }
-        if (form.status !== '0' && form.status !== '1') {
-            notify('Please choose Active or In-Active for status.');
             return false;
         }
         return true;
