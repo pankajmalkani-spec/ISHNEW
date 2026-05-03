@@ -10,6 +10,7 @@ import MwadminThemedAgGrid from '../../../Components/Mwadmin/MwadminThemedAgGrid
 import MwadminStatusBadge from '../../../Components/Mwadmin/MwadminStatusBadge';
 import DmyDateInput from '../../../Components/Mwadmin/DmyDateInput';
 import { dmyToIsoDate } from '../Sponsor/sponsorDateFormat';
+import YoutubeHoverPreview from '../../../Components/Mwadmin/YoutubeHoverPreview';
 
 const STATUS_OPTS = ['', 'Pending', 'WIP', 'Ready', 'Issue', 'Dropped', 'Hold', 'Released', 'Booked'];
 
@@ -175,6 +176,20 @@ export default function NewslistingIndex({ authUser = {} }) {
     const columns = useMemo(
         () => [
             { field: 'id', headerName: 'ID', width: 72, sortable: true, cellClass: vc },
+            {
+                field: 'actions',
+                headerName: 'Actions',
+                width: 130,
+                minWidth: 120,
+                sortable: false,
+                cellClass: `${vc} mwadmin-ag-cell-actions`,
+                cellRenderer: (params) => (
+                    <MwadminActionsDropdown
+                        flags={{ edit: perms.edit, delete: perms.delete }}
+                        onAction={(a) => handleAction(params.data.id, a)}
+                    />
+                ),
+            },
             { field: 'p2d_caseno', headerName: 'P2D Case No', minWidth: 110, sortable: true, cellClass: vc },
             { field: 'category_name', headerName: 'Category', minWidth: 120, sortable: false, cellClass: vc },
             { field: 'subcategory_name', headerName: 'Sub Category', minWidth: 120, sortable: false, cellClass: vc },
@@ -186,13 +201,19 @@ export default function NewslistingIndex({ authUser = {} }) {
                 sortable: false,
                 cellClass: `${vc} mwadmin-newslisting-cover-col`,
                 cellRenderer: (p) => {
-                    const src = p.value || '/images/categoryImages/boxImages/no_img.gif';
+                    const getYoutubeThumbnail = (url) => {
+                        if (!url) return null;
+                        const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
+                        return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : null;
+                    };
+                    const ytThumb = getYoutubeThumbnail(p.data?.youtube_url);
+                    const src = ytThumb || p.value || '/images/categoryImages/boxImages/no_img.gif';
                     return (
-                        <span className="mwadmin-newslisting-cover-cell">
-                            <span className="mwadmin-newslisting-cover-frame">
-                                <img className="mwadmin-newslisting-cover-thumb" src={src} alt="" />
-                            </span>
-                        </span>
+                        <YoutubeHoverPreview 
+                            youtubeUrl={p.data?.youtube_url} 
+                            coverSrc={src} 
+                            fallbackImg="/images/categoryImages/boxImages/no_img.gif" 
+                        />
                     );
                 },
             },
@@ -230,20 +251,6 @@ export default function NewslistingIndex({ authUser = {} }) {
                 autoHeaderHeight: true,
                 cellClass: `${vc} mwadmin-newslisting-badge-col`,
                 cellRenderer: (p) => <MwadminStatusBadge value={p.value} />,
-            },
-            {
-                field: 'actions',
-                headerName: 'Actions',
-                width: 130,
-                minWidth: 120,
-                sortable: false,
-                cellClass: `${vc} mwadmin-ag-cell-actions`,
-                cellRenderer: (params) => (
-                    <MwadminActionsDropdown
-                        flags={{ edit: perms.edit, delete: perms.delete }}
-                        onAction={(a) => handleAction(params.data.id, a)}
-                    />
-                ),
             },
         ],
         [perms]

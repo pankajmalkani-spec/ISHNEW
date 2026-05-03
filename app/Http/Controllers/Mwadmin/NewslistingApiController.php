@@ -209,7 +209,7 @@ class NewslistingApiController extends Controller
             ->leftJoin('subcategorymst as scm', 'scm.id', '=', 'ct.subcategory_id')
             ->leftJoin('newsource as ns', 'ns.id', '=', 'ct.news_source')
             ->selectRaw(
-                'ct.id, ct.p2d_caseno, ct.category_id, ct.subcategory_id, ct.banner_img, ct.cover_img, ct.title, ct.permalink, ct.status1, ct.featured_content, ct.final_releasestatus, ct.schedule_date, ns.name as news_source_name, cm.title as category_name, scm.name as subcategory_name'
+                'ct.id, ct.p2d_caseno, ct.category_id, ct.subcategory_id, ct.banner_img, ct.cover_img, ct.title, ct.permalink, ct.status1, ct.featured_content, ct.final_releasestatus, ct.schedule_date, ct.youtube_url, ns.name as news_source_name, cm.title as category_name, scm.name as subcategory_name'
             );
 
         if ($search !== '') {
@@ -1111,6 +1111,7 @@ private function resolveStatusAndScheduleold(Request $request): array
             'cover_img' => (string) $cover,
             'cover_img_url' => FrontendMedia::coverImageUrl($cover !== '' ? $cover : null),
             'banner_img_url' => $banner !== '' ? url('images/NewsContents/bannerImages/'.$banner) : null,
+            'youtube_url' => (string) ($item['youtube_url'] ?? ''),
         ];
     }
 

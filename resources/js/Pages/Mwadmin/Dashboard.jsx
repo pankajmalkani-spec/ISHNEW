@@ -6,6 +6,7 @@ import DmyDateInput from '../../Components/Mwadmin/DmyDateInput';
 import MwadminActionsDropdown from '../../Components/Mwadmin/MwadminActionsDropdown';
 import { useClassicDialog } from '../../Components/Mwadmin/ClassicDialog';
 import { canEdit, canViewDetail } from '../../lib/mwadminPermissions';
+import YoutubeHoverPreview from '../../Components/Mwadmin/YoutubeHoverPreview';
 
 const P2D_STATUS_OPTS = [
     { value: '1', label: 'Pending' },
@@ -379,6 +380,7 @@ export default function Dashboard({ authUser = {} }) {
                                     <option value="20">20</option>
                                     <option value="50">50</option>
                                     <option value="80">80</option>
+                                    <option value="all">All</option>
                                 </select>{' '}
                                 entries
                             </div>
@@ -402,6 +404,7 @@ export default function Dashboard({ authUser = {} }) {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Actions</th>
                                         <th>P2D Case No</th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
@@ -413,7 +416,6 @@ export default function Dashboard({ authUser = {} }) {
                                         <th>User</th>
                                         <th>Activity Status</th>
                                         <th>Remarks</th>
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -439,43 +441,16 @@ export default function Dashboard({ authUser = {} }) {
                                                     : code === 4
                                                       ? { backgroundColor: 'rgba(255, 165, 0, 0.4)' }
                                                       : {};
-                                            const src = row.cover_img_url || fallbackImg;
+                                            const getYoutubeThumbnail = (url) => {
+                                                if (!url) return null;
+                                                const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
+                                                return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : null;
+                                            };
+                                            const ytThumb = getYoutubeThumbnail(row.youtube_url);
+                                            const src = ytThumb || row.cover_img_url || fallbackImg;
                                             return (
                                                 <tr key={`${row.id}-${row.chart_id ?? 'x'}`} style={rowStyle}>
                                                     <td>{m ? '' : row.id}</td>
-                                                    <td>{m ? '' : row.p2d_caseno}</td>
-                                                    <td>{m ? '' : row.category_name}</td>
-                                                    <td>{m ? '' : row.subcategory_name}</td>
-                                                    <td>
-                                                        {m ? (
-                                                            ''
-                                                        ) : (
-                                                            <img
-                                                                src={src}
-                                                                alt=""
-                                                                style={{
-                                                                    maxWidth: '120px',
-                                                                    maxHeight: '72px',
-                                                                    objectFit: 'cover',
-                                                                }}
-                                                                onError={(e) => {
-                                                                    const el = e.currentTarget;
-                                                                    if (el.getAttribute('data-fallback') === '1')
-                                                                        return;
-                                                                    el.setAttribute('data-fallback', '1');
-                                                                    el.onerror = null;
-                                                                    el.src = fallbackImg;
-                                                                }}
-                                                            />
-                                                        )}
-                                                    </td>
-                                                    <td>{m ? '' : row.title}</td>
-                                                    <td>{m ? '' : row.due_date}</td>
-                                                    <td>{row.activity_name}</td>
-                                                    <td>{row.responsibilty}</td>
-                                                    <td>{row.user_name}</td>
-                                                    <td>{row.activity_status}</td>
-                                                    <td>{row.remarks}</td>
                                                     <td>
                                                         {m ? (
                                                             ''
@@ -489,6 +464,27 @@ export default function Dashboard({ authUser = {} }) {
                                                             />
                                                         )}
                                                     </td>
+                                                    <td>{m ? '' : row.p2d_caseno}</td>
+                                                    <td>{m ? '' : row.category_name}</td>
+                                                    <td>{m ? '' : row.subcategory_name}</td>
+                                                    <td>
+                                                        {m ? (
+                                                            ''
+                                                        ) : (
+                                                            <YoutubeHoverPreview 
+                                                                youtubeUrl={row.youtube_url} 
+                                                                coverSrc={src} 
+                                                                fallbackImg={fallbackImg} 
+                                                            />
+                                                        )}
+                                                    </td>
+                                                    <td>{m ? '' : row.title}</td>
+                                                    <td>{m ? '' : row.due_date}</td>
+                                                    <td>{row.activity_name}</td>
+                                                    <td>{row.responsibilty}</td>
+                                                    <td>{row.user_name}</td>
+                                                    <td>{row.activity_status}</td>
+                                                    <td>{row.remarks}</td>
                                                 </tr>
                                             );
                                         })}

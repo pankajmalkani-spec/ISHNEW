@@ -2,7 +2,7 @@ import { Head } from '@inertiajs/react';
 import axios from 'axios';
 import { format, startOfWeek } from 'date-fns';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { Calendar, Views } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import MwadminLayout from '../../../Components/Mwadmin/Layout';
@@ -44,6 +44,20 @@ export default function ScheduleIndex({ authUser = {} }) {
     const [viewMode, setViewMode] = useState('grid');
     /** RBC week vs agenda — must be controlled with onView or toolbar cannot switch views */
     const [calView, setCalView] = useState(Views.WEEK);
+    const scrollRef = useRef(null);
+
+    useEffect(() => {
+        const el = scrollRef.current;
+        if (!el) return;
+        const handleWheel = (e) => {
+            if (e.deltaY !== 0 && !e.shiftKey && e.deltaX === 0) {
+                e.preventDefault();
+                el.scrollLeft += e.deltaY;
+            }
+        };
+        el.addEventListener('wheel', handleWheel, { passive: false });
+        return () => el.removeEventListener('wheel', handleWheel);
+    }, [viewMode, payload]);
 
     const loadWeek = useCallback(
         async (start) => {
@@ -264,6 +278,7 @@ export default function ScheduleIndex({ authUser = {} }) {
                                     {viewMode === 'grid' ? (
                                         <motion.div
                                             key="schedule-grid"
+                                            ref={scrollRef}
                                             className="mwadmin-schedule-table-wrap mwadmin-schedule-scroll-wrap"
                                             initial={motionEnter}
                                             animate={motionAnim}
