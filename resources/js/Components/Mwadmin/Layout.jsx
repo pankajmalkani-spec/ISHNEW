@@ -12,6 +12,7 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
     const [isMastersOpen, setIsMastersOpen] = useState(true);
     const [isContentOpen, setIsContentOpen] = useState(true);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [signingOut, setSigningOut] = useState(false);
     const [openingModule, setOpeningModule] = useState(null);
     const logoutVisitStarted = useRef(false);
@@ -82,6 +83,7 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
     }, [dialog]);
 
     const startModuleNavigation = useCallback((event, href, label) => {
+        setIsMobileMenuOpen(false);
         if (
             event.defaultPrevented ||
             event.button !== 0 ||
@@ -161,28 +163,36 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
         <MwadminThemeContext.Provider value={{ themeMode }}>
         <div className={`mwadmin-shell ${themeMode === 'dark' ? 'mwadmin-theme-dark' : ''}`}>
             <header className="mwadmin-header">
-                <img className="mwadmin-logo" src="/images/ish_news.png" alt="ISH News" />
-                <div className="mwadmin-header-right">
-                    <div
-                        className="mwadmin-theme-segment"
-                        role="group"
-                        aria-label="Interface theme"
+                <div className="mwadmin-header-left">
+                    <button 
+                        type="button"
+                        className="mwadmin-mobile-menu-btn" 
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Toggle Menu"
                     >
-                        <button
-                            type="button"
-                            className={themeMode === 'light' ? 'is-active' : ''}
-                            onClick={() => setThemeMode('light')}
-                        >
-                            Light
-                        </button>
-                        <button
-                            type="button"
-                            className={themeMode === 'dark' ? 'is-active' : ''}
-                            onClick={() => setThemeMode('dark')}
-                        >
-                            Dark
-                        </button>
-                    </div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <img className="mwadmin-logo" src="/images/ish_news.png" alt="ISH News" />
+                </div>
+                <div className="mwadmin-header-right">
+                    <button
+                        type="button"
+                        className="mwadmin-modern-toggle"
+                        onClick={() => setThemeMode(themeMode === 'light' ? 'dark' : 'light')}
+                        aria-label="Toggle Light/Dark Mode"
+                    >
+                        <span className="mwadmin-modern-toggle-circle">
+                            {themeMode === 'light' ? (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                            ) : (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                            )}
+                        </span>
+                    </button>
                     <div className="mwadmin-user-menu-wrap">
                         <button
                             type="button"
@@ -244,7 +254,10 @@ export default function MwadminLayout({ authUser = {}, activeMenu = 'dashboard',
                 </div>
             </header>
 
-            <div className="mwadmin-layout">
+            <div className={`mwadmin-layout ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+                {isMobileMenuOpen && (
+                    <div className="mwadmin-sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
+                )}
                 <aside className="mwadmin-sidebar">
                     <ul className="mwadmin-menu">
                         {can('dashboard') && (
