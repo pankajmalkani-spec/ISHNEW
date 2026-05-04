@@ -72,8 +72,8 @@
     </div>
   </section>
 
-  @include('frontend.inc_footerbottom')
   @include('frontend.inc_carousel_slider')
+  @include('frontend.inc_footerbottom')
 </div>
 @include('frontend.inc_footerscript')
 @if(! empty($hasMore))
