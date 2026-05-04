@@ -27,6 +27,15 @@
     width: 100%;
     margin-bottom: 24px;
   }
+  .ish-cat-modern-card .ish-hm-row-card__description {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+  body.ish-modern-light .ish-cat-modern-card .ish-hm-row-card__description {
+    color: rgba(26, 24, 21, 0.72);
+  }
 </style>
 @endif
 
@@ -41,6 +50,9 @@
         <div class="ish-hm-row-card__body">
           <span class="ish-hm-row-card__cat" style="{{ $modernBadgeStyle($video) }}">{{ $video->subcategoryname ?? '' }}</span>
           <h3 class="ish-hm-row-card__title"><a href="{{ url('/videos/'.($video->categorycode ?? '').'/'.($video->permalink ?? '')) }}">{{ $video->title ?? '' }}</a></h3>
+          @if(! empty(trim(strip_tags((string) ($video->description ?? '')))))
+            <p class="ish-hm-row-card__description">{{ \Illuminate\Support\Str::limit(strip_tags((string) ($video->description ?? '')), 120) }}</p>
+          @endif
           <div class="ish-hm-row-card__meta">
             @if(! empty($video->schedule_date))
               <span><i class="fa fa-calendar"></i>{{ \Illuminate\Support\Carbon::parse($video->schedule_date)->format('M j, Y') }}</span>
