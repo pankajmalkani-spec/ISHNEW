@@ -454,6 +454,10 @@
         });
       }
 
+      function isHeroPreviewPlaying() {
+        return !!hero.querySelector('.netflix-hero-video-preview');
+      }
+
       function showHeroPreview(wrapper) {
         if (!wrapper || prefersReducedMotion) return;
 
@@ -462,6 +466,7 @@
         if (!videoId) return;
 
         clearHeroPreview();
+        stopAutoplay();
         var iframe = document.createElement('iframe');
         iframe.className = 'netflix-hero-video-preview';
         iframe.title = 'YouTube video preview';
@@ -476,8 +481,9 @@
         });
       }
 
-      function showSlide(index) {
+      function showSlide(index, force) {
         if (!slides.length) return;
+        if (!force && isHeroPreviewPlaying()) return false;
         clearHeroPreview();
         current = (index + slides.length) % slides.length;
 
@@ -490,6 +496,8 @@
         dots.forEach(function (dot, dotIndex) {
           dot.classList.toggle('active', dotIndex === current);
         });
+
+        return true;
       }
 
       function stopAutoplay() {
@@ -500,7 +508,7 @@
       }
 
       function startAutoplay() {
-        if (prefersReducedMotion || slides.length < 2 || timer) return;
+        if (prefersReducedMotion || slides.length < 2 || timer || isHeroPreviewPlaying()) return;
         timer = window.setInterval(function () {
           showSlide(current + 1);
         }, 5500);
@@ -513,22 +521,25 @@
 
       dots.forEach(function (dot) {
         dot.addEventListener('click', function () {
-          showSlide(parseInt(dot.getAttribute('data-modern-hero-dot'), 10) || 0);
-          restartAutoplay();
+          if (showSlide(parseInt(dot.getAttribute('data-modern-hero-dot'), 10) || 0)) {
+            restartAutoplay();
+          }
         });
       });
 
       if (prev) {
         prev.addEventListener('click', function () {
-          showSlide(current - 1);
-          restartAutoplay();
+          if (showSlide(current - 1)) {
+            restartAutoplay();
+          }
         });
       }
 
       if (next) {
         next.addEventListener('click', function () {
-          showSlide(current + 1);
-          restartAutoplay();
+          if (showSlide(current + 1)) {
+            restartAutoplay();
+          }
         });
       }
 
@@ -538,12 +549,14 @@
       hero.addEventListener('focusout', startAutoplay);
       hero.addEventListener('keydown', function (event) {
         if (event.key === 'ArrowLeft') {
-          showSlide(current - 1);
-          restartAutoplay();
+          if (showSlide(current - 1)) {
+            restartAutoplay();
+          }
         }
         if (event.key === 'ArrowRight') {
-          showSlide(current + 1);
-          restartAutoplay();
+          if (showSlide(current + 1)) {
+            restartAutoplay();
+          }
         }
       });
       hero.addEventListener('pointerdown', function (event) {
@@ -555,8 +568,9 @@
         dragging = false;
         var delta = event.clientX - startX;
         if (Math.abs(delta) > 45) {
-          showSlide(delta > 0 ? current - 1 : current + 1);
-          restartAutoplay();
+          if (showSlide(delta > 0 ? current - 1 : current + 1)) {
+            restartAutoplay();
+          }
         }
       });
       hero.addEventListener('pointercancel', function () {
@@ -580,7 +594,7 @@
       });
 
       hero.setAttribute('tabindex', '0');
-      showSlide(0);
+      showSlide(0, true);
       startAutoplay();
     }
 
