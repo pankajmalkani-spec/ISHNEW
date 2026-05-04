@@ -30,7 +30,6 @@
     <main id="content" class="ish-home-modern-main">
       @include('frontend.home_modern')
     </main>
-    @include('frontend.inc_carousel_slider')
   @else
   <div id="content">
     @include('frontend.banner')
@@ -100,12 +99,12 @@
           </section>
         </div>
       </div>
-      @include('frontend.inc_carousel_slider')
     </div>
   </div>
   @endif
 
   @include('frontend.inc_footerbottom')
+  @include('frontend.inc_carousel_slider')
 </div>
 @include('frontend.inc_footerscript')
 <script>
